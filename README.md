@@ -1,4 +1,15 @@
-# @komplett/themed: native SCSS themes for your app!
+<p align="center">
+  <a href="https://github.com/komplettio/themed" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://raw.githubusercontent.com/komplettio/themed/refs/heads/main/assets/themed-logo.png" alt="Themed logo">
+  </a>
+</p>
+<br/>
+<p align="center">
+  Themed: native SCSS themes for your app! 
+</p>
+<br/>
+
+---
 
 > [!WARNING]  
 > This is in early development. Expect things to break and change before it hits 1.0.0
