@@ -1,21 +1,36 @@
 {
-  "name": "themed",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@komplett/themed",
+  "version": "0.0.2",
+  "description": "All you need for scss-based theming",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build"
+  "private": false,
+  "directories": {
+    "example": "examples"
   },
-  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/komplettio/themed/issues"
+  },
+  "homepage": "https://github.com/komplettio/themed#readme",
+  "license": "MIT",
   "engines": {
     "node": ">=22.11.0"
   },
+  "keywords": [
+    "CSS",
+    "SCSS",
+    "Theme"
+  ],
+  "author": "Janis Jansen",
   "packageManager": "pnpm@10.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/komplettio/themed.git"
   },
-  "keywords": [],
-  "author": "Janis Jansen"
+  "publishConfig": {
+    "access": "public",
+    "directory": "packages/themed/dist"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
