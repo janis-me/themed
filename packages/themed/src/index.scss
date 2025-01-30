@@ -1,0 +1,65 @@
+@use "sass:map";
+@use "sass:meta";
+@use "sass:color";
+@use "sass:list";
+
+// An empty map that will be filled with the given themes, once the `@themes` mixin was called
+$themes-map: ();
+
+@mixin applyTheme($theme) {
+  @each $name, $color in $theme {
+    --themed-#{$name}: #{$color};
+  }
+}
+
+@function verify-themes($themes) {
+  @if not meta.type-of($themes) == "map" {
+    @error "The given themes variable is not a valid SCSS map.";
+  }
+
+  @if list.length(map.keys($themes)) == 0 {
+    @error "The map of themes is empty.";
+  }
+
+  $first-theme-name: list.nth(map.keys($themes), 1);
+  $first-theme: map.get($themes, $first-theme-name);
+
+  @each $theme-name, $theme-map in $themes {
+    @each $key, $value in $theme-map {
+      @if not map.has-key($first-theme, $key) {
+        @error "The default theme (#{$first-theme-name} doesn't define the value #{$key}, so you cannot use it in theme #{$theme-name}";
+        @return false;
+      }
+    }
+  }
+
+  @return true;
+}
+
+@mixin themes($themes) {
+  @if not verify-themes($themes) {
+    @error "Unable to apply themes, see error above.";
+  }
+
+  // Populate the global themes variable. This is later used just for validation etc.
+  $themes-map: $themes !global;
+
+  @each $theme-name, $theme-value in $themes {
+    html[data-theme="#{$theme-name}"] {
+      @include applyTheme($theme-value);
+    }
+  }
+}
+
+// Returns a value from the current theme, checking for validity
+// You could also just use the `var(--themed-#{$name})` directly, but this function
+// provides a nice way to check for validity and provide a better error message
+@function themed($name) {
+  @if meta.type-of($name) != "string" {
+    @error "'#{$name}' is not a string (should be quoted when passed into this function)";
+  } @else if map.has-key(list.nth(map.values($themes-map), 1), $name) == false {
+    @error "'#{$name}' is not defined in the primary theme.";
+  }
+
+  @return #{var(--themed-#{$name})};
+}

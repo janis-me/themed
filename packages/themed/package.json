@@ -1,0 +1,28 @@
+{
+  "name": "@komplett/themed",
+  "version": "0.0.1",
+  "description": "All you need for SCSS-based dynamic styling!",
+  "type": "module",
+  "exports": {
+    ".": "./dist/index.scss",
+    "./utils": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.ts"
+    },
+    "./themes/default": "./dist/themes/default.scss"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "^6.0.11",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-static-copy": "^2.2.0"
+  }
+}
