@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "All you need for scss-based theming",
   "main": "index.js",
+  "private": false,
   "directories": {
     "example": "examples"
   },

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "All you need for SCSS-based dynamic styling!",
   "type": "module",
+  "private": false,
   "exports": {
     ".": "./dist/index.scss",
     "./utils": {
