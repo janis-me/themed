@@ -31,9 +31,6 @@
     "directory": "packages/themed/dist"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build",
-    "publish": "pnpm --filter='./packages/themed' publish",
-    "prepublishOnly": "pnpm install && pnpm build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

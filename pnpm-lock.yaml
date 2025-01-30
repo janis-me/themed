@@ -18,13 +18,14 @@ catalogs:
 
 importers:
 
-  .: {}
+  .:
+    publishDirectory: packages/themed/dist
 
   examples/vite-vanilla:
     dependencies:
       '@komplett/themed':
         specifier: workspace:*
-        version: link:../../packages/themed
+        version: link:../../packages/themed/dist
     devDependencies:
       sass:
         specifier: 'catalog:'
