@@ -5,6 +5,7 @@
 
 // An empty map that will be filled with the given themes, once the `@themes` mixin was called
 $themes-map: ();
+$theme-values: ();
 
 @mixin applyTheme($theme) {
   @each $name, $color in $theme {
@@ -27,7 +28,7 @@ $themes-map: ();
   @each $theme-name, $theme-map in $themes {
     @each $key, $value in $theme-map {
       @if not map.has-key($first-theme, $key) {
-        @error "The default theme (#{$first-theme-name} doesn't define the value #{$key}, so you cannot use it in theme #{$theme-name}";
+        @error "One or more themes do not define the value #{$key}, so you cannot use it in #{$theme-name}";
         @return false;
       }
     }
@@ -43,6 +44,7 @@ $themes-map: ();
 
   // Populate the global themes variable. This is later used just for validation etc.
   $themes-map: $themes !global;
+  $theme-values: map.keys(list.nth(map.values($themes-map), 1)) !global;
 
   @each $theme-name, $theme-value in $themes {
     html[data-theme="#{$theme-name}"] {
@@ -57,8 +59,8 @@ $themes-map: ();
 @function themed($name) {
   @if meta.type-of($name) != "string" {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if map.has-key(list.nth(map.values($themes-map), 1), $name) == false {
-    @error "'#{$name}' is not defined in the primary theme.";
+  } @else if list.index($theme-values, $name) == null {
+    @error "'#{$name}' is not defined in your themes.";
   }
 
   @return #{var(--themed-#{$name})};

@@ -1,9 +1,7 @@
 {
-  "name": "@komplett/themed",
-  "version": "0.0.3",
+  "name": "@komplett/themed-monorepo",
   "description": "All you need for SCSS-based dynamic styling!",
   "type": "module",
-  "private": false,
   "directories": {
     "example": "examples"
   },
@@ -26,28 +24,10 @@
     "node": ">=22.11.0"
   },
   "packageManager": "pnpm@10.0.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "files": ["dist/"],
-  "exports": {
-    ".": "./dist/index.scss",
-    "./utils": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.ts"
-    },
-    "./themes/default": "./dist/themes/default.scss"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vite build",
-    "prepublishOnly": "pnpm install && pnpm build"
-  },
-  "devDependencies": {
-    "@types/node": "catalog:",
-    "typescript": "catalog:",
-    "vite": "^6.0.11",
-    "vite-plugin-dts": "^4.5.0",
-    "vite-plugin-static-copy": "^2.2.0"
+    "build": "pnpm --filter=./packages/themed --filter=./packages/react build",
+    "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react build:watch",
+    "example:vanilla": "pnpm --filter=./examples/vite-vanilla dev",
+    "example:react": "pnpm --filter=./examples/vite-react dev"
   }
 }

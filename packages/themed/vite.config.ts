@@ -4,6 +4,8 @@ import { resolve } from "node:path";
 import { viteStaticCopy } from "vite-plugin-static-copy";
 import dts from "vite-plugin-dts";
 
+import * as pkg from "./package.json";
+
 export default defineConfig({
   base: "",
   plugins: [
@@ -22,7 +24,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "@komplett/themed",
+      name: pkg.name,
       formats: ["es"],
       fileName: "index",
     },
