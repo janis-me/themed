@@ -26,9 +26,14 @@
     "type": "git",
     "url": "git+https://github.com/komplettio/themed.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "directory": "packages/themed/dist"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
-    "publish": "pnpm --filter='./packages/themed' publish"
+    "publish": "pnpm --filter='./packages/themed' publish",
+    "prepublishOnly": "pnpm install && pnpm build"
   }
 }
