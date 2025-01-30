@@ -5,8 +5,11 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  base: "",
   plugins: [
-    dts(),
+    dts({
+      exclude: ["node_modules", "vite.config.ts"],
+    }),
     viteStaticCopy({
       targets: [
         {
@@ -24,5 +27,8 @@ export default defineConfig({
       fileName: "index",
     },
     sourcemap: true,
+    rollupOptions: {
+      preserveEntrySignatures: "strict",
+    },
   },
 });

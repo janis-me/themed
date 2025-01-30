@@ -1,8 +1,8 @@
 {
   "name": "@komplett/themed",
-  "version": "0.0.2",
-  "description": "All you need for scss-based theming",
-  "main": "index.js",
+  "version": "0.0.3",
+  "description": "All you need for SCSS-based dynamic styling!",
+  "type": "module",
   "private": false,
   "directories": {
     "example": "examples"
@@ -10,27 +10,44 @@
   "bugs": {
     "url": "https://github.com/komplettio/themed/issues"
   },
+  "author": "Janis Jansen",
   "homepage": "https://github.com/komplettio/themed#readme",
-  "license": "MIT",
-  "engines": {
-    "node": ">=22.11.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/komplettio/themed.git"
   },
+  "license": "MIT",
   "keywords": [
     "CSS",
     "SCSS",
     "Theme"
   ],
-  "author": "Janis Jansen",
-  "packageManager": "pnpm@10.0.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/komplettio/themed.git"
+  "engines": {
+    "node": ">=22.11.0"
   },
+  "packageManager": "pnpm@10.0.0",
   "publishConfig": {
-    "access": "public",
-    "directory": "packages/themed/dist"
+    "access": "public"
+  },
+  "files": ["dist/"],
+  "exports": {
+    ".": "./dist/index.scss",
+    "./utils": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.ts"
+    },
+    "./themes/default": "./dist/themes/default.scss"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "prepublishOnly": "pnpm install && pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "^6.0.11",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-static-copy": "^2.2.0"
   }
 }

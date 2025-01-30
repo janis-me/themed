@@ -19,22 +19,6 @@ catalogs:
 importers:
 
   .:
-    publishDirectory: packages/themed/dist
-
-  examples/vite-vanilla:
-    dependencies:
-      '@komplett/themed':
-        specifier: workspace:*
-        version: link:../../packages/themed/dist
-    devDependencies:
-      sass:
-        specifier: 'catalog:'
-        version: 1.83.4
-      vite:
-        specifier: ^6.0.5
-        version: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
-
-  packages/themed:
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
@@ -51,6 +35,19 @@ importers:
       vite-plugin-static-copy:
         specifier: ^2.2.0
         version: 2.2.0(vite@6.0.11(@types/node@22.12.0)(sass@1.83.4))
+
+  examples/vite-vanilla:
+    dependencies:
+      '@komplett/themed':
+        specifier: workspace:*
+        version: link:../..
+    devDependencies:
+      sass:
+        specifier: 'catalog:'
+        version: 1.83.4
+      vite:
+        specifier: ^6.0.5
+        version: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
 
 packages:
 

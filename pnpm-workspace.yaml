@@ -1,6 +1,6 @@
 packages:
   - "examples/*"
-  - "packages/*"
+  - "./"
 
 catalog:
   "typescript": ^5.7.3
