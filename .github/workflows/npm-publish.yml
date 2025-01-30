@@ -8,7 +8,7 @@ on:
     types: [created]
 
 jobs:
-  build_and_publish:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,8 +24,21 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Publish 🚀
+  publish_main:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publish @komplett/themed 🚀
         shell: bash
-        run: pnpm publish ./ --access public --no-git-checks
+        run: pnpm publish packages/themed --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  publish_react:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publish @komplett/react 🚀
+        shell: bash
+        run: pnpm publish packages/react --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
