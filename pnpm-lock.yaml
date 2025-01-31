@@ -48,6 +48,9 @@ importers:
         specifier: catalog:react
         version: 19.0.0(react@19.0.0)
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.12.0
       '@types/react':
         specifier: catalog:react
         version: 19.0.8
@@ -60,8 +63,37 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
+      vite-tsconfig-paths:
+        specifier: ^5.1.4
+        version: 5.1.4(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(sass@1.83.4))
 
   examples/vite-vanilla:
+    dependencies:
+      '@komplett/themed':
+        specifier: workspace:*
+        version: link:../../packages/themed
+    devDependencies:
+      sass:
+        specifier: 'catalog:'
+        version: 1.83.4
+      vite:
+        specifier: 'catalog:'
+        version: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
+
+  examples/vite-vanilla-extended:
+    dependencies:
+      '@komplett/themed':
+        specifier: workspace:*
+        version: link:../../packages/themed
+    devDependencies:
+      sass:
+        specifier: 'catalog:'
+        version: 1.83.4
+      vite:
+        specifier: 'catalog:'
+        version: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
+
+  examples/vite-vanilla-simple:
     dependencies:
       '@komplett/themed':
         specifier: workspace:*
@@ -838,6 +870,9 @@ packages:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
     engines: {node: '>=4'}
 
+  globrex@0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
+
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
@@ -1085,6 +1120,16 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
+  tsconfck@3.1.4:
+    resolution: {integrity: sha512-kdqWFGVJqe+KGYvlSO9NIaWn9jT1Ny4oKVzAJsKii5eoE9snzTJzL4+MMVOMn+fikWGFmKEylcXL710V/kIPJQ==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
@@ -1128,6 +1173,14 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0
+
+  vite-tsconfig-paths@5.1.4:
+    resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
 
   vite@6.0.11:
     resolution: {integrity: sha512-4VL9mQPKoHy4+FE0NnRE/kbY51TOfaknxAjt3fJbGJxhIpBZiqVzlZDEesWWsuREXHwNdAoOFZ9MkPEVXczHwg==}
@@ -1856,6 +1909,8 @@ snapshots:
 
   globals@11.12.0: {}
 
+  globrex@0.1.2: {}
+
   graceful-fs@4.2.11: {}
 
   has-flag@4.0.0: {}
@@ -2076,6 +2131,10 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
+  tsconfck@3.1.4(typescript@5.7.3):
+    optionalDependencies:
+      typescript: 5.7.3
+
   typescript@5.7.2: {}
 
   typescript@5.7.3: {}
@@ -2122,6 +2181,17 @@ snapshots:
       fs-extra: 11.3.0
       picocolors: 1.1.1
       vite: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
+
+  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(sass@1.83.4)):
+    dependencies:
+      debug: 4.4.0
+      globrex: 0.1.2
+      tsconfck: 3.1.4(typescript@5.7.3)
+    optionalDependencies:
+      vite: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   vite@6.0.11(@types/node@22.12.0)(sass@1.83.4):
     dependencies:

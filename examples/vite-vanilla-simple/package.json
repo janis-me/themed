@@ -9,15 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@komplett/react-themed": "workspace:*",
-    "react": "catalog:react",
-    "react-dom": "catalog:react"
+    "@komplett/themed": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "catalog:react",
-    "@types/react-dom": "catalog:react",
     "sass": "catalog:",
-    "vite": "catalog:",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite": "catalog:"
   }
 }
