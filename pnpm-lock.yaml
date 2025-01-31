@@ -64,19 +64,6 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(sass@1.83.4))
 
-  examples/vite-vanilla:
-    dependencies:
-      '@komplett/themed':
-        specifier: workspace:*
-        version: link:../../packages/themed
-    devDependencies:
-      sass:
-        specifier: 'catalog:'
-        version: 1.83.4
-      vite:
-        specifier: 'catalog:'
-        version: 6.0.11(@types/node@22.12.0)(sass@1.83.4)
-
   examples/vite-vanilla-extended:
     dependencies:
       '@komplett/themed':
@@ -839,8 +826,8 @@ packages:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
 
-  fastq@1.18.0:
-    resolution: {integrity: sha512-QKHXPW0hD8g4UET03SdOdunzSouc9N4AuHdsX8XNcTsuz+yYFILVNIX4l9yHABMhiEI9Db0JTTIpu0wB+Y1QQw==}
+  fastq@1.19.0:
+    resolution: {integrity: sha512-7SFSRCNjBQIZH/xZR3iy5iQYR8aGBE0h3VG6/cwlbrpdciNYBMotQav8c1XI3HjHH+NikUpP53nPdlZSdWmFzA==}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -1485,7 +1472,7 @@ snapshots:
   '@nodelib/fs.walk@1.2.8':
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
-      fastq: 1.18.0
+      fastq: 1.19.0
 
   '@parcel/watcher-android-arm64@2.5.1':
     optional: true
@@ -1882,7 +1869,7 @@ snapshots:
       merge2: 1.4.1
       micromatch: 4.0.8
 
-  fastq@1.18.0:
+  fastq@1.19.0:
     dependencies:
       reusify: 1.0.4
 
