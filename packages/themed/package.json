@@ -1,6 +1,6 @@
 {
   "name": "@komplett/themed",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "All you need for SCSS-based dynamic styling!",
   "type": "module",
   "private": false,
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "sass": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "^4.5.0",

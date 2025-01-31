@@ -1,6 +1,11 @@
+import "./index.scss";
+
 export const THEME_ATTRIBUTE_NAME = "data-theme" as const;
 
-/** All values the theme string can have. Not currently handling theme names/strings. */
+/**
+ * All values the theme string can have.
+ * Currently, all strings are allowed. By convention, it's good to just use 'dark' and 'light'
+ */
 export type ThemeOption = string;
 
 export function getTheme(): ThemeOption | null {

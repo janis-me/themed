@@ -24,6 +24,9 @@ export default defineConfig({
     react(),
   ],
   build: {
+    // Temporarily not emptying the out-dir until https://github.com/qmhc/vite-plugin-dts/issues/335 is fixed.
+    // vite-plugin-dts currently does not generate d.ts files when a CSS file is changed in watch mode.
+    emptyOutDir: false,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: pkg.name,

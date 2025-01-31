@@ -1,0 +1,11 @@
+.my-button {
+  color: themed("text");
+  background-color: themed("grey-7");
+  border: 1px solid themed("grey-5");
+  padding: 6px 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: themed("grey-6");
+  }
+}
