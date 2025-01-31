@@ -48,9 +48,6 @@ importers:
         specifier: catalog:react
         version: 19.0.0(react@19.0.0)
     devDependencies:
-      '@types/node':
-        specifier: 'catalog:'
-        version: 22.12.0
       '@types/react':
         specifier: catalog:react
         version: 19.0.8
@@ -148,6 +145,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.12.0
+      sass:
+        specifier: 'catalog:'
+        version: 1.83.4
       typescript:
         specifier: 'catalog:'
         version: 5.7.3

@@ -36,19 +36,15 @@ $prefix: "themed";
   @return true;
 }
 
-@mixin makeCSSVars($map, $prefix) {
-  @each $name, $color in $theme {
-    --#{prefix}-#{$name}: #{$color};
-  }
+@mixin make-css-variable($prefix, $key, $value) {
+  --#{$prefix}-#{$key}: #{$value};
 }
 
-/**
-* Given a map of themes, checks all maps to be valid, have equal keys etc,
-* Then, saves the themes to global variables to do compile-time checks later and 
-* creates CSS variables for each theme.
-*
-* the `$prefix` is used for the CSS variable, for example 
-*/
+// Given a map of themes, checks all maps to be valid, have equal keys etc,
+// Then, saves the themes to global variables to do compile-time checks later and
+// creates CSS variables for each theme.
+//
+// the `$prefix` is used for the CSS variable, for example
 @mixin themes($themes, $prefix: "themed") {
   @if not verify-themes($themes) {
     @error "Unable to register themes, see error above.";
@@ -61,18 +57,21 @@ $prefix: "themed";
   // Prefix used for CSS variables
   $prefix: $prefix !global;
 
-  @each $theme-name, $theme-value in $themes {
+  @each $theme-name, $theme-map in $themes {
     html[data-theme="#{$theme-name}"] {
-      @include makeCSSVars($theme-value, $prefix);
+      // Register the default variables for each theme
+      @each $key, $val in $theme-map {
+        @include make-css-variable($prefix, $key, $val);
+
+        @content ($prefix, $key, $val);
+      }
     }
   }
 }
 
-/**
-* Returns a value from the current theme, checking for validity
-* You could also just use the `var(--themed-#{$name})` directly, but this function
-* provides a nice way to check for validity and provide a better error message
-*/
+// Returns a value from the current theme, checking for validity
+// You could also just use the `var(--themed-#{$name})` directly, but this function
+// provides a nice way to check for validity and provide a better error message
 @function themed($name) {
   @if meta.type-of($name) != "string" {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
@@ -80,5 +79,5 @@ $prefix: "themed";
     @error "'#{$name}' is not defined in your themes.";
   }
 
-  @return var(--#{prefix}-#{$name});
+  @return var(--#{$prefix}-#{$name});
 }

@@ -1,3 +1,5 @@
+import "./index.scss";
+
 export const THEME_ATTRIBUTE_NAME = "data-theme" as const;
 
 /**
