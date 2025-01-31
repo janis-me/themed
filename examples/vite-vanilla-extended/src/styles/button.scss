@@ -1,0 +1,14 @@
+// This file is just used to demonstrate, that you can use the themed function in all your files.
+
+button {
+  color: themed("text");
+  background-color: themed("grey-7");
+  border: 1px solid themed("grey-5");
+  padding: 6px 8px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: themed("grey-6");
+  }
+}

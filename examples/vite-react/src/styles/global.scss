@@ -1,3 +1,6 @@
+@forward "@komplett/react-themed";
+
+@use "@komplett/react-themed" as *;
 @use "./themes.scss";
 
 @use "sass:meta";
@@ -14,21 +17,3 @@ $theme-map: meta.module-variables("themes");
 
 // Calling `themes` defines the theme-map.
 @include themes($theme-map);
-
-html,
-body {
-  color: themed("text");
-  background-color: themed("background");
-}
-
-button {
-  color: themed("text");
-  background-color: themed("grey-7");
-  border: 1px solid themed("grey-5");
-  padding: 6px 8px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: themed("grey-6");
-  }
-}

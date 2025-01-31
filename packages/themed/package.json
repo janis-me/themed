@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "sass": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "^4.5.0",

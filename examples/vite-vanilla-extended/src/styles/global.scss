@@ -1,0 +1,33 @@
+@forward "@komplett/themed";
+
+@use "@komplett/themed" as *;
+@use "./themes.scss";
+
+@use "sass:meta";
+@use "sass:color";
+
+// Usually, you would just @use the library like
+// @use "@komplett/themed" as *;
+// However, we defined this as a global in the vite.config.ts, so no need to import it.
+// all @komplett/themed functions will be globally available.
+
+// This get's all themes we defined in ./themes.scss as a map.
+// You could also just define the themes inside this file as a map!
+// Then, you also don't have to import the `sass:meta` module.
+$theme-map: meta.module-variables("themes");
+
+$alpha-modifiers: 90, 80, 70, 60, 50, 40, 30, 20, 10;
+
+// Calling `themes` defines the theme-map.
+// Everything after the `using` keyword is used to dynamically generate more CSS variables.
+// In this example, we generate each variable with a couple of different opacity values.
+@include themes($theme-map, "my-var") using ($prefix, $key, $value) {
+  @each $alpha in $alpha-modifiers {
+    // make-css-variable is a utility mixin provided by themed
+    @include make-css-variable(
+      $prefix,
+      "#{$key}--#{$alpha}",
+      #{color.change($value, $alpha: calc($alpha / 100))}
+    );
+  }
+}
