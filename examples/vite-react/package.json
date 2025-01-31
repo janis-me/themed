@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@komplett/themed": "workspace:*"
+    "@komplett/react-themed": "workspace:*",
+    "react": "catalog:react",
+    "react-dom": "catalog:react"
   },
   "devDependencies": {
+    "@types/react": "catalog:react",
+    "@types/react-dom": "catalog:react",
     "sass": "catalog:",
     "vite": "catalog:"
   }

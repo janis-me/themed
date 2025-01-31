@@ -1,0 +1,49 @@
+{
+  "name": "@komplett/react-themed",
+  "version": "0.0.1",
+  "description": "All you need for SCSS-based dynamic styling in react!",
+  "type": "module",
+  "private": false,
+  "keywords": [
+    "CSS",
+    "SCSS",
+    "Themes"
+  ],
+  "author": "Janis Jansen",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./dist/index.scss",
+    "./utils": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.ts"
+    },
+    "./themes/default": "./dist/themes/default.scss"
+  },
+  "scripts": {
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "pnpm install && pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:react",
+    "@types/react-dom": "catalog:react",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "catalog:",
+    "react": "catalog:react",
+    "react-dom": "catalog:react",
+    "vite": "catalog:",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-static-copy": "^2.2.0"
+  },
+  "dependencies": {
+    "@komplett/themed": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "catalog:react",
+    "react-dom": "catalog:react"
+  }
+}
