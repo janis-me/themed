@@ -29,6 +29,9 @@
     "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react build:watch",
     "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
     "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
-    "example:react": "pnpm --filter=./examples/vite-react dev"
+    "example:react": "pnpm --filter=./examples/vite-react dev",
+    "publish:all": "pnpm run publish:themed && publish:react",
+    "publish:themed": "pnpm publish packages/themed --access public",
+    "publish:react": "pnpm publish packages/react --access public"
   }
 }
