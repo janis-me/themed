@@ -25,12 +25,14 @@ export default defineConfig({
         items: [
           { text: "Global setup", link: "/guide/global-setup" },
           { text: "Defining themes", link: "/guide/defining-themes" },
-          { text: "How validation works", link: "/guide/how-validation-works" },
           { text: "Customization", link: "/guide/customization" },
           { text: "Utility functions", link: "/guide/utility-functions" },
           { text: "Use with React", link: "/guide/usage-with-react" },
-          { text: "Setup with vite", link: "/guide/setup-with-vite" },
         ],
+      },
+      {
+        text: "FAQ",
+        link: "/guide/faq",
       },
     ],
 
