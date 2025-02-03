@@ -1,0 +1,14 @@
+{
+  "name": "@komplett/docs",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "sass": "catalog:",
+    "typescript": "catalog:",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13"
+  }
+}
