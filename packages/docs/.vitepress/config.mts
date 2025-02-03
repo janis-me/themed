@@ -1,4 +1,8 @@
 import { defineConfig } from "vitepress";
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from "vitepress-plugin-group-icons";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -9,13 +13,14 @@ export default defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "Getting Started", link: "/guide/getting-started" },
-      { text: "Guide", link: "/guide/defining-themes" },
+      { text: "Guide", link: "/guide/global-setup" },
     ],
 
     sidebar: [
       {
         text: "Introduction",
         items: [
+          { text: "Why themed?", link: "/guide/why-themed" },
           { text: "Installation", link: "/guide/installation" },
           { text: "Getting started", link: "/guide/getting-started" },
         ],
@@ -39,5 +44,13 @@ export default defineConfig({
     socialLinks: [
       { icon: "github", link: "https://github.com/komplettio/themed" },
     ],
+  },
+  markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin);
+    },
+  },
+  vite: {
+    plugins: [groupIconVitePlugin()],
   },
 });
