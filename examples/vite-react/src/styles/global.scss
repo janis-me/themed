@@ -1,6 +1,6 @@
 @forward "@komplett/react-themed";
 
-@use "@komplett/react-themed" as *;
+@use "@komplett/react-themed" as themed;
 @use "./themes.scss";
 
 @use "sass:meta";
@@ -16,4 +16,4 @@
 $theme-map: meta.module-variables("themes");
 
 // Calling `themes` defines the theme-map.
-@include themes($theme-map);
+@include themed.themes($theme-map);

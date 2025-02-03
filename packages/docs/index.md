@@ -18,7 +18,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: Documentation
-      link: /guide/docs
+      link: /guide/global-setup
 
 features:
   - title: Type-Safe
@@ -26,12 +26,12 @@ features:
     details: Adds validation to your SCSS variables, preventing errors, half-defined themes and so on!
   - title: Tiny
     icon: 📦
-    details: "@komplett/themed has 0 dependencies, and at it's core is just ~100 lines of SCSS."
+    details: "0 dependencies and no extra CSS is needed. Only your theme is included in the build!"
   - title: Feature-rich
     icon: 🚀
     details: Supports every utility you might need for integrating themes into your app nicely.
   - title: React support
-    icon: <<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 30 20">
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 30 20">
       <title>React Logo</title>
       <circle cx="0" cy="0" r="2" fill="#61dafb"/>
       <g stroke="#61dafb" stroke-width="1" fill="none">
@@ -39,7 +39,7 @@ features:
       <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
       <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
       </g>
-      </svg>>
+      </svg>
     details: "With @komplett/react-themed, we offer first-class react support."
 ---
 

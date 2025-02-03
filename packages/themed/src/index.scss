@@ -6,12 +6,12 @@
 // An empty map that will be filled with the given themes, once the `@themes` mixin was called
 $themes-map: ();
 // List of all keys in the themes to check which keys exist.
-$theme-values: ();
+$theme-keys: ();
 // The string used to prefix all CSS variables
 $prefix: "themed";
 
 @function verify-themes($themes) {
-  @if not meta.type-of($themes) == "map" {
+  @if not meta.type-of($themes-map) == "map" {
     @error "The given themes variable is not a valid SCSS map.";
     @return false;
   }
@@ -24,10 +24,23 @@ $prefix: "themed";
   $first-theme-name: list.nth(map.keys($themes), 1);
   $first-theme: map.get($themes, $first-theme-name);
 
-  @each $theme-name, $theme-map in $themes {
-    @each $key, $value in $theme-map {
-      @if not map.has-key($first-theme, $key) {
-        @error "One or more themes do not define the value #{$key}, so you cannot use it in #{$theme-name}";
+  // Get all theme keys from the first theme as reference
+  $reference-keys: map.keys($first-theme);
+
+  // Check each theme against the reference keys
+  @each $theme-name, $theme-entry in $themes {
+    // Check if the current theme has all reference keys
+    @each $key in $reference-keys {
+      @if not map.has-key($theme-entry, $key) {
+        @error "Theme '#{$theme-name}' is missing the key '#{$key}'";
+        @return false;
+      }
+    }
+
+    // Check if the current theme has any extra keys not in the reference
+    @each $key in map.keys($theme-entry) {
+      @if not list.index($reference-keys, $key) {
+        @error "Theme '#{$theme-name}' has an extra key '#{$key}' not present in other themes";
         @return false;
       }
     }
@@ -53,7 +66,7 @@ $prefix: "themed";
   // Populate the global themes variable. This is later used just for validation etc.
   $themes-map: $themes !global;
   // Register valid keys. We checked that all maps have the same keys, so we just get the ones from the first theme.
-  $theme-values: map.keys(list.nth(map.values($themes-map), 1)) !global;
+  $theme-keys: map.keys(list.nth(map.values($themes-map), 1)) !global;
   // Prefix used for CSS variables
   $prefix: $prefix !global;
 
@@ -63,7 +76,7 @@ $prefix: "themed";
       @each $key, $val in $theme-map {
         @include make-css-variable($prefix, $key, $val);
 
-        @content ($prefix, $key, $val);
+        @content ($prefix, $key, $val, $theme-name);
       }
     }
   }
@@ -72,12 +85,90 @@ $prefix: "themed";
 // Returns a value from the current theme, checking for validity
 // You could also just use the `var(--themed-#{$name})` directly, but this function
 // provides a nice way to check for validity and provide a better error message
-@function themed($name) {
+@function themed($name, $verify: true) {
   @if meta.type-of($name) != "string" {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if list.index($theme-values, $name) == null {
+  } @else if $verify and list.index($theme-keys, $name) == null {
     @error "'#{$name}' is not defined in your themes.";
   }
 
   @return var(--#{$prefix}-#{$name});
+}
+
+// Return a themes variable without any type-checking or using CSS variables,
+// Useful for custom theming logic on a component level
+@function unthemed($theme, $name, $verify: true) {
+  @if meta.type-of($name) != "string" {
+    @error "'#{$name}' is not a string (should be quoted when passed into this function)";
+  } @else if $verify and list.index($theme-keys, $name) == null {
+    @error "'#{$name}' is not defined in your themes.";
+  }
+
+  $themes-entry: map.get($themes-map, $theme);
+  @return map.get($themes-entry, $name);
+}
+
+// ------------
+// Helper methods/mixins
+// ------------
+
+/**
+* A function that applies the given transformer function to each value of all themes.
+* This can be used to dynamically alter themes, adding more variables to them.
+*/
+@function modify-themes($themes, $transformers...) {
+  $result-map: $themes;
+
+  @each $theme-name, $theme-map in $themes {
+    $theme-result: $theme-map;
+
+    @each $key, $value in $theme-map {
+      @each $transformer in $transformers {
+        $result: meta.call($transformer, $key, $value, $theme-name);
+        $theme-result: map.merge($theme-result, $result);
+      }
+    }
+
+    $result-map: map.deep-merge($result-map, (#{$theme-name}: $theme-result));
+  }
+
+  @return $result-map;
+}
+
+// ---- alpha-modifier
+
+@function alpha-modifier($key, $value, $theme-name) {
+  $results: ();
+
+  @if meta.type-of($value) == "color" {
+    @each $alpha in $alpha-steps {
+      $new-value: color.change($value, $alpha: calc($alpha / 100));
+      $results: map.merge(
+        $results,
+        (
+          "#{$key}#{$alpha-prefix}#{$alpha}": $new-value,
+        )
+      );
+    }
+  }
+
+  @return $results;
+}
+
+// Ugly way of returning a "dynamic" function:
+// Just use SCSS globals...
+$alpha-steps: (80, 60, 40, 20);
+$alpha-prefix: "--a";
+/**
+* The alpha modifier adds each theme value with a given alpha value,
+* as defined by "steps". By default, using alpha values of 80%, 60%, 40% and 20%
+*/
+@function alpha($steps: null, $prefix: null) {
+  @if $steps {
+    $alpha-steps: $steps !global;
+  } @else if $prefix {
+    $alpha-prefix: $prefix !global;
+  }
+
+  @return meta.get-function(alpha-modifier);
 }

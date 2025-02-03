@@ -28,6 +28,7 @@
     "build": "pnpm --filter=./packages/themed --filter=./packages/react build",
     "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react build:watch",
     "build:docs": "pnpm  --filter=./packages/docs build",
+    "dev:docs": "pnpm  --filter=./packages/docs dev",
     "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
     "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
     "example:react": "pnpm --filter=./examples/vite-react dev",

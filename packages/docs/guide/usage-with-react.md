@@ -64,12 +64,15 @@ It also has the methods `setTheme` and `getTheme`.
 
 ## Outside of react
 
-Outside of react, you can import the same functions as exported in the `@komplett/themed` package, just prefixed with `imperatively`. For example:
+Outside of react, you can import the same functions as exported in the `@komplett/themed` package, for example:
 
 ```ts
-import { setThemeImperatively } from "@komplett/react-themed/utils";
+import { setTheme as setThemeImperatively } from "@komplett/react-themed/utils";
 
 function someAction() {
   setThemeImperatively("light");
 }
 ```
+
+This is not recommended though, because it will only be reflected in react if you didn't disable `watchThemeAttribute` on the provider.
+In general, you probably **always** want to use the `useTheme` hook

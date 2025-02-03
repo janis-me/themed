@@ -7,10 +7,9 @@ import {
 } from "react";
 import {
   setTheme,
-  THEME_ATTRIBUTE_NAME,
   ThemeOption,
-  watchPreferredColorScheme,
-  watchThemeAttribute,
+  watchPreferredColorScheme as _watchPreferredColorScheme,
+  watchThemeAttribute as _watchThemeAttribute,
 } from "@komplett/themed/utils";
 
 type Action = {
@@ -22,6 +21,10 @@ type Dispatch = (action: Action) => void;
 type ThemeProviderProps = {
   children: React.ReactNode;
   defaultTheme?: ThemeOption;
+  // If false, will not watch updates to window.matchMedia, so listening to the preferred color scheme changing
+  watchPreferredColorScheme?: boolean;
+  // If false, will not listen to the documentElement 'data-theme' attribute changing.
+  watchThemeAttribute?: boolean;
 };
 
 interface State {
@@ -49,7 +52,12 @@ function themeReducer(state: State, action: Action): State {
   }
 }
 
-function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
+function ThemeProvider({
+  children,
+  defaultTheme,
+  watchPreferredColorScheme = true,
+  watchThemeAttribute = true,
+}: ThemeProviderProps) {
   const [state, dispatch] = useReducer(themeReducer, DEFAULT_STATE);
 
   // Sets the initial theme to defaultTheme, if given, otherwise to 'light'
@@ -62,26 +70,30 @@ function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
 
   // Watches the preferred colorScheme, updating the theme when changed,
   useEffect(() => {
-    const unregisterMediaObserver = watchPreferredColorScheme(setTheme);
+    if (watchPreferredColorScheme) {
+      const unregisterMediaObserver = _watchPreferredColorScheme(setTheme);
 
-    return () => {
-      unregisterMediaObserver();
-    };
+      return () => {
+        unregisterMediaObserver();
+      };
+    }
   }, []);
 
   // Watches the documentElement for changes in the theme attribute
   // and updates the state on changes.
   useEffect(() => {
-    const unregisterDOMObserver = watchThemeAttribute((theme) => {
-      console.log("attr changed", theme);
-      if (theme) {
-        dispatch({ type: "setActiveTheme", data: { theme } });
-      }
-    });
+    if (watchThemeAttribute) {
+      const unregisterDOMObserver = _watchThemeAttribute((theme) => {
+        console.log("attr changed", theme);
+        if (theme) {
+          dispatch({ type: "setActiveTheme", data: { theme } });
+        }
+      });
 
-    return () => {
-      unregisterDOMObserver();
-    };
+      return () => {
+        unregisterDOMObserver();
+      };
+    }
   }, [dispatch]);
 
   // Populates state changes to the DOM to actually change the theme.

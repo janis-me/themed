@@ -78,7 +78,7 @@ Alternatively, use `npm install -D @komplett/themed` and follow the example abov
 
 ### React
 
-For react, install `@komplett/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it, or import imperative
+For react, install `@komplett/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it. All utility methods are also exported from `@komplett/react-themed/utils`.
 
 ---
 

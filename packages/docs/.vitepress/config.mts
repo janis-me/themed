@@ -30,6 +30,11 @@ export default defineConfig({
         items: [
           { text: "Global setup", link: "/guide/global-setup" },
           { text: "Defining themes", link: "/guide/defining-themes" },
+          { text: "Modifiers", link: "/guide/modifiers" },
+          {
+            text: "Writing custom modifiers",
+            link: "/guide/writing-custom-modifiers",
+          },
           { text: "Customization", link: "/guide/customization" },
           { text: "Utility functions", link: "/guide/utility-functions" },
           { text: "Use with React", link: "/guide/usage-with-react" },

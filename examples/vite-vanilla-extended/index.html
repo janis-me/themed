@@ -8,13 +8,19 @@
   </head>
   <body>
     <div id="app">
-      <button id="toggle-theme-button">toggle theme</button>
-      <h1>Welcome to <b>@komplett/themed</b></h1>
-      <p>
-        This example shows you you can style things like
-        <button id="get-theme-button">Buttons</button> with
-        <b>@komplett/themed</b> in pure SCSS
-      </p>
+      <header>
+        <b>@komplett/themed example</b>
+        <button id="toggle-theme-button">toggle theme</button>
+      </header>
+      <main>
+        <h1>Welcome to <b>@komplett/themed</b></h1>
+        <p>
+          This example shows you you can style things like
+          <button id="get-theme-button">Buttons</button> with
+          <b>@komplett/themed</b> in pure SCSS
+        </p>
+        <p>It also listens to the preferred color scheme of your OS, and set's the theme to your preferred color scheme by default.</p>
+      </main>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
