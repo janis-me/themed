@@ -1,6 +1,6 @@
 {
   "name": "@komplett/react-themed",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "All you need for SCSS-based dynamic styling in react!",
   "type": "module",
   "private": false,

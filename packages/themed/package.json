@@ -1,6 +1,6 @@
 {
   "name": "@komplett/themed",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "All you need for SCSS-based dynamic styling!",
   "type": "module",
   "private": false,
