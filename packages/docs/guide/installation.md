@@ -39,4 +39,4 @@ We recommend to install it with a package manager, as this is the only way you w
 
 ## Advanced setup
 
-Depending on your toolchain, you might want to do some more steps to make this work as nicely as possible. For example with `vite`, you can make all `themed` functions available in every file. See [Setup with vite](/guide/setup-with-vite) for more information.
+Depending on your toolchain, you might want to do some more steps to make this work as nicely as possible. For example with `vite`, you can make all `themed` functions available in every file. See [Global setup](/guide/global-setup) for more information.
