@@ -25,8 +25,8 @@
   "packageManager": "pnpm@10.0.0",
   "type": "module",
   "scripts": {
-    "build": "pnpm --filter=./packages/themed --filter=./packages/react build",
-    "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react build:watch",
+    "build": "pnpm --filter=./packages/themed --filter=./packages/react-themed build",
+    "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react-themed build:watch",
     "build:docs": "pnpm  --filter=./packages/docs build",
     "build:all": "pnpm  --parallel --filter=* build",
     "dev:docs": "pnpm  --filter=./packages/docs dev",
@@ -34,8 +34,8 @@
     "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
     "example:react": "pnpm --filter=./examples/vite-react dev",
     "format:all": "pnpm --parallel --filter=* format",
-    "publish:all": "pnpm run publish:themed && publish:react",
+    "publish:all": "pnpm run publish:themed && publish:react-themed",
     "publish:themed": "pnpm publish packages/themed --access public",
-    "publish:react": "pnpm publish packages/react --access public"
+    "publish:react-themed": "pnpm publish packages/react-themed --access public"
   }
 }
