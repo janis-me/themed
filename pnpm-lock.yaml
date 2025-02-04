@@ -40,7 +40,7 @@ importers:
     dependencies:
       '@komplett/react-themed':
         specifier: workspace:*
-        version: link:../../packages/react
+        version: link:../../packages/react-themed
       react:
         specifier: catalog:react
         version: 19.0.0
@@ -111,7 +111,7 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
 
-  packages/react:
+  packages/react-themed:
     dependencies:
       '@komplett/themed':
         specifier: workspace:*
