@@ -1,10 +1,23 @@
-@import "./button.scss";
-@import "./header.scss";
+@use 'sass:meta';
+@use 'sass:color';
+
+@import './button.scss';
+@import './header.scss';
+
+// This actually applies the base theme to the documentElement.
+// Everything after the `using` keyword is used to dynamically generate more CSS variables.
+// In this example, we generate each variable of the dark theme with a lighter value.
+// NOTE: Because these CSS variables are not included in the theme map, they can also not be type-checked.
+@include apply($theme-map) using ($prefix, $key, $value, $theme) {
+  @if $theme == 'dark' and meta.type-of($value) == 'color' {
+    @include make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
+  }
+}
 
 html,
 body {
-  color: themed("text");
-  background-color: themed("background");
+  color: themed('text');
+  background-color: themed('background');
   margin: 0;
   width: 100vw;
   height: 100vh;

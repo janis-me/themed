@@ -39,6 +39,10 @@ $theme-map: meta.module-variables('themes');
 
 :::
 
+::: warning
+make sure to also call `apply` in the main style file. `themes` is responsible for the type checking, but `apply` does the actual styling.
+:::
+
 Now, you can `@use` the global.scss file and use all the `@komplett/themed` functions without issues.
 
 While the initial setup with this is a bit more complex, this has many advantages. If you don't want to deal with this,

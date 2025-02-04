@@ -1,9 +1,9 @@
-@forward "@komplett/react-themed";
+@forward '@komplett/react-themed';
 
-@use "@komplett/react-themed" as themed;
-@use "./themes.scss";
+@use '@komplett/react-themed' as themed;
+@use './themes.scss';
 
-@use "sass:meta";
+@use 'sass:meta';
 
 // Usually, you would just @use the library like
 // @use "@komplett/themed" as *;
@@ -13,7 +13,7 @@
 // This get's all themes we defined in ./themes.scss as a map.
 // You could also just define the themes inside this file as a map!
 // Then, you also don't have to import the `sass:meta` module.
-$theme-map: meta.module-variables("themes");
+$theme-map: meta.module-variables('themes');
 
 // Calling `themes` defines the theme-map.
 @include themed.themes($theme-map);

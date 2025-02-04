@@ -24,7 +24,7 @@ Using these variables, you can 'derive' new ones!
 ```scss
 $alpha-modifiers: 90, 80, 70, 60, 50, 40, 30, 20, 10;
 
-@include themes($theme-map) using ($prefix, $key, $value) {
+@include apply($theme-map) using ($prefix, $key, $value) {
   @each $alpha in $alpha-modifiers {
     // make-css-variable is a utility mixin provided by themed
     @include make-css-variable($prefix, '#{$key}--#{$alpha}', #{color.change($value, $alpha: calc($alpha / 100))});

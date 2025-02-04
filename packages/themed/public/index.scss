@@ -57,9 +57,9 @@ $prefix: 'themed';
 // creates CSS variables for each theme.
 //
 // the `$prefix` is used for the CSS variable, for example
-@mixin themes($themes, $prefix: 'themed') {
+@function themes($themes, $prefix: 'themed') {
   @if not verify-themes($themes) {
-    @error "Unable to register themes, see error above.";
+    @error "Unable to check themes, see error above.";
   }
 
   // Populate the global themes variable. This is later used just for validation etc.
@@ -68,7 +68,9 @@ $prefix: 'themed';
   $theme-keys: map.keys(list.nth(map.values($themes-map), 1)) !global;
   // Prefix used for CSS variables
   $prefix: $prefix !global;
+}
 
+@mixin apply($themes, $prefix: 'themed') {
   @each $theme-name, $theme-map in $themes {
     html[data-theme='#{$theme-name}'] {
       // Register the default variables for each theme

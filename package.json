@@ -34,7 +34,7 @@
     "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
     "example:react": "pnpm --filter=./examples/vite-react dev",
     "format:all": "pnpm --parallel --filter=* format",
-    "publish:all": "pnpm run publish:themed && publish:react-themed",
+    "publish:all": "pnpm run publish:themed && pnpm run publish:react-themed",
     "publish:themed": "pnpm publish packages/themed --access public",
     "publish:react-themed": "pnpm publish packages/react-themed --access public"
   }
