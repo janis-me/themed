@@ -1,19 +1,13 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
+import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 import {
   setTheme,
   ThemeOption,
   watchPreferredColorScheme as _watchPreferredColorScheme,
   watchThemeAttribute as _watchThemeAttribute,
-} from "@komplett/themed/utils";
+} from '@komplett/themed/utils';
 
 type Action = {
-  type: "setActiveTheme";
+  type: 'setActiveTheme';
   data: { theme: ThemeOption };
 };
 
@@ -35,19 +29,15 @@ const DEFAULT_STATE = {
   activeTheme: undefined,
 } satisfies State;
 
-const ThemeStateContext = createContext<
-  { state: State; dispatch: Dispatch } | undefined
->(undefined);
+const ThemeStateContext = createContext<{ state: State; dispatch: Dispatch } | undefined>(undefined);
 
 function themeReducer(state: State, action: Action): State {
   switch (action.type) {
-    case "setActiveTheme": {
+    case 'setActiveTheme': {
       return { ...state, activeTheme: action.data.theme };
     }
     default: {
-      throw new Error(
-        `Unhandled action type: ${(action as { type: unknown }).type}`
-      );
+      throw new Error(`Unhandled action type: ${(action as { type: unknown }).type}`);
     }
   }
 }
@@ -63,8 +53,8 @@ function ThemeProvider({
   // Sets the initial theme to defaultTheme, if given, otherwise to 'light'
   useEffect(() => {
     dispatch({
-      type: "setActiveTheme",
-      data: { theme: defaultTheme ?? "light" },
+      type: 'setActiveTheme',
+      data: { theme: defaultTheme ?? 'light' },
     });
   }, [defaultTheme]);
 
@@ -83,10 +73,10 @@ function ThemeProvider({
   // and updates the state on changes.
   useEffect(() => {
     if (watchThemeAttribute) {
-      const unregisterDOMObserver = _watchThemeAttribute((theme) => {
-        console.log("attr changed", theme);
+      const unregisterDOMObserver = _watchThemeAttribute(theme => {
+        console.log('attr changed', theme);
         if (theme) {
-          dispatch({ type: "setActiveTheme", data: { theme } });
+          dispatch({ type: 'setActiveTheme', data: { theme } });
         }
       });
 
@@ -104,30 +94,26 @@ function ThemeProvider({
   }, [state.activeTheme]);
 
   const value = { state, dispatch };
-  return (
-    <ThemeStateContext.Provider value={value}>
-      {children}
-    </ThemeStateContext.Provider>
-  );
+  return <ThemeStateContext.Provider value={value}>{children}</ThemeStateContext.Provider>;
 }
 
 function useTheme() {
   const context = useContext(ThemeStateContext);
   if (context === undefined) {
-    throw new Error("useCount must be used within a CountProvider");
+    throw new Error('useCount must be used within a CountProvider');
   }
 
   return useMemo(
     () => ({
       theme: context.state.activeTheme,
       setTheme: (theme: ThemeOption) => {
-        context.dispatch({ type: "setActiveTheme", data: { theme } });
+        context.dispatch({ type: 'setActiveTheme', data: { theme } });
       },
       toggleTheme: () => {
         context.dispatch({
-          type: "setActiveTheme",
+          type: 'setActiveTheme',
           data: {
-            theme: context.state.activeTheme === "light" ? "dark" : "light",
+            theme: context.state.activeTheme === 'light' ? 'dark' : 'light',
           },
         });
       },

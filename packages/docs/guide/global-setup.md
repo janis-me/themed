@@ -24,17 +24,17 @@ This file would define the theme and `@forward` all functions that `@komplett/th
 ::: code-group
 
 ```scss [global.scss]
-@forward "@komplett/themed";
+@forward '@komplett/themed';
 
-@use "@komplett/themed" as *;
-@use "sass:meta";
-@use "./themes.scss";
+@use '@komplett/themed' as *;
+@use 'sass:meta';
+@use './themes.scss';
 
 // This gets all themes defined in ./themes.scss as a map.
 // You can also just define a map here, like described in `getting started`.
-$theme-map: meta.module-variables("themes");
+$theme-map: meta.module-variables('themes');
 
-@include themes($theme-map)
+@include themes($theme-map);
 ```
 
 :::
@@ -49,7 +49,6 @@ Because the `themed` function uses global SCSS variables to validate it's input,
 This means that if you would just call the `themed` variable outside of the scope, it would tell you the variable wasn't part of your themes.
 :::
 
-
 ## Dynamically import themed
 
 Secondly, if you use tools like `vite` or a framework like `next.js`, you can automatically import `@komplett/themed` or the `global.scss` file into every scss file of your app.
@@ -57,9 +56,8 @@ For vite, it would look like
 
 ::: code-group
 
-
 ```ts [vite.config.ts] {9}
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   // .. The usual config ..

@@ -15,16 +15,17 @@
   },
   "exports": {
     ".": "./dist/index.scss",
+    "./modifiers": "./dist/modifiers.scss",
     "./utils": {
       "import": "./dist/index.js",
       "types": "./dist/index.ts"
-    },
-    "./themes/default": "./dist/themes/default.scss"
+    }
   },
   "scripts": {
     "build": "vite build",
     "build:watch": "vite build --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier . --write",
     "prepublishOnly": "pnpm install && pnpm build"
   },
   "devDependencies": {
@@ -32,12 +33,12 @@
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
     "@vitejs/plugin-react": "^4.3.4",
-    "typescript": "catalog:",
+    "prettier": "^3.4.2",
     "react": "catalog:react",
     "react-dom": "catalog:react",
+    "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "^4.5.0",
-    "vite-plugin-static-copy": "^2.2.0"
+    "vite-plugin-dts": "^4.5.0"
   },
   "dependencies": {
     "@komplett/themed": "workspace:*"

@@ -1,6 +1,7 @@
 @forward "@komplett/themed";
 
 @use "@komplett/themed";
+@use "@komplett/themed/modifiers";
 @use "./themes.scss";
 
 @use "sass:meta";
@@ -17,7 +18,13 @@
 $raw-theme-map: meta.module-variables("themes");
 
 // modify-themes is used to apply any number of modifiers onto the themes.
-$theme-map: themed.modify-themes($raw-theme-map, themed.alpha());
+$theme-map: themed.modify-themes(
+  $raw-theme-map,
+  modifiers.fill(),
+  modifiers.colorspace(),
+  modifiers.alpha(),
+  modifiers.lightness()
+);
 
 // Calling `themes` defines the theme-map.
 // Everything after the `using` keyword is used to dynamically generate more CSS variables.

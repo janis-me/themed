@@ -1,54 +1,46 @@
-import { defineConfig } from "vitepress";
-import {
-  groupIconMdPlugin,
-  groupIconVitePlugin,
-} from "vitepress-plugin-group-icons";
+import { defineConfig } from 'vitepress';
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Themed",
-  description: "SCSS themes made easy",
+  title: 'Themed',
+  description: 'SCSS themes made easy',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: "Home", link: "/" },
-      { text: "Getting Started", link: "/guide/getting-started" },
-      { text: "Guide", link: "/guide/global-setup" },
+      { text: 'Home', link: '/' },
+      { text: 'Getting Started', link: '/guide/getting-started' },
+      { text: 'Guide', link: '/guide/global-setup' },
+      { text: 'Why themed?', link: '/guide/why-themed' },
     ],
 
     sidebar: [
       {
-        text: "Introduction",
+        text: 'Introduction',
         items: [
-          { text: "Why themed?", link: "/guide/why-themed" },
-          { text: "Installation", link: "/guide/installation" },
-          { text: "Getting started", link: "/guide/getting-started" },
+          { text: 'Why themed?', link: '/guide/why-themed' },
+          { text: 'Installation', link: '/guide/installation' },
+          { text: 'Getting started', link: '/guide/getting-started' },
         ],
       },
       {
-        text: "Guide",
+        text: 'Guide',
         items: [
-          { text: "Global setup", link: "/guide/global-setup" },
-          { text: "Defining themes", link: "/guide/defining-themes" },
-          { text: "Modifiers", link: "/guide/modifiers" },
-          {
-            text: "Writing custom modifiers",
-            link: "/guide/writing-custom-modifiers",
-          },
-          { text: "Customization", link: "/guide/customization" },
-          { text: "Utility functions", link: "/guide/utility-functions" },
-          { text: "Use with React", link: "/guide/usage-with-react" },
+          { text: 'Global setup', link: '/guide/global-setup' },
+          { text: 'Defining themes', link: '/guide/defining-themes' },
+          { text: 'Modifiers', link: '/guide/modifiers' },
+          { text: 'Customization', link: '/guide/customization' },
+          { text: 'Utility functions', link: '/guide/utility-functions' },
+          { text: 'Use with React', link: '/guide/usage-with-react' },
         ],
       },
       {
-        text: "FAQ",
-        link: "/guide/faq",
+        text: 'FAQ',
+        link: '/guide/faq',
       },
     ],
 
-    socialLinks: [
-      { icon: "github", link: "https://github.com/komplettio/themed" },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/komplettio/themed' }],
   },
   markdown: {
     config(md) {

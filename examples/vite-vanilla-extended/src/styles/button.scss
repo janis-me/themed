@@ -2,15 +2,14 @@
 
 button {
   color: themed("text");
-  background-color: themed("grey-6");
+  background-color: themed("grey-3");
   border: none;
   border-radius: themed("border-radius");
-  padding: calc(unthemed("light", "default-padding") / 2)
-    themed("default-padding");
+  padding: calc(unthemed("default-padding") / 2) themed("default-padding");
 
   cursor: pointer;
 
   &:hover {
-    background-color: themed("grey-7");
+    background-color: themed("grey-3--l20");
   }
 }

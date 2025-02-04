@@ -7,9 +7,9 @@ You can customize `themed` in a couple of ways:
 By default, the generated CSS variables will use the `themed` prefix, for example `--themed-text`. You can set a custom prefix using the `themes` function:
 
 ```scss
-@use "@komplett/themed" as *;
+@use '@komplett/themed' as *;
 
-@include themes($themes, $prefix: "my-custom-var");
+@include themes($themes, $prefix: 'my-custom-var');
 ```
 
 This would generate `--my-custom-var-text`. The `themed` function will automatically use the selected prefix, [provided it's in the same lexical scope! ](/guide/global-setup)
@@ -27,11 +27,7 @@ $alpha-modifiers: 90, 80, 70, 60, 50, 40, 30, 20, 10;
 @include themes($theme-map) using ($prefix, $key, $value) {
   @each $alpha in $alpha-modifiers {
     // make-css-variable is a utility mixin provided by themed
-    @include make-css-variable(
-      $prefix,
-      "#{$key}--#{$alpha}",
-      #{color.change($value, $alpha: calc($alpha / 100))}
-    );
+    @include make-css-variable($prefix, '#{$key}--#{$alpha}', #{color.change($value, $alpha: calc($alpha / 100))});
   }
 }
 ```

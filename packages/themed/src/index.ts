@@ -1,6 +1,4 @@
-import "./index.scss";
-
-export const THEME_ATTRIBUTE_NAME = "data-theme" as const;
+export const THEME_ATTRIBUTE_NAME = 'data-theme' as const;
 
 /**
  * All values the theme string can have.
@@ -26,7 +24,7 @@ export function setTheme(theme: ThemeOption) {
  */
 export function toggleTheme(): ThemeOption {
   const current = getTheme();
-  const next = current === "light" ? "dark" : "light";
+  const next = current === 'light' ? 'dark' : 'light';
 
   setTheme(next);
 
@@ -40,10 +38,10 @@ export function toggleTheme(): ThemeOption {
  */
 export function getPreferredColorScheme(): ThemeOption | undefined {
   if (window.matchMedia) {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
     } else {
-      return "light";
+      return 'light';
     }
   }
 
@@ -54,18 +52,16 @@ export function getPreferredColorScheme(): ThemeOption | undefined {
  * Uses window.matchMedia to watch for changes in prefers-color-scheme and set's the correct theme on change.
  * This only works with two themes, 'light' and 'dark'.
  */
-export function watchPreferredColorScheme(
-  listener: (theme: ThemeOption) => void
-) {
-  const queryString = "(prefers-color-scheme: light)";
+export function watchPreferredColorScheme(listener: (theme: ThemeOption) => void) {
+  const queryString = '(prefers-color-scheme: light)';
   const eventHandler = (event: MediaQueryListEvent) => {
-    listener(event.matches ? "light" : "dark");
+    listener(event.matches ? 'light' : 'dark');
   };
 
-  window.matchMedia(queryString).addEventListener("change", eventHandler);
+  window.matchMedia(queryString).addEventListener('change', eventHandler);
 
   return () => {
-    window.matchMedia(queryString).removeEventListener("change", eventHandler);
+    window.matchMedia(queryString).removeEventListener('change', eventHandler);
   };
 }
 
@@ -76,12 +72,10 @@ export function watchPreferredColorScheme(
  * @param listener Function to be called with the new theme
  * @returns An unregister function that will disconnect the `MutationObserver`
  */
-export function watchThemeAttribute(
-  listener: (theme: ThemeOption | null) => void
-) {
+export function watchThemeAttribute(listener: (theme: ThemeOption | null) => void) {
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
-      if (mutation.type === "attributes") {
+      if (mutation.type === 'attributes') {
         const newTheme = getTheme();
         listener(newTheme);
       }

@@ -3,9 +3,11 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "format": "prettier . --write"
   },
   "devDependencies": {
+    "prettier": "^3.4.2",
     "sass": "catalog:",
     "typescript": "catalog:",
     "vitepress": "^1.6.3",
