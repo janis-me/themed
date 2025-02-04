@@ -95,17 +95,9 @@
 
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #90F1EF 30%,
-    #7BF1A8
-  );
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #90f1ef 30%, #7bf1a8);
 
-  --vp-home-hero-image-background-image: linear-gradient(
-    -45deg,
-    #90F1EF 50%,
-    #7BF1A8 50%
-  );
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #90f1ef 50%, #7bf1a8 50%);
   --vp-home-hero-image-filter: blur(44px);
 }
 
@@ -139,4 +131,3 @@
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-grey-3) !important;
 }
-

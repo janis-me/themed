@@ -10,15 +10,15 @@ Firstly, you should add the `ThemeProvider` to the top level of your app. This i
 This does not mean that you cannot use the CSS variables in components outside of the Provider. Those are still defined globally (on an HTML level).
 
 ```tsx
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { ThemeProvider } from "@komplett/react-themed/utils";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ThemeProvider } from '@komplett/react-themed/utils';
 
-import App from "./App.tsx";
+import App from './App.tsx';
 
-import "./styles/main.scss";
+import './styles/main.scss';
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <App />
@@ -39,7 +39,7 @@ The `ThemeProvider` does a couple of things for you:
 ...let's you react to theme changes, but also set/get the theme in react.
 
 ```tsx
-import { useTheme } from "@komplett/react-themed/utils";
+import { useTheme } from '@komplett/react-themed/utils';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -50,9 +50,7 @@ function App() {
 
   return (
     <>
-      <button onClick={handleToggleTheme}>
-        toggle theme. currently: {theme}
-      </button>
+      <button onClick={handleToggleTheme}>toggle theme. currently: {theme}</button>
     </>
   );
 }
@@ -64,12 +62,15 @@ It also has the methods `setTheme` and `getTheme`.
 
 ## Outside of react
 
-Outside of react, you can import the same functions as exported in the `@komplett/themed` package, just prefixed with `imperatively`. For example:
+Outside of react, you can import the same functions as exported in the `@komplett/themed` package, for example:
 
 ```ts
-import { setThemeImperatively } from "@komplett/react-themed/utils";
+import { setTheme as setThemeImperatively } from '@komplett/react-themed/utils';
 
 function someAction() {
-  setThemeImperatively("light");
+  setThemeImperatively('light');
 }
 ```
+
+This is not recommended though, because it will only be reflected in react if you didn't disable `watchThemeAttribute` on the provider.
+In general, you probably **always** want to use the `useTheme` hook

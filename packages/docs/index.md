@@ -6,7 +6,7 @@ title: Themed
 titleTemplate: SCSS-native themes made simple
 
 hero:
-  name: "Themed"
+  name: 'Themed'
   text: SCSS-native themes made simple
   tagline: Add dynamic, SCSS-based themes to any website/app without any struggle.
   image:
@@ -18,7 +18,10 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: Documentation
-      link: /guide/docs
+      link: /guide/global-setup
+    - theme: alt
+      text: Why themed?
+      link: /guide/why-themed
 
 features:
   - title: Type-Safe
@@ -26,12 +29,12 @@ features:
     details: Adds validation to your SCSS variables, preventing errors, half-defined themes and so on!
   - title: Tiny
     icon: 📦
-    details: "@komplett/themed has 0 dependencies, and at it's core is just ~100 lines of SCSS."
+    details: '0 dependencies and no extra CSS is needed. Only your theme is included in the build!'
   - title: Feature-rich
     icon: 🚀
     details: Supports every utility you might need for integrating themes into your app nicely.
   - title: React support
-    icon: <<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 30 20">
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -10 30 20">
       <title>React Logo</title>
       <circle cx="0" cy="0" r="2" fill="#61dafb"/>
       <g stroke="#61dafb" stroke-width="1" fill="none">
@@ -39,8 +42,8 @@ features:
       <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
       <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
       </g>
-      </svg>>
-    details: "With @komplett/react-themed, we offer first-class react support."
+      </svg>
+    details: 'With @komplett/react-themed, we offer first-class react support.'
 ---
 
 <script setup>
@@ -50,6 +53,7 @@ features:
 <br />
 
 ---
+
 <br />
 
 # SCSS theming like it should be done!
@@ -93,7 +97,7 @@ $ bun add -D @komplett/themed
 ::: code-group
 
 ```scss [style.scss] {1}
-@use "@komplett/themed" as *;
+@use '@komplett/themed' as *;
 ```
 
 :::
@@ -103,22 +107,22 @@ $ bun add -D @komplett/themed
 ::: code-group
 
 ```scss [style.scss] {3-20}
-@use "@komplett/themed" as *;
+@use '@komplett/themed' as *;
 
 $themes: (
-  "light": (
-    "text": #212529,
-    "background": #fafafa,
-    "grey-1": #343a40,
-    "grey-2": #495057,
-    "grey-3": #6c757d,
+  'light': (
+    'text': #212529,
+    'background': #fafafa,
+    'grey-1': #343a40,
+    'grey-2': #495057,
+    'grey-3': #6c757d,
   ),
-  "dark": (
-    "text": #fafafa,
-    "background": #212529,
-    "grey-1": #f8f9fa,
-    "grey-2": #e9ecef,
-    "grey-3": #dee2e6,
+  'dark': (
+    'text': #fafafa,
+    'background': #212529,
+    'grey-1': #f8f9fa,
+    'grey-2': #e9ecef,
+    'grey-3': #dee2e6,
   ),
 );
 
@@ -134,8 +138,8 @@ $themes: (
 ```scss [style.scss] {23-27}
 html,
 body {
-  color: themed("text");
-  background-color: themed("background");
+  color: themed('text');
+  background-color: themed('background');
 }
 ```
 

@@ -1,38 +1,54 @@
 {
   "name": "@komplett/themed",
-  "version": "0.1.0",
-  "description": "All you need for SCSS-based dynamic styling!",
-  "type": "module",
-  "private": false,
+  "version": "0.1.1",
+  "description": "SCSS-native themes made simple",
+  "directories": {
+    "example": "examples"
+  },
+  "bugs": {
+    "url": "https://github.com/komplettio/themed/issues"
+  },
+  "author": "Janis Jansen",
+  "homepage": "https://github.com/komplettio/themed#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/komplettio/themed.git"
+  },
+  "license": "MIT",
   "keywords": [
     "CSS",
     "SCSS",
-    "Themes"
+    "Theme"
   ],
-  "author": "Janis Jansen",
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
   "exports": {
     ".": "./dist/index.scss",
+    "./modifiers": "./dist/modifiers.scss",
     "./utils": {
       "import": "./dist/index.js",
       "types": "./dist/index.ts"
-    },
-    "./themes/default": "./dist/themes/default.scss"
+    }
   },
   "scripts": {
     "build": "vite build",
     "build:watch": "vite build --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier . --write",
     "prepublishOnly": "pnpm install && pnpm build"
   },
   "devDependencies": {
     "@types/node": "catalog:",
+    "prettier": "^3.4.2",
     "sass": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "^4.5.0",
-    "vite-plugin-static-copy": "^2.2.0"
+    "vite-plugin-dts": "^4.5.0"
   }
 }

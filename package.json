@@ -1,7 +1,6 @@
 {
   "name": "@komplett/themed-monorepo",
-  "description": "All you need for SCSS-based dynamic styling!",
-  "type": "module",
+  "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"
   },
@@ -24,13 +23,17 @@
     "node": ">=22.11.0"
   },
   "packageManager": "pnpm@10.0.0",
+  "type": "module",
   "scripts": {
     "build": "pnpm --filter=./packages/themed --filter=./packages/react build",
     "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react build:watch",
     "build:docs": "pnpm  --filter=./packages/docs build",
+    "build:all": "pnpm  --parallel --filter=* build",
+    "dev:docs": "pnpm  --filter=./packages/docs dev",
     "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
     "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
     "example:react": "pnpm --filter=./examples/vite-react dev",
+    "format:all": "pnpm --parallel --filter=* format",
     "publish:all": "pnpm run publish:themed && publish:react",
     "publish:themed": "pnpm publish packages/themed --access public",
     "publish:react": "pnpm publish packages/react --access public"

@@ -1,5 +1,5 @@
 import {
-  toggleThemeImperatively,
+  toggleTheme as toggleThemeImperatively,
   useTheme,
 } from "@komplett/react-themed/utils";
 import Button from "./components/Button";

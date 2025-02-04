@@ -16,7 +16,7 @@ Assumes the only themes are `light` and `dark`, and toggles between them, like
 
 ```ts
 const current = getTheme();
-const next = current === "light" ? "dark" : "light";
+const next = current === 'light' ? 'dark' : 'light';
 
 setTheme(next);
 
@@ -34,7 +34,7 @@ Uses `window.matchMedia` to get the users preferred color scheme (That they set,
 Registers the given `listener` to be called whenever the preferred colorScheme changes. Using this, you can automatically set the data-theme attribute to the new theme.
 
 ```ts
-import { watchPreferredColorScheme, setTheme } from "@komplett/themed/utils";
+import { watchPreferredColorScheme, setTheme } from '@komplett/themed/utils';
 
 // Watches the color scheme and calls setTheme with the new preference.
 watchPreferredColorScheme(setTheme);
