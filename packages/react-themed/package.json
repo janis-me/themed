@@ -1,6 +1,6 @@
 {
   "name": "@komplett/react-themed",
-  "version": "0.1.3-alpha.0",
+  "version": "0.1.3-alpha.1",
   "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"
