@@ -1,6 +1,6 @@
 {
   "name": "@komplett/react-themed",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"
@@ -24,15 +24,19 @@
     "node": ">=22.11.0"
   },
   "packageManager": "pnpm@10.0.0",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": "./dist/index.scss",
     "./modifiers": "./dist/modifiers.scss",
     "./utils": {
       "import": "./dist/index.js",
-      "types": "./dist/index.ts"
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
