@@ -57,7 +57,7 @@ $prefix: 'themed';
 // creates CSS variables for each theme.
 //
 // the `$prefix` is used for the CSS variable, for example
-@function themes($themes, $prefix: 'themed') {
+@mixin themes($themes, $prefix: 'themed') {
   @if not verify-themes($themes) {
     @error "Unable to check themes, see error above.";
   }
@@ -71,6 +71,8 @@ $prefix: 'themed';
 }
 
 @mixin apply($themes, $prefix: 'themed') {
+  @include themes($themes, $prefix);
+
   @each $theme-name, $theme-map in $themes {
     html[data-theme='#{$theme-name}'] {
       // Register the default variables for each theme
