@@ -34,13 +34,16 @@ This file would define the theme and `@forward` all functions that `@komplett/th
 // You can also just define a map here, like described in `getting started`.
 $theme-map: meta.module-variables('themes');
 
-@include themes($theme-map);
+@include register($theme-map);
 ```
 
 :::
 
 ::: warning
-make sure to also call `apply` in the main style file. `themes` is responsible for the type checking, but `apply` does the actual styling.
+Note, that here we are calling `verify` instead of `apply`. Make sure to call `apply` in the main style file.
+
+`register` is responsible for the type checking, but `apply` does the actual styling.
+Calling `apply` automatically calls `register` in the current scope as well.
 :::
 
 Now, you can `@use` the global.scss file and use all the `@komplett/themed` functions without issues.
@@ -74,6 +77,20 @@ export default defineConfig({
     },
   },
 });
+```
+
+```ts [next.config.ts] {5}
+import { NextConfig } from 'next';
+
+const nextConfig = {
+  // .. The usual config ..
+  sassOptions: {
+    // Import global.scss or `@komplett/themed` here
+    additionalData: `@use "/src/styles/global" as *;\n`,
+  },
+} satisfies NextConfig;
+
+module.exports = nextConfig;
 ```
 
 :::

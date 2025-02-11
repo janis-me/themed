@@ -52,12 +52,14 @@ $prefix: 'themed';
   --#{$prefix}-#{$key}: #{$value};
 }
 
-// Given a map of themes, checks all maps to be valid, have equal keys etc,
-// Then, saves the themes to global variables to do compile-time checks later and
-// creates CSS variables for each theme.
-//
-// the `$prefix` is used for the CSS variable, for example
-@mixin themes($themes, $prefix: 'themed') {
+/**
+* Given a map of themes, checks all maps to be valid, have equal keys etc,
+* Then, saves the themes to global variables to do compile-time checks later and
+* creates CSS variables for each theme.
+*
+* the `$prefix` is used for the CSS variable, for example
+*/
+@mixin register($themes, $prefix: 'themed') {
   @if not verify-themes($themes) {
     @error "Unable to check themes, see error above.";
   }
@@ -70,8 +72,11 @@ $prefix: 'themed';
   $prefix: $prefix !global;
 }
 
+/**
+* Verifies themes and then applies them to the documentElement.
+*/
 @mixin apply($themes, $prefix: 'themed') {
-  @include themes($themes, $prefix);
+  @include register($themes, $prefix);
 
   @each $theme-name, $theme-map in $themes {
     html[data-theme='#{$theme-name}'] {
@@ -85,10 +90,16 @@ $prefix: 'themed';
   }
 }
 
-// Returns a value from the current theme, checking for validity
-// You could also just use the `var(--themed-#{$name})` directly, but this function
-// provides a nice way to check for validity and provide a better error message
+/*
+* Returns a value from the current theme, checking for validity
+* You could also just use the `var()` directly, but this function
+* provides a nice way to check for validity and shows a better error message
+*/
 @function themed($name, $verify: true) {
+  @if list.length($themes-map) == 0 {
+    @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
+  }
+
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
   } @else if $verify and list.index($theme-keys, $name) == null {
@@ -98,8 +109,10 @@ $prefix: 'themed';
   @return var(--#{$prefix}-#{$name});
 }
 
-// Return a themes variable without any type-checking or using CSS variables,
-// Useful for custom theming logic on a component level
+/*
+* Return a themes variable without any type-checking or using CSS variables,
+* Useful for custom theming logic on a component level
+*/
 @function unthemed($name, $theme: null, $verify: true) {
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";

@@ -75,9 +75,9 @@ $themes: (
 
 :::
 
-## Register themes
+## Apply themes
 
-And finally, register those themes with the `themes` mixin. In it's simplest form, this mixin just verifies your themes and creates the SCSS variables for you.
+And finally, register those themes with the `themes` mixin. In it's simplest form, this mixin just verifies your themes and creates the CSS variables for you.
 
 ::: code-group
 
@@ -101,7 +101,7 @@ $themes: (
   ),
 );
 
-@include themes($themes);
+@include apply($themes);
 ```
 
 :::
@@ -138,7 +138,7 @@ $themes: (
   ),
 );
 
-@include themes($themes);
+@include apply($themes);
 
 html,
 body {

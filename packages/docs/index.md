@@ -126,7 +126,7 @@ $themes: (
   ),
 );
 
-@include themes($themes);
+@include apply($themes);
 ```
 
 :::

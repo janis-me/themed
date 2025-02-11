@@ -15,7 +15,7 @@ In [the previous section](/guide/global-setup), we showed a code snippet like th
 // You can also just define a map here, like described in `getting started`.
 $theme-map: meta.module-variables('themes');
 
-@include themes($theme-map);
+@include apply($theme-map);
 ```
 
 :::
@@ -74,7 +74,7 @@ $themes-map: (
 @use 'sass:meta';
 @use './themes.scss';
 
-@include themes(themes.$themes-map);
+@include apply(themes.$themes-map);
 ```
 
 :::
