@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@types/node": "catalog:",
-    "prettier": "^3.4.2",
+    "prettier": "catalog:",
     "sass": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",

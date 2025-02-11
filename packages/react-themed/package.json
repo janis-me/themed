@@ -51,7 +51,7 @@
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
     "@vitejs/plugin-react": "^4.3.4",
-    "prettier": "^3.4.2",
+    "prettier": "catalog:",
     "react": "catalog:react",
     "react-dom": "catalog:react",
     "typescript": "catalog:",

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@komplett/react-themed": "workspace:*",
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@types/react": "catalog:react",
     "@types/react-dom": "catalog:react",
+    "prettier": "catalog:",
     "sass": "catalog:",
     "vite": "catalog:",
     "vite-tsconfig-paths": "^5.1.4"

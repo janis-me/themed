@@ -8,7 +8,8 @@
 // Everything after the `using` keyword is used to dynamically generate more CSS variables.
 // In this example, we generate each variable of the dark theme with a lighter value.
 // NOTE: Because these CSS variables are not included in the theme map, they can also not be type-checked.
-@include apply($theme-map) using ($prefix, $key, $value, $theme) {
+// Another note: The $theme-map and $theme-prefix variables are defined in globals.scss
+@include apply($theme-map, $theme-prefix) using ($prefix, $key, $value, $theme) {
   @if $theme == 'dark' and meta.type-of($value) == 'color' {
     @include make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
   }
@@ -31,5 +32,6 @@ body {
 }
 
 main {
-  padding: 0 32px;
+  // 'unthemed' get's values from the default theme, or the theme given as a second argument.
+  padding: 0 calc(unthemed('default-padding') * 4);
 }

@@ -114,6 +114,10 @@ $prefix: 'themed';
 * Useful for custom theming logic on a component level
 */
 @function unthemed($name, $theme: null, $verify: true) {
+  @if list.length($themes-map) == 0 {
+    @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
+  }
+
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
   } @else if $verify and list.index($theme-keys, $name) == null {

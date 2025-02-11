@@ -7,7 +7,7 @@
     "format": "prettier . --write"
   },
   "devDependencies": {
-    "prettier": "^3.4.2",
+    "prettier": "catalog:",
     "sass": "catalog:",
     "typescript": "catalog:",
     "vitepress": "^1.6.3",

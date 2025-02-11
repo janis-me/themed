@@ -25,5 +25,7 @@ $theme-map: themed.modify-themes(
   modifiers.lightness()
 );
 
-// Calling `themes` defines the theme-map, enabling type-checking.
-@include themed.themes($theme-map, 'my-var');
+$theme-prefix: 'my-var';
+
+// Calling `register` defines the theme-map, enabling type-checking.
+@include themed.register($theme-map, $theme-prefix);

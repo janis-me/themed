@@ -22,7 +22,7 @@
   "engines": {
     "node": ">=22.11.0"
   },
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@10.3.0",
   "type": "module",
   "scripts": {
     "build": "pnpm --filter=./packages/themed --filter=./packages/react-themed build",
