@@ -1,11 +1,10 @@
-@forward "@komplett/themed";
+@forward '@komplett/themed';
 
-@use "@komplett/themed";
-@use "@komplett/themed/modifiers";
-@use "./themes.scss";
+@use '@komplett/themed';
+@use '@komplett/themed/modifiers';
+@use './themes.scss';
 
-@use "sass:meta";
-@use "sass:color";
+@use 'sass:meta';
 
 // Usually, you would just @use the library like
 // @use "@komplett/themed" as *;
@@ -15,7 +14,7 @@
 // meta.module-variables gets all themes we defined in ./themes.scss as a map.
 // You could also just define the themes inside this file as a map!
 // Then, you also don't have to import the `sass:meta` module.
-$raw-theme-map: meta.module-variables("themes");
+$raw-theme-map: meta.module-variables('themes');
 
 // modify-themes is used to apply any number of modifiers onto the themes.
 $theme-map: themed.modify-themes(
@@ -26,17 +25,7 @@ $theme-map: themed.modify-themes(
   modifiers.lightness()
 );
 
-// Calling `themes` defines the theme-map.
-// Everything after the `using` keyword is used to dynamically generate more CSS variables.
-// In this example, we generate each variable of the dark theme with a lighter value.
-// NOTE: Because these CSS variables are not included in the theme map, they can also not be type-checked.
-@include themed.themes($theme-map, "my-var") using
-  ($prefix, $key, $value, $theme) {
-  @if $theme == "dark" and meta.type-of($value) == "color" {
-    @include themed.make-css-variable(
-      $prefix,
-      "#{$key}--light",
-      color.change($value, $lightness: 30%)
-    );
-  }
-}
+$theme-prefix: 'my-var';
+
+// Calling `register` defines the theme-map, enabling type-checking.
+@include themed.register($theme-map, $theme-prefix);

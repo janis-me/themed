@@ -1,5 +1,7 @@
+@include apply($theme-map);
+
 html,
 body {
-  color: themed("text");
-  background-color: themed("background");
+  color: themed('text');
+  background-color: themed('background');
 }

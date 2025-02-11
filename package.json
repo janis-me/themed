@@ -22,19 +22,19 @@
   "engines": {
     "node": ">=22.11.0"
   },
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@10.3.0",
   "type": "module",
   "scripts": {
     "build": "pnpm --filter=./packages/themed --filter=./packages/react-themed build",
-    "build:watch": "pnpm --parallel --filter=./packages/themed --filter=./packages/react-themed build:watch",
+    "build:watch": "pnpm exec bash ./packages/scripts/build-watch.sh",
+    "build:all": "pnpm exec bash ./packages/scripts/build-all.sh",
     "build:docs": "pnpm  --filter=./packages/docs build",
-    "build:all": "pnpm  --parallel --filter=* build",
     "dev:docs": "pnpm  --filter=./packages/docs dev",
     "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
     "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
     "example:react": "pnpm --filter=./examples/vite-react dev",
     "format:all": "pnpm --parallel --filter=* format",
-    "publish:all": "pnpm run publish:themed && publish:react-themed",
+    "publish:all": "pnpm exec bash ./packages/scripts/publish.sh",
     "publish:themed": "pnpm publish packages/themed --access public",
     "publish:react-themed": "pnpm publish packages/react-themed --access public"
   }
