@@ -23,7 +23,7 @@ export default function Editor({ value, path, readonly = false, onChange, onMoun
       value={value}
       onMount={handleMount}
       onChange={onChange}
-      options={{ readOnly: readonly }}
+      options={{ readOnly: readonly, minimap: { enabled: false } }}
     />
   );
 }

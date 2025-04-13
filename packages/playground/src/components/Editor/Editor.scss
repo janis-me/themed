@@ -1,4 +1,8 @@
 .editor {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+
   .monaco-editor {
     position: absolute;
   }

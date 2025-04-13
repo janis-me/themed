@@ -1,0 +1,16 @@
+.terminal {
+  &__container {
+    position: relative;
+    background-color: #1e1e1e;
+    border-top: 1px solid themed('grey-8');
+    padding: 8px 16px;
+  }
+
+  &__instance {
+    height: 100%;
+  }
+}
+
+.xterm {
+  height: 100%;
+}
