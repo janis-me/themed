@@ -6,8 +6,8 @@ This is where SCSS and `themed` utility methods come to play.
 `Themed` defines a set of functions that make it easy for you to extend/modify your themes. If you have a theme map ready, let's call it `$themes`, you can add modifiers like this:
 
 ```scss
-@use '@komplett/themed';
-@use '@komplett/themed/modifiers';
+@use '@janis.me/themed';
+@use '@janis.me/themed/modifiers';
 
 $theme-map: themed.modify-themes($themes, modifiers.alpha());
 ```

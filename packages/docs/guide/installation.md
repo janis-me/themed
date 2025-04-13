@@ -1,35 +1,35 @@
 # Installation
 
-Two main ways to install `@komplett/themed`: Via a package manager, or by copying the source.
+Two main ways to install `@janis.me/themed`: Via a package manager, or by copying the source.
 In both cases, you must have `sass` installed as a dependency. We tested this packages mainly with the [sass](https://www.npmjs.com/package/sass) package, but [sass-embedded](https://www.npmjs.com/package/sass-embedded) should also work well.
 
 ## With a package manager
 
-For the first option, just add it as a dev-dependency. If you use react, install `@komplett/react-themed` instead. See [Use with React](/guide/usage-with-react) for more information.
+For the first option, just add it as a dev-dependency. If you use react, install `@janis.me/react-themed` instead. See [Use with React](/guide/usage-with-react) for more information.
 
 ::: code-group
 
 ```sh [npm]
-$ npm add -D @komplett/themed
+$ npm add -D @janis.me/themed
 ```
 
 ```sh [pnpm]
-$ pnpm add -D @komplett/themed
+$ pnpm add -D @janis.me/themed
 ```
 
 ```sh [yarn]
-$ yarn add -D @komplett/themed
+$ yarn add -D @janis.me/themed
 ```
 
 ```sh [bun]
-$ bun add -D @komplett/themed
+$ bun add -D @janis.me/themed
 ```
 
 :::
 
 ## Via the source
 
-If you want this to be as minimal and customizable as possible, you can also just **copy it's source**. You can find that [on github](https://github.com/komplettio/themed/blob/main/packages/themed/src/index.scss).
+If you want this to be as minimal and customizable as possible, you can also just **copy it's source**. You can find that [on github](https://github.com/janis-me/themed/blob/main/packages/themed/src/index.scss).
 
 Now, you can add or validation as you please, customize how variables are defined, how the functions are called etc. But most of these things, you can also do when installed via npm, so:
 

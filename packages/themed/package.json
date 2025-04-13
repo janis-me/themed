@@ -1,18 +1,18 @@
 {
-  "name": "@komplett/themed",
-  "version": "0.1.3",
+  "name": "@janis.me/themed",
+  "version": "0.1.0",
   "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"
   },
   "bugs": {
-    "url": "https://github.com/komplettio/themed/issues"
+    "url": "https://github.com/janis-me/themed/issues"
   },
   "author": "Janis Jansen",
-  "homepage": "https://github.com/komplettio/themed#readme",
+  "homepage": "https://github.com/janis-me/themed#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/komplettio/themed.git"
+    "url": "git+https://github.com/janis-me/themed.git"
   },
   "license": "MIT",
   "keywords": [

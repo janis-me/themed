@@ -10,7 +10,7 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@komplett/react-themed": "workspace:*",
+    "@janis.me/react-themed": "workspace:*",
     "react": "catalog:react",
     "react-dom": "catalog:react"
   },

@@ -40,7 +40,7 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/komplettio/themed' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/janis-me/themed' }],
   },
   markdown: {
     config(md) {

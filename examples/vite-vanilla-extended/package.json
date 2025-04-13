@@ -10,7 +10,7 @@
     "format": "prettier . --write"
   },
   "dependencies": {
-    "@komplett/themed": "workspace:*"
+    "@janis.me/themed": "workspace:*"
   },
   "devDependencies": {
     "prettier": "catalog:",

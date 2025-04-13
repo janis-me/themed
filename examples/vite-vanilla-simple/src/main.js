@@ -1,4 +1,4 @@
-import { getTheme, toggleTheme } from '@komplett/themed/utils';
+import { getTheme, toggleTheme } from '@janis.me/themed/utils';
 
 import './styles/main.scss';
 

@@ -21,7 +21,7 @@ Adding themes to a website is easy. **Doing it right is not**. The list of requi
 
 And there is more. So, better rely on a tiny all-in-one solution. 📦
 
-## What `@komplett/themed` offers:
+## What `@janis.me/themed` offers:
 
 - 🔒 **Type-checking** themes for validity, checking all values exist etc.
 - 🌐 Produces nice **SCSS AND CSS** variables, so you can use all SCSS features with theming.
@@ -29,6 +29,6 @@ And there is more. So, better rely on a tiny all-in-one solution. 📦
 - 🚀 **Extra features** like JS/TS methods for interactivity built in.
 - 🎭 **Customizable**: Adjust nearly every aspect of how you use themes.
 - 🌈 Prints **human-readable** errors when doing something wrong.
-- <ReactLogo /> First class **React** support with `@komplett/react-themed`.
+- <ReactLogo /> First class **React** support with `@janis.me/react-themed`.
 
 (All free and open-source, of course.)

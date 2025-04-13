@@ -1,7 +1,7 @@
 # Usage with react
 
 ::: tip
-This setup is demonstrated in the [react example on github](https://github.com/komplettio/themed/tree/main/examples/vite-react). Check that out for a quick overview.
+This setup is demonstrated in the [react example on github](https://github.com/janis-me/themed/tree/main/examples/vite-react). Check that out for a quick overview.
 :::
 
 For react, the SCSS part (defining themes, using the themed function...) is exactly the same. (It uses the same code under the hood). However, to achieve 'reactiveness', two things are added.
@@ -12,7 +12,7 @@ This does not mean that you cannot use the CSS variables in components outside o
 ```tsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider } from '@komplett/react-themed/utils';
+import { ThemeProvider } from '@janis.me/react-themed/utils';
 
 import App from './App.tsx';
 
@@ -39,7 +39,7 @@ The `ThemeProvider` does a couple of things for you:
 ...let's you react to theme changes, but also set/get the theme in react.
 
 ```tsx
-import { useTheme } from '@komplett/react-themed/utils';
+import { useTheme } from '@janis.me/react-themed/utils';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -62,10 +62,10 @@ It also has the methods `setTheme` and `getTheme`.
 
 ## Outside of react
 
-Outside of react, you can import the same functions as exported in the `@komplett/themed` package, for example:
+Outside of react, you can import the same functions as exported in the `@janis.me/themed` package, for example:
 
 ```ts
-import { setTheme as setThemeImperatively } from '@komplett/react-themed/utils';
+import { setTheme as setThemeImperatively } from '@janis.me/react-themed/utils';
 
 function someAction() {
   setThemeImperatively('light');

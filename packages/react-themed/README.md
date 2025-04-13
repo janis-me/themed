@@ -1,14 +1,14 @@
 <p align="center">
-  <a href="https://github.com/komplettio/themed" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/janis-me/themed" target="_blank" rel="noopener noreferrer">
     <img width="180" src="https://raw.githubusercontent.com/komplettio/themed/refs/heads/main/assets/themed-logo.png" alt="Themed logo">
   </a>
 </p>
 <br/>
 <p align="center">
-  <a href="https://npmjs.com/package/@komplett/themed">
+  <a href="https://npmjs.com/package/@janis.me/themed">
     <img src="https://img.shields.io/npm/v/%40komplett%2Freact-themed?labelColor=orange&color=grey" alt="npm package">
   </a>
-  <a href="https://npmjs.com/package/@komplett/react-themed">
+  <a href="https://npmjs.com/package/@janis.me/react-themed">
     <img alt="NPM Version" src="https://img.shields.io/npm/v/%40komplett%2Freact-themed?label=react&labelColor=%2361dafb&color=grey">
   </a>
   <a href="https://app.netlify.com/sites/komplett-themed/deploys">
@@ -23,7 +23,7 @@
 </p>
 <br/>
 
-`@komplett/themed` is a customizable SCSS utility to add theming to your website as easily and safely as possible. It also offers utility methods for javascript/typescript (and react via `@komplett/react-themed`).
+`@janis.me/themed` is a customizable SCSS utility to add theming to your website as easily and safely as possible. It also offers utility methods for javascript/typescript (and react via `@janis.me/react-themed`).
 
 > [!WARNING]  
 > This is in early development. Expect things to break and change before it hits 1.0.0
@@ -40,7 +40,7 @@
 - 🚀 **Extra features** like JS/TS methods for interactivity built in.
 - 🎭 **Customizable**: Adjust nearly every aspect of how you use themes.
 - 🌈 Prints **human-readable** errors when doing something wrong.
-- First class **React support** with `@komplett/react-themed`.
+- First class **React support** with `@janis.me/react-themed`.
 
 ---
 
@@ -49,7 +49,7 @@
 It's as easy as:
 
 ```scss
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 // Define themes in a map
 $themes: (
@@ -92,11 +92,11 @@ Using SCSS' meta package and error/type checking. you get nice error hints!
 
 One way is to just copy the stuff in `./packages/themed/src/index.scss` and put them into your app.
 
-Alternatively, use `npm install -D @komplett/themed` and follow the example above, or look at one of the examples in the `examples` folder.
+Alternatively, use `npm install -D @janis.me/themed` and follow the example above, or look at one of the examples in the `examples` folder.
 
 ### React
 
-For react, install `@komplett/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it. All utility methods are also exported from `@komplett/react-themed/utils`.
+For react, install `@janis.me/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it. All utility methods are also exported from `@janis.me/react-themed/utils`.
 
 ---
 

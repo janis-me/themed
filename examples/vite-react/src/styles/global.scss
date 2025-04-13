@@ -1,14 +1,14 @@
-@forward '@komplett/react-themed';
+@forward '@janis.me/react-themed';
 
-@use '@komplett/react-themed' as themed;
+@use '@janis.me/react-themed' as themed;
 @use './themes.scss';
 
 @use 'sass:meta';
 
 // Usually, you would just @use the library like
-// @use "@komplett/themed" as *;
+// @use "@janis.me/themed" as *;
 // However, we defined this as a global in the vite.config.ts, so no need to import it.
-// all @komplett/themed functions will be globally available.
+// all @janis.me/themed functions will be globally available.
 
 // This get's all themes we defined in ./themes.scss as a map.
 // You could also just define the themes inside this file as a map!

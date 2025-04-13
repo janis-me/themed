@@ -4,7 +4,7 @@ import {
   ThemeOption,
   watchPreferredColorScheme as _watchPreferredColorScheme,
   watchThemeAttribute as _watchThemeAttribute,
-} from '@komplett/themed/utils';
+} from '@janis.me/themed/utils';
 
 type Action = {
   type: 'setActiveTheme';
