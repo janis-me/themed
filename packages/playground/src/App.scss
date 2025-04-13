@@ -1,0 +1,27 @@
+.app {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'header header' 'editor1 editor2';
+}
+
+.header {
+  grid-area: header;
+}
+
+.app__editor1 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  grid-area: editor1;
+}
+.app__editor2 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  grid-area: editor2;
+}

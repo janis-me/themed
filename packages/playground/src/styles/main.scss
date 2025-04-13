@@ -1,0 +1,14 @@
+@include apply($theme-map);
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: themed('text');
+  background-color: themed('background');
+
+  margin: 0;
+  padding: 0;
+}
