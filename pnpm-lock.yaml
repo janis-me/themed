@@ -63,7 +63,7 @@ importers:
 
   examples/vite-react:
     dependencies:
-      janis.me/react-themed:
+      '@janis.me/react-themed':
         specifier: workspace:*
         version: link:../../packages/react-themed
       react:

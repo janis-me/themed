@@ -1,6 +1,6 @@
-@forward 'janis.me/react-themed';
+@forward '@janis.me/react-themed';
 
-@use 'janis.me/react-themed' as themed;
+@use '@janis.me/react-themed' as themed;
 @use './themes.scss';
 
 @use 'sass:meta';

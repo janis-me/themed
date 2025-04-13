@@ -43,7 +43,7 @@ features:
       <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
       </g>
       </svg>
-    details: 'With janis.me/react-themed, we offer first-class react support.'
+    details: 'With @janis.me/react-themed, we offer first-class react support.'
 ---
 
 <script setup>
@@ -64,7 +64,7 @@ features:
 - 🚀 **Extra features** like JS/TS methods for interactivity built in.
 - 🎭 **Customizable**: Adjust nearly every aspect of how you use themes.
 - 🌈 Prints **human-readable** errors when doing something wrong.
-- <ReactLogo /> First class **React** support with `janis.me/react-themed`.
+- <ReactLogo /> First class **React** support with `@janis.me/react-themed`.
 
 And no, CSS variables are not a solution. Read though our [Guide](/guide/why-themed) so we can convince you.
 
