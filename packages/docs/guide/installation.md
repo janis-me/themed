@@ -5,7 +5,7 @@ In both cases, you must have `sass` installed as a dependency. We tested this pa
 
 ## With a package manager
 
-For the first option, just add it as a dev-dependency. If you use react, install `@komplett/react-themed` instead. See [Use with React](/guide/usage-with-react) for more information.
+For the first option, just add it as a dev-dependency. If you use react, install `janis.me/react-themed` instead. See [Use with React](/guide/usage-with-react) for more information.
 
 ::: code-group
 
