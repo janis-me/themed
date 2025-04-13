@@ -1,10 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 import {
-  setTheme,
-  ThemeOption,
   watchPreferredColorScheme as _watchPreferredColorScheme,
   watchThemeAttribute as _watchThemeAttribute,
+  setTheme,
+  ThemeOption,
 } from '@janis.me/themed/utils';
+import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 type Action = {
   type: 'setActiveTheme';
@@ -121,7 +121,7 @@ function useTheme() {
         return context.state.activeTheme;
       },
     }),
-    [context]
+    [context],
   );
 }
 

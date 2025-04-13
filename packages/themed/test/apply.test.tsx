@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+
 import { jsx } from './utils';
 
 test('properly handles form inputs', async () => {

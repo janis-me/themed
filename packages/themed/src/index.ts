@@ -75,7 +75,7 @@ export function watchPreferredColorScheme(listener: (theme: ThemeOption) => void
 export function watchThemeAttribute(listener: (theme: ThemeOption | null) => void) {
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
-      if (mutation.type === 'attributes') {
+      if (mutation.type === 'attributes' && mutation.attributeName === THEME_ATTRIBUTE_NAME) {
         const newTheme = getTheme();
         listener(newTheme);
       }

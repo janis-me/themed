@@ -2,49 +2,39 @@
   "name": "@janis.me/themed",
   "version": "0.1.0",
   "description": "SCSS-native themes made simple",
-  "directories": {
-    "example": "examples"
-  },
-  "bugs": {
-    "url": "https://github.com/janis-me/themed/issues"
-  },
-  "author": "Janis Jansen",
-  "homepage": "https://github.com/janis-me/themed#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/janis-me/themed.git"
-  },
-  "license": "MIT",
   "keywords": [
     "CSS",
     "SCSS",
     "Theme"
   ],
-  "engines": {
-    "node": ">=22.11.0"
+  "homepage": "https://github.com/janis-me/themed#readme",
+  "bugs": {
+    "url": "https://github.com/janis-me/themed/issues"
   },
-  "packageManager": "pnpm@10.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janis-me/themed.git"
+  },
+  "license": "MIT",
+  "author": "Janis Jansen",
   "type": "module",
-  "publishConfig": {
-    "access": "public"
+  "exports": {
+    ".": "./dist/index.scss",
+    "./modifiers": "./dist/modifiers.scss"
+  },
+  "main": "dist/index.js",
+  "directories": {
+    "example": "examples"
   },
   "files": [
     "dist"
   ],
-  "exports": {
-    ".": "./dist/index.scss",
-    "./modifiers": "./dist/modifiers.scss",
-    "./utils": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    }
-  },
   "scripts": {
     "build": "vite build",
     "build:watch": "vite build --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier . --write",
-    "prepublishOnly": "pnpm install && pnpm build"
+    "prepublishOnly": "pnpm install && pnpm build",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "@types/node": "catalog:",
@@ -52,6 +42,14 @@
     "sass": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "^4.5.0"
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-static-copy": "^2.3.1"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

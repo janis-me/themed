@@ -1,10 +1,4 @@
-import {
-  getTheme,
-  toggleTheme,
-  watchPreferredColorScheme,
-  setTheme,
-  getPreferredColorScheme,
-} from '@janis.me/themed/utils';
+import { getPreferredColorScheme, getTheme, setTheme, toggleTheme, watchPreferredColorScheme } from '@janis.me/themed';
 
 import './styles/main.scss';
 

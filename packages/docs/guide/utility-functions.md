@@ -34,7 +34,7 @@ Uses `window.matchMedia` to get the users preferred color scheme (That they set,
 Registers the given `listener` to be called whenever the preferred colorScheme changes. Using this, you can automatically set the data-theme attribute to the new theme.
 
 ```ts
-import { watchPreferredColorScheme, setTheme } from '@janis.me/themed/utils';
+import { setTheme, watchPreferredColorScheme } from '@janis.me/themed/utils';
 
 // Watches the color scheme and calls setTheme with the new preference.
 watchPreferredColorScheme(setTheme);

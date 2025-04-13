@@ -4,6 +4,8 @@ $light: (
   'grey-1': #fcfcfd,
   'grey-2': #f9f9fb,
   'grey-3': #eff0f3,
+  // The variables below will be 'filled' in for all other themes using the `fill` modifier.
+  // see https://themed.janis.me/guide/modifiers.html#modifiers-fill
   'default-padding': 8px,
   'border-radius': 3px,
 );
