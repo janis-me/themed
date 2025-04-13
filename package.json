@@ -36,6 +36,13 @@
     "format:all": "pnpm --parallel --filter=* format",
     "publish:all": "pnpm exec bash ./packages/scripts/publish.sh",
     "publish:themed": "pnpm publish packages/themed --access public",
-    "publish:react-themed": "pnpm publish packages/react-themed --access public"
+    "publish:react-themed": "pnpm publish packages/react-themed --access public",
+    "test:browser": "vitest"
+  },
+  "devDependencies": {
+    "@vitest/browser": "catalog:",
+    "playwright": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
