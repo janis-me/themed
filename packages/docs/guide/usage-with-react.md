@@ -10,7 +10,7 @@ Firstly, you should add the `ThemeProvider` to the top level of your app. This i
 This does not mean that you cannot use the CSS variables in components outside of the Provider. Those are still defined globally (on an HTML level).
 
 ```tsx
-import { ThemeProvider } from '@janis.me/react-themed/utils';
+import { ThemeProvider } from '@janis.me/react-themed/js';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -39,7 +39,7 @@ The `ThemeProvider` does a couple of things for you:
 ...let's you react to theme changes, but also set/get the theme in react.
 
 ```tsx
-import { useTheme } from '@janis.me/react-themed/utils';
+import { useTheme } from '@janis.me/react-themed/js';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
@@ -65,7 +65,7 @@ It also has the methods `setTheme` and `getTheme`.
 Outside of react, you can import the same functions as exported in the `@janis.me/themed` package, for example:
 
 ```ts
-import { setTheme as setThemeImperatively } from '@janis.me/react-themed/utils';
+import { setTheme as setThemeImperatively } from '@janis.me/react-themed/js';
 
 function someAction() {
   setThemeImperatively('light');

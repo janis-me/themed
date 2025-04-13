@@ -1,3 +1,3 @@
-export * from '@janis.me/themed/utils';
+export * from '@janis.me/themed/js';
 
 export * from './context';

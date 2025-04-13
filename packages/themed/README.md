@@ -96,7 +96,7 @@ Alternatively, use `npm install -D @janis.me/themed` and follow the example abov
 
 ### React
 
-For react, install `@janis.me/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it. All utility methods are also exported from `@janis.me/react-themed/utils`.
+For react, install `@janis.me/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it. All utility methods are also exported from `@janis.me/react-themed/js`.
 
 ---
 

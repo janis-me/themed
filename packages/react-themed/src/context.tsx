@@ -3,7 +3,7 @@ import {
   watchThemeAttribute as _watchThemeAttribute,
   setTheme,
   ThemeOption,
-} from '@janis.me/themed/utils';
+} from '@janis.me/themed/js';
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 type Action = {
