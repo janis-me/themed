@@ -1,5 +1,5 @@
 {
-  "name": "@komplett/themed-monorepo",
+  "name": "@janis.me/themed-monorepo",
   "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"

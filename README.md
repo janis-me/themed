@@ -5,7 +5,7 @@
 </p>
 <br/>
 <p align="center">
-  <a href="https://npmjs.com/package/@komplett/themed">
+  <a href="https://npmjs.com/package/@janis.me/themed">
     <img src="https://img.shields.io/npm/v/%40komplett%2Freact-themed?labelColor=orange&color=grey" alt="npm package">
   </a>
   <a href="https://npmjs.com/package/@komplett/react-themed">
@@ -23,7 +23,7 @@
 </p>
 <br/>
 
-`@komplett/themed` is a customizable SCSS utility to add theming to your website as easily and safely as possible. It also offers utility methods for javascript/typescript (and react via `@komplett/react-themed`).
+`@janis.me/themed` is a customizable SCSS utility to add theming to your website as easily and safely as possible. It also offers utility methods for javascript/typescript (and react via `@komplett/react-themed`).
 
 > [!WARNING]  
 > This is in early development. Expect things to break and change before it hits 1.0.0
@@ -49,7 +49,7 @@
 It's as easy as:
 
 ```scss
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 // Define themes in a map
 $themes: (
@@ -92,7 +92,7 @@ Using SCSS' meta package and error/type checking. you get nice error hints!
 
 One way is to just copy the stuff in `./packages/themed/src/index.scss` and put them into your app.
 
-Alternatively, use `npm install -D @komplett/themed` and follow the example above, or look at one of the examples in the `examples` folder.
+Alternatively, use `npm install -D @janis.me/themed` and follow the example above, or look at one of the examples in the `examples` folder.
 
 ### React
 

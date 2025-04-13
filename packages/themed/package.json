@@ -1,6 +1,6 @@
 {
-  "name": "@komplett/themed",
-  "version": "0.1.3",
+  "name": "@janis.me/themed",
+  "version": "0.1.0",
   "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"

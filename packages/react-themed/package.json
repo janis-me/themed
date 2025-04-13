@@ -1,6 +1,6 @@
 {
   "name": "@komplett/react-themed",
-  "version": "0.1.3",
+  "version": "0.1.0",
   "description": "SCSS-native themes made simple",
   "directories": {
     "example": "examples"
@@ -59,7 +59,7 @@
     "vite-plugin-dts": "^4.5.0"
   },
   "dependencies": {
-    "@komplett/themed": "workspace:*"
+    "@janis.me/themed": "workspace:*"
   },
   "peerDependencies": {
     "react": "catalog:react",

@@ -4,7 +4,7 @@ import {
   watchPreferredColorScheme,
   setTheme,
   getPreferredColorScheme,
-} from '@komplett/themed/utils';
+} from '@janis.me/themed/utils';
 
 import './styles/main.scss';
 

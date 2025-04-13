@@ -20,11 +20,11 @@ function App() {
     <>
       <Button onClick={handleToggleTheme}>toggle theme</Button>
       <h1>
-        Welcome to <b>@komplett/themed</b>
+        Welcome to <b>@janis.me/themed</b>
       </h1>
       <p>
         This example shows you you can style things like
-        <Button onClick={handlePromptTheme}>Buttons</Button> with <b>@komplett/themed</b> in pure SCSS
+        <Button onClick={handlePromptTheme}>Buttons</Button> with <b>@janis.me/themed</b> in pure SCSS
         <b>The current theme is: {theme}</b>
       </p>
       <p>

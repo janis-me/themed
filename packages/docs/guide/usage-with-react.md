@@ -62,7 +62,7 @@ It also has the methods `setTheme` and `getTheme`.
 
 ## Outside of react
 
-Outside of react, you can import the same functions as exported in the `@komplett/themed` package, for example:
+Outside of react, you can import the same functions as exported in the `@janis.me/themed` package, for example:
 
 ```ts
 import { setTheme as setThemeImperatively } from '@komplett/react-themed/utils';

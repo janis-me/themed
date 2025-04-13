@@ -14,19 +14,19 @@ First, install themed or copy it's source, as described in [Installation](/guide
 ::: code-group
 
 ```sh [npm]
-$ npm add -D @komplett/themed
+$ npm add -D @janis.me/themed
 ```
 
 ```sh [pnpm]
-$ pnpm add -D @komplett/themed
+$ pnpm add -D @janis.me/themed
 ```
 
 ```sh [yarn]
-$ yarn add -D @komplett/themed
+$ yarn add -D @janis.me/themed
 ```
 
 ```sh [bun]
-$ bun add -D @komplett/themed
+$ bun add -D @janis.me/themed
 ```
 
 :::
@@ -36,7 +36,7 @@ Use it inside SCSS with the `@use .. as *` rule. This way, you can use all mixin
 ::: code-group
 
 ```scss [style.scss] {1}
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 ```
 
 :::
@@ -53,7 +53,7 @@ Create a "map of maps" like below to group all themes together. You can also def
 ::: code-group
 
 ```scss [style.scss] {3-18}
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 $themes: (
   'light': (
@@ -82,7 +82,7 @@ And finally, register those themes with the `themes` mixin. In it's simplest for
 ::: code-group
 
 ```scss [style.scss] {20}
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 $themes: (
   'light': (
@@ -119,7 +119,7 @@ Be aware, that using the themed function in different files might require some m
 ::: code-group
 
 ```scss [style.scss] {23-27}
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 $themes: (
   'light': (
@@ -169,7 +169,7 @@ Or, use one of the utility functions that `themed` offers out of the box in any 
 ::: code-group
 
 ```js [index.js] {1-3}
-import { setTheme } from '@komplett/themed/utils';
+import { setTheme } from '@janis.me/themed/utils';
 
 setTheme('light');
 ```

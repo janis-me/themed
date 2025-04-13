@@ -5,9 +5,9 @@ In [the previous section](/guide/global-setup), we showed a code snippet like th
 ::: code-group
 
 ```scss [global.scss]
-@forward '@komplett/themed';
+@forward '@janis.me/themed';
 
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 @use 'sass:meta';
 @use './themes.scss';
 
@@ -68,9 +68,9 @@ $themes-map: (
 ```
 
 ```scss [global.scss]
-@forward '@komplett/themed';
+@forward '@janis.me/themed';
 
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 @use 'sass:meta';
 @use './themes.scss';
 
@@ -136,7 +136,7 @@ $dark: (
 ```
 
 ```scss [global.scss]
-@use '@komplett/themed/modifiers';
+@use '@janis.me/themed/modifiers';
 
 $raw-theme-map: meta.module-variables('themes');
 

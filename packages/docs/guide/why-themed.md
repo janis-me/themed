@@ -21,7 +21,7 @@ Adding themes to a website is easy. **Doing it right is not**. The list of requi
 
 And there is more. So, better rely on a tiny all-in-one solution. 📦
 
-## What `@komplett/themed` offers:
+## What `@janis.me/themed` offers:
 
 - 🔒 **Type-checking** themes for validity, checking all values exist etc.
 - 🌐 Produces nice **SCSS AND CSS** variables, so you can use all SCSS features with theming.

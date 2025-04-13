@@ -1,3 +1,3 @@
-export * from '@komplett/themed/utils';
+export * from '@janis.me/themed/utils';
 
 export * from './context';

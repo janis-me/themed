@@ -7,7 +7,7 @@ You can customize `themed` in a couple of ways:
 By default, the generated CSS variables will use the `themed` prefix, for example `--themed-text`. You can set a custom prefix using the `apply` function:
 
 ```scss
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 @include apply($themes, $prefix: 'my-custom-var');
 ```

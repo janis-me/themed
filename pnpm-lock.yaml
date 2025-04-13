@@ -94,7 +94,7 @@ importers:
 
   examples/vite-vanilla-extended:
     dependencies:
-      '@komplett/themed':
+      '@janis.me/themed':
         specifier: workspace:*
         version: link:../../packages/themed
     devDependencies:
@@ -110,7 +110,7 @@ importers:
 
   examples/vite-vanilla-simple:
     dependencies:
-      '@komplett/themed':
+      '@janis.me/themed':
         specifier: workspace:*
         version: link:../../packages/themed
     devDependencies:
@@ -147,7 +147,7 @@ importers:
 
   packages/react-themed:
     dependencies:
-      '@komplett/themed':
+      '@janis.me/themed':
         specifier: workspace:*
         version: link:../themed
     devDependencies:

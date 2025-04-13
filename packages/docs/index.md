@@ -75,19 +75,19 @@ And no, CSS variables are not a solution. Read though our [Guide](/guide/why-the
 ::: code-group
 
 ```sh [npm]
-$ npm add -D @komplett/themed
+$ npm add -D @janis.me/themed
 ```
 
 ```sh [pnpm]
-$ pnpm add -D @komplett/themed
+$ pnpm add -D @janis.me/themed
 ```
 
 ```sh [yarn]
-$ yarn add -D @komplett/themed
+$ yarn add -D @janis.me/themed
 ```
 
 ```sh [bun]
-$ bun add -D @komplett/themed
+$ bun add -D @janis.me/themed
 ```
 
 :::
@@ -97,7 +97,7 @@ $ bun add -D @komplett/themed
 ::: code-group
 
 ```scss [style.scss] {1}
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 ```
 
 :::
@@ -107,7 +107,7 @@ $ bun add -D @komplett/themed
 ::: code-group
 
 ```scss [style.scss] {3-20}
-@use '@komplett/themed' as *;
+@use '@janis.me/themed' as *;
 
 $themes: (
   'light': (
