@@ -1,11 +1,11 @@
 # Global setup
 
 ::: tip
-This setup is demonstrated in the [extended example on github](https://github.com/komplettio/themed/tree/main/examples/vite-vanilla-extended). Check that out for a quick overview.
+This setup is demonstrated in the [extended example on github](https://github.com/janis-me/themed/tree/main/examples/vite-vanilla-extended). Check that out for a quick overview.
 :::
 
 ::: warning
-`@janis.me/themed` is still under active development. The need for a global setup like described below is [still being discussed](https://github.com/komplettio/themed/issues/15). Please let us know your opinion.
+`@janis.me/themed` is still under active development. The need for a global setup like described below is [still being discussed](https://github.com/janis-me/themed/issues/15). Please let us know your opinion.
 :::
 
 Realistically, you would want to use the `themed` functions in every file of your project. for example in components, layout files etc.
@@ -18,7 +18,7 @@ Here's how to fix that:
 
 ## Defining a global.scss file
 
-As shown in the [extended example on github](https://github.com/komplettio/themed/tree/main/examples/vite-vanilla-extended), the easiest way to use `@janis.me/themed` effectively, is to add a `global.scss` file.
+As shown in the [extended example on github](https://github.com/janis-me/themed/tree/main/examples/vite-vanilla-extended), the easiest way to use `@janis.me/themed` effectively, is to add a `global.scss` file.
 This file would define the theme and `@forward` all functions that `@janis.me/themed` defines.
 
 ::: code-group

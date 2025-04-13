@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/komplettio/themed" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/janis-me/themed" target="_blank" rel="noopener noreferrer">
     <img width="180" src="https://raw.githubusercontent.com/komplettio/themed/refs/heads/main/assets/themed-logo.png" alt="Themed logo">
   </a>
 </p>

@@ -1,7 +1,7 @@
 # Usage with react
 
 ::: tip
-This setup is demonstrated in the [react example on github](https://github.com/komplettio/themed/tree/main/examples/vite-react). Check that out for a quick overview.
+This setup is demonstrated in the [react example on github](https://github.com/janis-me/themed/tree/main/examples/vite-react). Check that out for a quick overview.
 :::
 
 For react, the SCSS part (defining themes, using the themed function...) is exactly the same. (It uses the same code under the hood). However, to achieve 'reactiveness', two things are added.

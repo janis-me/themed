@@ -5,7 +5,7 @@ outline: deep
 # Getting started!
 
 ::: tip
-You can also just look at some [examples on github](https://github.com/komplettio/themed/tree/main/examples) if you want to dive in quickly.
+You can also just look at some [examples on github](https://github.com/janis-me/themed/tree/main/examples) if you want to dive in quickly.
 :::
 
 ## Installation
