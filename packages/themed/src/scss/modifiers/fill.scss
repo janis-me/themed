@@ -1,0 +1,34 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+@function fill-modifier($key, $value, $theme-name, $themes) {
+  $results: ();
+
+  $primary-theme-name: list.nth(map.keys($themes), 1);
+  $primary-theme: map.get($themes, $primary-theme-name);
+
+  @if $theme-name != $primary-theme-name {
+    $current-theme: map.get($themes, $theme-name);
+
+    @each $k, $v in $primary-theme {
+      @if not map.has-key($current-theme, $k) {
+        $results: map.merge(
+          $results,
+          (
+            '#{$k}': $v,
+          )
+        );
+      }
+    }
+  }
+
+  @return $results;
+}
+
+/**
+* The fill modifier ensures that all 'secondary' themes have the values of the 'primary' theme by copying missing values
+*/
+@function fill() {
+  @return meta.get-function(fill-modifier);
+}

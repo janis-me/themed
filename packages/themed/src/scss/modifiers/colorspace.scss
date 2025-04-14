@@ -1,0 +1,25 @@
+@use 'sass:meta';
+@use 'sass:color';
+
+@function colorspace-modifier($key, $value, $theme-name, $themes) {
+  @if meta.type-of($value) == 'color' {
+    $results: (#{$key}: color.to-space($value, $colorspace-space));
+    @return $results;
+  }
+
+  @return ();
+}
+
+// Ugly way of returning a "dynamic" function:
+// Just use SCSS globals...
+$colorspace-space: oklch;
+/**
+* The colorspace modifier converts every color in the theme to oklch space.
+*/
+@function colorspace($space: null) {
+  @if $space {
+    $colorspace-space: $space !global;
+  }
+
+  @return meta.get-function(colorspace-modifier);
+}

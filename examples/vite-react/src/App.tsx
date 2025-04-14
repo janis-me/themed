@@ -1,4 +1,5 @@
-import { toggleTheme as toggleThemeImperatively, useTheme } from '@janis.me/react-themed/utils';
+import { toggleTheme as toggleThemeImperatively, useTheme } from '@janis.me/react-themed/js';
+
 import Button from './components/Button';
 
 function App() {

@@ -1,10 +1,10 @@
 import {
+  getPreferredColorScheme,
   getTheme,
+  setTheme,
   toggleTheme,
   watchPreferredColorScheme,
-  setTheme,
-  getPreferredColorScheme,
-} from '@janis.me/themed/utils';
+} from '@janis.me/themed/js';
 
 import './styles/main.scss';
 

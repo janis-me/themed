@@ -169,7 +169,7 @@ Or, use one of the utility functions that `themed` offers out of the box in any 
 ::: code-group
 
 ```js [index.js] {1-3}
-import { setTheme } from '@janis.me/themed/utils';
+import { setTheme } from '@janis.me/themed/js';
 
 setTheme('light');
 ```

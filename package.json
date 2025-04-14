@@ -1,48 +1,52 @@
 {
   "name": "@janis.me/themed-monorepo",
   "description": "SCSS-native themes made simple",
-  "directories": {
-    "example": "examples"
-  },
-  "bugs": {
-    "url": "https://github.com/janis-me/themed/issues"
-  },
-  "author": "Janis Jansen",
-  "homepage": "https://github.com/janis-me/themed#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/janis-me/themed.git"
-  },
-  "license": "MIT",
   "keywords": [
     "CSS",
     "SCSS",
     "Theme"
   ],
-  "engines": {
-    "node": ">=22.11.0"
+  "homepage": "https://github.com/janis-me/themed#readme",
+  "bugs": {
+    "url": "https://github.com/janis-me/themed/issues"
   },
-  "packageManager": "pnpm@10.8.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janis-me/themed.git"
+  },
+  "license": "MIT",
+  "author": "Janis Jansen",
   "type": "module",
+  "directories": {
+    "example": "examples"
+  },
   "scripts": {
     "build": "pnpm --filter=./packages/themed --filter=./packages/react-themed build",
-    "build:watch": "pnpm exec bash ./packages/scripts/build-watch.sh",
     "build:all": "pnpm exec bash ./packages/scripts/build-all.sh",
     "build:docs": "pnpm  --filter=./packages/docs build",
+    "build:watch": "pnpm exec bash ./packages/scripts/build-watch.sh",
     "dev:docs": "pnpm  --filter=./packages/docs dev",
-    "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
-    "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
     "example:react": "pnpm --filter=./examples/vite-react dev",
-    "format:all": "pnpm --parallel --filter=* format",
+    "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
+    "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
+    "format": "prettier --write .",
+    "lint": "eslint --flag unstable_config_lookup_from_file .",
     "publish:all": "pnpm exec bash ./packages/scripts/publish.sh",
-    "publish:themed": "pnpm publish packages/themed --access public",
     "publish:react-themed": "pnpm publish packages/react-themed --access public",
+    "publish:themed": "pnpm publish packages/themed --access public",
     "test:browser": "vitest"
   },
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "catalog:formatter",
     "@vitest/browser": "catalog:",
     "playwright": "catalog:",
+    "prettier": "catalog:formatter",
+    "prettier-plugin-packagejson": "catalog:formatter",
     "typescript": "catalog:",
     "vitest": "catalog:"
+  },
+  "packageManager": "pnpm@10.8.0",
+  "engines": {
+    "node": ">=22.11.0"
   }
 }

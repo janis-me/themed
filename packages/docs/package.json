@@ -1,10 +1,10 @@
 {
   "name": "@komplett/docs",
   "scripts": {
-    "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview",
-    "format": "prettier . --write"
+    "dev": "vitepress dev",
+    "format": "prettier . --write",
+    "preview": "vitepress preview"
   },
   "devDependencies": {
     "prettier": "catalog:",

@@ -1,0 +1,48 @@
+@use 'sass:meta';
+@use 'sass:color';
+@use 'sass:map';
+
+@function saturation-modifier($key, $value, $theme-name, $themes) {
+  $results: ();
+
+  @if meta.type-of($value) == 'color' {
+    @each $saturation in $saturation-steps {
+      $new-value: color.to-space(
+        color.change($value, $saturation: $saturation * 1%, $space: $saturation-colorspace),
+        $saturation-colorspace
+      );
+
+      $results: map.merge(
+        $results,
+        (
+          '#{$key}#{$saturation-prefix}#{$saturation}': $new-value,
+        )
+      );
+    }
+  }
+
+  @return $results;
+}
+
+// Ugly way of returning a "dynamic" function:
+// Just use SCSS globals...
+$saturation-steps: (80, 60, 40, 20);
+$saturation-prefix: '--s';
+$saturation-colorspace: oklch;
+/**
+* The saturation modifier adds each theme value with a given saturation value,
+* as defined by "steps". By default, using saturation values of 80%, 60%, 40% and 20%
+*/
+@function saturation($steps: null, $prefix: null, $colorspace: null) {
+  @if $steps {
+    $saturation-steps: $steps !global;
+  }
+  @if $prefix {
+    $saturation-prefix: $prefix !global;
+  }
+  @if $colorspace {
+    $saturation-colorspace: $colorspace !global;
+  }
+
+  @return meta.get-function(saturation-modifier);
+}

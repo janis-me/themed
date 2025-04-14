@@ -1,0 +1,48 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:color';
+
+@function alpha-modifier($key, $value, $theme-name, $themes) {
+  $results: ();
+
+  @if meta.type-of($value) == 'color' {
+    @each $alpha in $alpha-steps {
+      $new-value: color.to-space(
+        color.change($value, $alpha: calc($alpha / 100), $space: $alpha-colorspace),
+        $alpha-colorspace
+      );
+
+      $results: map.merge(
+        $results,
+        (
+          '#{$key}#{$alpha-prefix}#{$alpha}': $new-value,
+        )
+      );
+    }
+  }
+
+  @return $results;
+}
+
+// Ugly way of returning a "dynamic" function:
+// Just use SCSS globals...
+$alpha-steps: (80, 60, 40, 20);
+$alpha-prefix: '--a';
+$alpha-colorspace: oklch;
+/**
+* The alpha modifier adds each theme value with a given alpha value,
+* as defined by "steps". By default, using alpha values of 80%, 60%, 40% and 20%
+*/
+@function alpha($steps: null, $prefix: null, $colorspace: null) {
+  @if $steps {
+    $alpha-steps: $steps !global;
+  }
+  @if $prefix {
+    $alpha-prefix: $prefix !global;
+  }
+  @if $colorspace {
+    $alpha-colorspace: $colorspace !global;
+  }
+
+  @return meta.get-function(alpha-modifier);
+}
