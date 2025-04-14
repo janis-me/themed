@@ -23,6 +23,7 @@
   "scripts": {
     "build": "pnpm --filter=@janis.me/themed --filter=@janis.me/react-themed build",
     "build:docs": "pnpm  --filter=@janis.me/themed-docs build",
+    "build:playground": "pnpm  --filter=@janis.me/themed-playground build",
     "format": "prettier --write .",
     "lint": "eslint --flag unstable_config_lookup_from_file .",
     "publish:react-themed": "pnpm publish packages/react-themed --access public",
