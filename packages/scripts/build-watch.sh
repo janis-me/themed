@@ -1,1 +1,0 @@
-pnpm --parallel --filter=./packages/themed --filter=./packages/react-themed build:watch
