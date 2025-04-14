@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
 
-import '@fontsource/ibm-plex-mono';
+import '@fontsource/ibm-plex-mono/400.css';
 import './styles/main.scss';
 
 createRoot(document.getElementById('root')!).render(
