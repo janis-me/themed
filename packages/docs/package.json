@@ -1,5 +1,5 @@
 {
-  "name": "@komplett/docs",
+  "name": "@janis.me/themed-docs",
   "scripts": {
     "build": "vitepress build",
     "dev": "vitepress dev",
