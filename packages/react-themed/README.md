@@ -1,1 +1,1 @@
-../themed/README.md
+../../README.md
