@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import '@xterm/xterm/css/xterm.css';
 import './Terminal.scss';
 
+import { useTheme } from '@janis.me/react-themed/js';
 import { Resizable } from 're-resizable';
 
 export interface TerminalProps {
@@ -12,11 +13,23 @@ export interface TerminalProps {
 }
 
 export default function Terminal({ onMount, onResize }: TerminalProps) {
+  const { theme } = useTheme();
   const terminalElementRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<XTerm>(null);
 
   useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.options.theme = {
+        background: theme === 'dark' ? '#1e1e1e' : '#ffffff',
+        foreground: theme === 'dark' ? '#fafafa' : '#1e1e1e',
+      };
+    }
+  }, [theme]);
+
+  useEffect(() => {
     const initializeXterm = async () => {
+      if (terminalRef.current) throw new Error('Terminal already initialized');
+
       const { Terminal: XTerm } = await import('@xterm/xterm');
       const { FitAddon } = await import('@xterm/addon-fit');
       const { WebLinksAddon } = await import('@xterm/addon-web-links');
@@ -35,6 +48,7 @@ export default function Terminal({ onMount, onResize }: TerminalProps) {
         },
       });
 
+      if (terminalRef.current) throw new Error('Terminal already initialized');
       terminalRef.current = terminal;
 
       terminal.loadAddon(fitAddon);
@@ -56,10 +70,14 @@ export default function Terminal({ onMount, onResize }: TerminalProps) {
     const res = initializeXterm();
 
     return () => {
-      res.then(([terminal, resizeObserver]) => {
-        terminal.dispose();
-        resizeObserver.disconnect();
-      });
+      res
+        .then(([terminal, resizeObserver]) => {
+          terminal.dispose();
+          resizeObserver.disconnect();
+        })
+        .catch(error => {
+          console.error('Terminal error:', error);
+        });
     };
   }, []);
 

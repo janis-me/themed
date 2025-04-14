@@ -6,8 +6,9 @@
 
 html,
 body {
-  color: themed('text');
-  background-color: themed('background');
+  color: themed('grey-12');
+  background-color: themed('grey-1');
+  font-family: 'IBM Plex Mono', monospace;
 
   margin: 0;
   padding: 0;

@@ -13,9 +13,8 @@
 // Ugly way of returning a "dynamic" function:
 // Just use SCSS globals...
 $colorspace-space: oklch;
-/**
-* The colorspace modifier converts every color in the theme to oklch space.
-*/
+
+// The colorspace modifier converts every color in the theme to oklch space.
 @function colorspace($space: null) {
   @if $space {
     $colorspace-space: $space !global;

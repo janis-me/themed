@@ -52,13 +52,10 @@ $prefix: 'themed';
   --#{$prefix}-#{$key}: #{$value};
 }
 
-/**
-* Given a map of themes, checks all maps to be valid, have equal keys etc,
-* Then, saves the themes to global variables to do compile-time checks later and
-* creates CSS variables for each theme.
-*
-* the `$prefix` is used for the CSS variable, for example
-*/
+// Given a map of themes, checks all maps to be valid, have equal keys etc,
+// Then, saves the themes to global variables to do compile-time checks later and
+// creates CSS variables for each theme.
+// the `prefix` is used for the CSS variable, for example
 @mixin register($themes, $prefix: 'themed') {
   @if not verify-themes($themes) {
     @error "Unable to check themes, see error above.";
@@ -72,9 +69,7 @@ $prefix: 'themed';
   $prefix: $prefix !global;
 }
 
-/**
-* Verifies themes and then applies them to the documentElement.
-*/
+// Verifies themes and then applies them to the documentElement.
 @mixin apply($themes, $prefix: 'themed') {
   @include register($themes, $prefix);
 
@@ -90,11 +85,9 @@ $prefix: 'themed';
   }
 }
 
-/*
-* Returns a value from the current theme, checking for validity
-* You could also just use the `var()` directly, but this function
-* provides a nice way to check for validity and shows a better error message
-*/
+// Returns a value from the current theme, checking for validity
+// You could also just use the `var()` directly, but this function
+// provides a nice way to check for validity and shows a better error message
 @function themed($name, $verify: true) {
   @if list.length($themes-map) == 0 {
     @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
@@ -109,10 +102,8 @@ $prefix: 'themed';
   @return var(--#{$prefix}-#{$name});
 }
 
-/*
-* Return a themes variable without any type-checking or using CSS variables,
-* Useful for custom theming logic on a component level
-*/
+// Return a themes variable without any type-checking or using CSS variables,
+// Useful for custom theming logic on a component level
 @function unthemed($name, $theme: null, $verify: true) {
   @if list.length($themes-map) == 0 {
     @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
@@ -139,10 +130,8 @@ $prefix: 'themed';
 // Helper methods/mixins
 // ------------
 
-/**
-* A function that applies the given transformer function to each value of all themes.
-* This can be used to dynamically alter themes, adding more variables to them.
-*/
+// A function that applies the given transformer function to each value of all themes.
+// This can be used to dynamically alter themes, adding more variables to them.
 @function modify-themes($themes, $transformers...) {
   $result-map: $themes;
 

@@ -21,6 +21,7 @@
   "exports": {
     ".": "./dist/index.scss",
     "./modifiers": "./dist/modifiers.scss",
+    "./modifiers/*": "./dist/modifiers/*.scss",
     "./js": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"

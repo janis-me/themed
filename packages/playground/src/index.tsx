@@ -4,10 +4,13 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App.tsx';
 
+import '@fontsource/ibm-plex-mono';
 import './styles/main.scss';
 
 createRoot(document.getElementById('root')!).render(
-  <ThemeProvider defaultTheme={getPreferredColorScheme()}>
-    <App />
-  </ThemeProvider>,
+  <StrictMode>
+    <ThemeProvider defaultTheme={getPreferredColorScheme()}>
+      <App />
+    </ThemeProvider>
+  </StrictMode>,
 );
