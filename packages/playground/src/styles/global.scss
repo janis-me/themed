@@ -1,0 +1,9 @@
+@forward '@janis.me/react-themed';
+
+@use 'sass:meta';
+@use '@janis.me/react-themed' as themed;
+@use './themes.scss';
+
+$theme-map: meta.module-variables('themes');
+
+@include themed.register($theme-map);

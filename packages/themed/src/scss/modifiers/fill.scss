@@ -26,9 +26,7 @@
   @return $results;
 }
 
-/**
-* The fill modifier ensures that all 'secondary' themes have the values of the 'primary' theme by copying missing values
-*/
+// The fill modifier ensures that all 'secondary' themes have the values of the 'primary' theme by copying missing values
 @function fill() {
   @return meta.get-function(fill-modifier);
 }

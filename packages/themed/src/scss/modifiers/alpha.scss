@@ -29,10 +29,9 @@
 $alpha-steps: (80, 60, 40, 20);
 $alpha-prefix: '--a';
 $alpha-colorspace: oklch;
-/**
-* The alpha modifier adds each theme value with a given alpha value,
-* as defined by "steps". By default, using alpha values of 80%, 60%, 40% and 20%
-*/
+
+// The alpha modifier adds each theme value with a given alpha value,
+// as defined by "steps". By default, using alpha values of 80%, 60%, 40% and 20%
 @function alpha($steps: null, $prefix: null, $colorspace: null) {
   @if $steps {
     $alpha-steps: $steps !global;

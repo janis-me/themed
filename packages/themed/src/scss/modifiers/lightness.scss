@@ -29,10 +29,9 @@
 $lightness-steps: (80, 60, 40, 20);
 $lightness-prefix: '--l';
 $lightness-colorspace: oklch;
-/**
-* The lightness modifier adds each theme value with a given lightness value,
-* as defined by "steps". By default, using lightness values of 80%, 60%, 40% and 20%
-*/
+
+// The lightness modifier adds each theme value with a given lightness value,
+// as defined by "steps". By default, using lightness values of 80%, 60%, 40% and 20%
 @function lightness($steps: null, $prefix: null, $colorspace: null) {
   @if $steps {
     $lightness-steps: $steps !global;

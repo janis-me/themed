@@ -1,0 +1,29 @@
+.app {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 60px 1fr;
+
+  &__container {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+  }
+}
+
+.header {
+}
+
+.app__editor-input {
+  position: relative;
+  border-right: 1px solid themed('grey-6');
+}
+
+.app__editor-output {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
