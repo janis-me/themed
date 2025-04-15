@@ -15,23 +15,48 @@
   }
 }
 
+// Everything below this is just to showcase.
+
 html,
 body {
-  color: themed('text');
-  background-color: themed('background');
+  color: themed('grey-12');
+  background-color: themed('grey-1');
   margin: 0;
-  width: 100vw;
-  height: 100vh;
+  padding: 0;
 }
 
-#app {
-  margin: 0;
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+h1 {
+  code {
+    vertical-align: middle;
+  }
+}
+
+code {
+  font-weight: 400;
+  color: themed('teal-9');
+  background-color: themed('grey-3');
+  border-radius: 3px;
+  padding: 6px 8px;
+  font-size: 1rem;
 }
 
 main {
   // 'unthemed' get's values from the default theme, or the theme given as a second argument.
   padding: 0 calc(unthemed('default-padding') * 4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+}
+
+#app {
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  height: 100vh;
+  width: 100vw;
+}
+
+#logo {
+  max-height: 128px;
 }

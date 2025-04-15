@@ -24,7 +24,7 @@ export default function Terminal({ onMount, onResize }: TerminalProps) {
         foreground: theme === 'dark' ? '#fafafa' : '#1e1e1e',
       };
     }
-  }, [theme]);
+  }, [theme, terminalRef.current]);
 
   useEffect(() => {
     const initializeXterm = async () => {
@@ -44,7 +44,8 @@ export default function Terminal({ onMount, onResize }: TerminalProps) {
         convertEol: true,
         fontFamily: 'IBM Plex Mono, courier-new, courier, monospace',
         theme: {
-          background: '#1e1e1e',
+          background: theme === 'dark' ? '#1e1e1e' : '#ffffff',
+          foreground: theme === 'dark' ? '#fafafa' : '#1e1e1e',
         },
       });
 

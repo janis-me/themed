@@ -1,7 +1,8 @@
 header {
-  height: 60px;
+  height: 100%;
   padding: themed('default-padding') 32px;
-  background-color: themed('grey-1--a40');
+  background-color: themed('grey-3');
+  border-bottom: 1px solid themed('grey-6');
   display: flex;
   align-items: center;
   justify-content: space-between;

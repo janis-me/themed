@@ -1,15 +1,13 @@
 // This file is just used to demonstrate, that you can use the themed function in all your files.
 
 button {
-  color: themed('text');
-  background-color: themed('grey-3');
+  color: themed('grey-12');
+  background-color: themed('teal-9');
   border: none;
-  border-radius: themed('border-radius');
-  padding: calc(unthemed('default-padding') / 2) themed('default-padding');
-
+  padding: 6px 8px;
   cursor: pointer;
 
   &:hover {
-    background-color: themed('grey-3--l80');
+    background-color: themed('teal-10');
   }
 }
