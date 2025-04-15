@@ -21,24 +21,23 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "pnpm --filter=./packages/themed --filter=./packages/react-themed build",
-    "build:all": "pnpm exec bash ./packages/scripts/build-all.sh",
-    "build:docs": "pnpm  --filter=./packages/docs build",
-    "build:watch": "pnpm exec bash ./packages/scripts/build-watch.sh",
-    "dev:docs": "pnpm  --filter=./packages/docs dev",
-    "example:react": "pnpm --filter=./examples/vite-react dev",
-    "example:vanilla-extended": "pnpm --filter=./examples/vite-vanilla-extended dev",
-    "example:vanilla-simple": "pnpm --filter=./examples/vite-vanilla-simple dev",
+    "build": "pnpm --filter=@janis.me/themed build && pnpm --filter=@janis.me/react-themed build",
+    "build:docs": "pnpm build && pnpm  --filter=@janis.me/themed-docs build",
+    "build:playground": "pnpm build && pnpm  --filter=@janis.me/themed-playground build",
+    "build:watch": "pnpm --parallel --filter=@janis.me/themed --filter=@janis.me/react-themed build:watch",
     "format": "prettier --write .",
     "lint": "eslint --flag unstable_config_lookup_from_file .",
-    "publish:all": "pnpm exec bash ./packages/scripts/publish.sh",
     "publish:react-themed": "pnpm publish packages/react-themed --access public",
     "publish:themed": "pnpm publish packages/themed --access public",
-    "test:browser": "vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "catalog:formatter",
+    "@janis.me/linter-config": "workspace:*",
+    "@janis.me/typescript-config": "workspace:*",
     "@vitest/browser": "catalog:",
+    "eslint": "catalog:linter",
+    "jiti": "catalog:linter",
     "playwright": "catalog:",
     "prettier": "catalog:formatter",
     "prettier-plugin-packagejson": "catalog:formatter",

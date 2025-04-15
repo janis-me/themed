@@ -9,7 +9,8 @@ export default defineConfig({
   base: '',
   plugins: [
     dts({
-      exclude: ['node_modules', 'vite.config.ts'],
+      include: ['src'],
+      exclude: ['node_modules', '*.config.ts'],
     }),
     react(),
   ],
@@ -22,7 +23,7 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
-      external: [...(Object.keys(pkg.peerDependencies) || {}), 'react/jsx-runtime'],
+      external: [...Object.keys(pkg.peerDependencies), 'react/jsx-runtime'],
       preserveEntrySignatures: 'strict',
     },
   },

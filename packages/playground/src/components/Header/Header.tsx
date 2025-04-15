@@ -1,14 +1,13 @@
-import { useTheme } from '@janis.me/react-themed/js';
 import { Moon, Sun } from 'lucide-react';
+
+import { useTheme } from '@janis.me/react-themed/js';
 
 import ExampleSelect from '../ExampleSelect/ExampleSelect';
 
 import './Header.scss';
 
-export interface HeaderProps {}
-
-export default function Header({}: HeaderProps) {
-  const { theme, toggleTheme } = useTheme();
+export default function Header() {
+  const { theme, setTheme, toggleTheme } = useTheme();
 
   return (
     <nav className="header">
@@ -20,7 +19,12 @@ export default function Header({}: HeaderProps) {
         <ExampleSelect />
       </div>
 
-      <button className="header__theme-toggle" onClick={toggleTheme}>
+      <button
+        className="header__theme-toggle"
+        onClick={() => {
+          setTheme(toggleTheme());
+        }}
+      >
         {theme === 'dark' ? <Sun /> : <Moon />}
       </button>
     </nav>

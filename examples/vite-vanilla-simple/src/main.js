@@ -1,14 +1,24 @@
-import { getTheme, toggleTheme } from '@janis.me/themed/js';
+import { getThemeFromDocument, setDefaultTheme, setTheme, toggleTheme } from '@janis.me/themed/js';
 
 import './styles/main.scss';
 
-const toggleThemeButton = document.getElementById('toggle-theme-button');
-const getThemeButton = document.getElementById('get-theme-button');
+function setupThemed() {
+  // When first loaded, you might want to set the default theme for the user.
+  // This way, you don't have to set the data-theme attribute yourself, and the user will instantly see their preferred theme.
+  // This will not save anything to localstorage, so we don't assume the users preferences
+  setDefaultTheme();
 
-toggleThemeButton.addEventListener('click', () => {
-  toggleTheme();
-});
+  const toggleThemeButton = document.getElementById('toggle-theme-button');
+  const getThemeButton = document.getElementById('get-theme-button');
 
-getThemeButton.addEventListener('click', () => {
-  alert(`The current theme is: ${getTheme()}`);
-});
+  toggleThemeButton.addEventListener('click', () => {
+    const newTheme = toggleTheme();
+    setTheme(newTheme);
+  });
+
+  getThemeButton.addEventListener('click', () => {
+    alert(`The current theme is: ${getThemeFromDocument()}`);
+  });
+}
+
+setupThemed();

@@ -1,31 +1,33 @@
 import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
 
-import { editorAtom } from '../../atoms';
+import { exampleAtom } from '../../atoms';
 import { EXAMPLES } from '../../constants';
 
 import './ExampleSelect.scss';
 
-export interface ExampleSelectProps {}
+export default function ExampleSelect() {
+  const [example, setExample] = useAtom(exampleAtom);
 
-export default function ExampleSelect({}: ExampleSelectProps) {
-  const [_, setEditorValue] = useAtom(editorAtom);
-  const [example, setExample] = useState<keyof typeof EXAMPLES>('simple');
-
-  useEffect(() => {
-    if (example) {
-      setEditorValue(EXAMPLES[example]);
+  const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = event => {
+    const selectedExample = event.target.value;
+    if (Object.keys(EXAMPLES).includes(selectedExample)) {
+      const example = selectedExample as keyof typeof EXAMPLES;
+      setExample(example);
+    } else {
+      setExample(null);
     }
-  }, [example, setEditorValue]);
+  };
 
   return (
-    <select
-      name="example"
-      className="example-select"
-      onChange={e => setExample(e.target.value as keyof typeof EXAMPLES)}
-    >
-      <option value="simple">Simple</option>
-      <option value="modifiers">Modifiers</option>
+    <select name="example" className="example-select" value={example ?? ''} onChange={handleSelectChange}>
+      <option value="" disabled>
+        Select an example
+      </option>
+      {Object.keys(EXAMPLES).map(example => (
+        <option key={example} value={example}>
+          {example}
+        </option>
+      ))}
     </select>
   );
 }
