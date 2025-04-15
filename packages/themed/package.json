@@ -42,12 +42,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@janis.me/linter-config": "workspace:*",
+    "@janis.me/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "prettier": "catalog:",
     "sass": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
-    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-dts": "^4.5.3",
     "vite-plugin-static-copy": "^2.3.1"
   },
   "packageManager": "pnpm@10.0.0",

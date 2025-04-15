@@ -33,7 +33,11 @@
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "catalog:formatter",
+    "@janis.me/linter-config": "workspace:*",
+    "@janis.me/typescript-config": "workspace:*",
     "@vitest/browser": "catalog:",
+    "eslint": "catalog:linter",
+    "jiti": "catalog:linter",
     "playwright": "catalog:",
     "prettier": "catalog:formatter",
     "prettier-plugin-packagejson": "catalog:formatter",

@@ -1,3 +1,5 @@
+import { createContext, JSX, useContext, useEffect, useMemo, useReducer } from 'react';
+
 import {
   getPreferredColorScheme as _getPreferredColorScheme,
   getTheme as _getTheme,
@@ -8,7 +10,6 @@ import {
   THEME_LOCALSTORAGE_KEY,
   ThemeOption,
 } from '@janis.me/themed/js';
-import { createContext, JSX, useContext, useEffect, useMemo, useReducer } from 'react';
 
 type Action = {
   type: 'setActiveTheme';

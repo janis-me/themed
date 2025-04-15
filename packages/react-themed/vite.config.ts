@@ -9,7 +9,8 @@ export default defineConfig({
   base: '',
   plugins: [
     dts({
-      exclude: ['node_modules', 'vite.config.ts'],
+      include: ['src'],
+      exclude: ['node_modules', '*.config.ts'],
     }),
     react(),
   ],
