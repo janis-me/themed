@@ -50,8 +50,6 @@ function App() {
     }
   };
 
-  const handleTerminalResize = (_: { rows: number; cols: number }) => {};
-
   return (
     <div className="app">
       <Header />
@@ -71,7 +69,7 @@ function App() {
         </Resizable>
         <div className="app__editor-output">
           <Editor value={resultValue} path="result.css" />
-          <Terminal onMount={handleTerminalMount} onResize={handleTerminalResize} />
+          <Terminal onMount={handleTerminalMount} />
         </div>
       </div>
     </div>

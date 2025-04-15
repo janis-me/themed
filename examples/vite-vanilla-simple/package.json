@@ -13,6 +13,8 @@
     "@janis.me/themed": "workspace:*"
   },
   "devDependencies": {
+    "@janis.me/linter-config": "workspace:*",
+    "@janis.me/typescript-config": "workspace:*",
     "prettier": "catalog:",
     "sass": "catalog:",
     "vite": "catalog:"

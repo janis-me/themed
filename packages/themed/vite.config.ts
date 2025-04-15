@@ -6,7 +6,6 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import * as pkg from './package.json';
 
 export default defineConfig({
-  base: '',
   plugins: [
     viteStaticCopy({
       structured: false,
@@ -18,7 +17,8 @@ export default defineConfig({
       ],
     }),
     dts({
-      exclude: ['node_modules', 'vite.config.ts'],
+      include: ['src'],
+      exclude: ['node_modules', '*.config.ts'],
     }),
   ],
   build: {

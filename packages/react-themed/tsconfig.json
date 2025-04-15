@@ -1,1 +1,5 @@
-{ "extends": "../../tsconfig.json", "include": ["src", "vite.config.ts"] }
+{
+  "extends": "@janis.me/typescript-config/react.json",
+  "include": ["*.config.ts", "src"],
+  "exclude": ["node_modules", "dist"]
+}

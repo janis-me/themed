@@ -1,3 +1,5 @@
+import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
+
 import {
   getPreferredColorScheme as _getPreferredColorScheme,
   getTheme as _getTheme,
@@ -8,15 +10,14 @@ import {
   THEME_LOCALSTORAGE_KEY,
   ThemeOption,
 } from '@janis.me/themed/js';
-import { createContext, JSX, useContext, useEffect, useMemo, useReducer } from 'react';
 
-type Action = {
+interface Action {
   type: 'setActiveTheme';
   data: { theme: ThemeOption | string };
-};
+}
 
 type Dispatch = (action: Action) => void;
-type ThemeProviderProps = {
+interface ThemeProviderProps {
   children: React.ReactNode;
   /** Can be set to override the default theme. Usually you would want themed to figure out the theme to show to a user */
   defaultTheme?: ThemeOption | string;
@@ -28,21 +29,22 @@ type ThemeProviderProps = {
   saveToLocalstorage?: boolean;
   /** The key to use for localstorage. If not given, will default to THEME_LOCALSTORAGE_KEY */
   localstorageThemeKey?: string;
-};
+}
 
 interface State {
-  activeTheme: ThemeOption | string | null;
+  activeTheme: ThemeOption | string;
 }
 
 const ThemeStateContext = createContext<{ state: State; dispatch: Dispatch } | null>(null);
 
 function themeReducer(state: State, action: Action): State {
   switch (action.type) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- remove when more actions are added
     case 'setActiveTheme': {
       return { ...state, activeTheme: action.data.theme };
     }
     default: {
-      throw new Error(`Unhandled action type: ${(action as { type: unknown }).type}`);
+      throw new Error(`Unhandled action type: ${String(action.type)}`);
     }
   }
 }
@@ -75,7 +77,7 @@ function ThemeProvider({
   watchThemeAttribute = true,
   saveToLocalstorage = true,
   localstorageThemeKey = THEME_LOCALSTORAGE_KEY,
-}: ThemeProviderProps): JSX.Element {
+}: ThemeProviderProps) {
   const initialTheme = defaultTheme ?? _getTheme(localstorageThemeKey);
 
   const [state, dispatch] = useReducer(themeReducer, {
@@ -86,15 +88,15 @@ function ThemeProvider({
   useEffect(() => {
     let unregisterMediaObserver: (() => void) | undefined;
     if (watchPreferredColorScheme) {
-      unregisterMediaObserver = _watchPreferredColorScheme(newTheme =>
-        _setTheme(newTheme, saveToLocalstorage, localstorageThemeKey),
-      );
+      unregisterMediaObserver = _watchPreferredColorScheme(newTheme => {
+        _setTheme(newTheme, saveToLocalstorage, localstorageThemeKey);
+      });
     }
 
     return () => {
       unregisterMediaObserver?.();
     };
-  }, [watchPreferredColorScheme]);
+  }, [localstorageThemeKey, saveToLocalstorage, watchPreferredColorScheme]);
 
   // Watches the documentElement for changes in the theme attribute
   // and updates the state on changes.
@@ -118,9 +120,10 @@ function ThemeProvider({
     if (state.activeTheme) {
       _setTheme(state.activeTheme, saveToLocalstorage, localstorageThemeKey);
     }
-  }, [state.activeTheme]);
+  }, [localstorageThemeKey, saveToLocalstorage, state.activeTheme]);
 
   const value = { state, dispatch };
+
   return <ThemeStateContext.Provider value={value}>{children}</ThemeStateContext.Provider>;
 }
 
@@ -128,7 +131,7 @@ export interface UseThemeResult {
   /**
    * The currently active theme
    */
-  theme: ThemeOption | string | null;
+  theme: ThemeOption | string;
   /**
    * Sets the theme to the given value. Will set the theme on the documentElement and localstorage.
    *
