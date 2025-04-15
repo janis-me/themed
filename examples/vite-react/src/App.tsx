@@ -3,10 +3,11 @@ import { toggleTheme as toggleThemeImperatively, useTheme } from '@janis.me/reac
 import Button from './components/Button';
 
 function App() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, setTheme } = useTheme();
 
   const handleToggleTheme = () => {
-    toggleTheme();
+    const newTheme = toggleTheme();
+    setTheme(newTheme);
   };
 
   const handlePromptTheme = () => {
@@ -14,12 +15,16 @@ function App() {
   };
 
   const handleClickToggleImteratively = () => {
-    toggleThemeImperatively();
+    setTheme(toggleThemeImperatively());
   };
 
   return (
     <>
-      <Button onClick={handleToggleTheme}>toggle theme</Button>
+      <Button id="toggle-theme-button" onClick={handleToggleTheme}>
+        toggle theme
+      </Button>
+      <img id="logo" src="/themed-logo.png" alt="themed logo" />
+
       <h1>
         Welcome to <b>@janis.me/themed</b>
       </h1>

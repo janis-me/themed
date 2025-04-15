@@ -77,8 +77,6 @@ function ThemeProvider({
   localstorageThemeKey = THEME_LOCALSTORAGE_KEY,
 }: ThemeProviderProps): JSX.Element {
   const initialTheme = defaultTheme ?? _getTheme(localstorageThemeKey);
-  console.log(initialTheme);
-  _setTheme(initialTheme);
 
   const [state, dispatch] = useReducer(themeReducer, {
     activeTheme: initialTheme,
