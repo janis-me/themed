@@ -14,6 +14,7 @@ const themed = {
 };
 
 export function compile(value: string, terminal: XTerm): string {
+  terminal.clear();
   terminal.writeln('Compiling...');
   const startTime = performance.now();
 
@@ -56,14 +57,12 @@ export function compile(value: string, terminal: XTerm): string {
     const endTime = performance.now();
     const time = (endTime - startTime).toFixed(2);
 
-    terminal.clear();
     terminal.writeln(`Compiled successfully in ${time}ms`);
     return res.css;
   } catch (error) {
     const endTime = performance.now();
     const time = (endTime - startTime).toFixed(2);
 
-    terminal.clear();
     terminal.writeln(`${COLOR.red}Error (after ${time}ms):`);
     terminal.writeln((error as Error).message);
   }
