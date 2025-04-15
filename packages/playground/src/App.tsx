@@ -1,7 +1,7 @@
 import { Terminal as XTerm } from '@xterm/xterm';
 import { useAtom } from 'jotai';
 import { Resizable } from 're-resizable';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { editorAtom, exampleAtom } from './atoms';
 import { compile } from './compile';
@@ -42,13 +42,9 @@ function App() {
     }
   };
 
-  const handleTerminalMount = (xterm: XTerm) => {
+  const handleTerminalMount = useCallback((xterm: XTerm) => {
     xTermRef.current = xterm;
-    // force recompilation after xterm is mounted
-    if (editorValue) {
-      setResultValue(compile(editorValue, xterm));
-    }
-  };
+  }, []);
 
   return (
     <div className="app">
