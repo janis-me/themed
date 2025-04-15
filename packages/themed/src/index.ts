@@ -51,6 +51,16 @@ export function setTheme(
 }
 
 /**
+ * When first loaded, you might want to set the default theme for the user.
+ * This way, you don't have to set the `data-theme` attribute yourself, and the user will instantly see their preferred theme.
+ *
+ * This will not save anything to localstorage, so we don't assume the users preferences
+ */
+export function setDefaultTheme() {
+  setTheme(getTheme(), false);
+}
+
+/**
  * Gets the theme from the `document element`, if it exists.
  *
  * @returns The theme or null

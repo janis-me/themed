@@ -18,6 +18,7 @@ type Action = {
 type Dispatch = (action: Action) => void;
 type ThemeProviderProps = {
   children: React.ReactNode;
+  /** Can be set to override the default theme. Usually you would want themed to figure out the theme to show to a user */
   defaultTheme?: ThemeOption | string;
   /** If false, will not watch updates to window.matchMedia, so listening to the preferred color scheme changing */
   watchPreferredColorScheme?: boolean;
@@ -76,6 +77,8 @@ function ThemeProvider({
   localstorageThemeKey = THEME_LOCALSTORAGE_KEY,
 }: ThemeProviderProps): JSX.Element {
   const initialTheme = defaultTheme ?? _getTheme(localstorageThemeKey);
+  console.log(initialTheme);
+  _setTheme(initialTheme);
 
   const [state, dispatch] = useReducer(themeReducer, {
     activeTheme: initialTheme,

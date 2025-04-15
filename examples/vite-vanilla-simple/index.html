@@ -1,19 +1,21 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<!-- Note that we didn't set the data-theme attribute here. We do that in the main.js file -->
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/themed-logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@janis.me/themed example!</title>
   </head>
   <body>
     <div id="app">
-      <button id="toggle-theme-button">toggle theme</button>
-      <h1>Welcome to <b>@janis.me/themed</b></h1>
+      <img id="logo" src="/themed-logo.png" alt="themed logo" />
+      <h1>Welcome to <code>@janis.me/themed</code></h1>
       <p>
         This example shows you you can style things like
         <button id="get-theme-button">Buttons</button> with <b>@janis.me/themed</b> in pure SCSS
       </p>
+      <button id="toggle-theme-button">toggle theme</button>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
