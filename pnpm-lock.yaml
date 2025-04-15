@@ -57,20 +57,20 @@ catalogs:
       specifier: ^2.4.2
       version: 2.4.2
     typescript-eslint:
-      specifier: ^8.26.1
+      specifier: ^8.30.1
       version: 8.30.1
   react:
     '@types/react':
-      specifier: ^19.0.8
-      version: 19.1.1
+      specifier: ^19.1.2
+      version: 19.1.2
     '@types/react-dom':
-      specifier: ^19.0.3
+      specifier: ^19.1.2
       version: 19.1.2
     react:
-      specifier: ^19.0.0
+      specifier: ^19.1.0
       version: 19.1.0
     react-dom:
-      specifier: ^19.0.0
+      specifier: ^19.1.0
       version: 19.1.0
 
 importers:
@@ -128,10 +128,10 @@ importers:
     devDependencies:
       '@types/react':
         specifier: catalog:react
-        version: 19.1.1
+        version: 19.1.2
       '@types/react-dom':
         specifier: catalog:react
-        version: 19.1.2(@types/react@19.1.1)
+        version: 19.1.2(@types/react@19.1.2)
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
@@ -148,6 +148,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/themed
     devDependencies:
+      '@janis.me/linter-config':
+        specifier: workspace:*
+        version: link:../../packages/linter-config
+      '@janis.me/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
@@ -164,6 +170,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/themed
     devDependencies:
+      '@janis.me/linter-config':
+        specifier: workspace:*
+        version: link:../../packages/linter-config
+      '@janis.me/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
@@ -195,8 +207,8 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3(@algolia/client-search@5.23.3)(@types/node@22.14.1)(postcss@8.5.3)(sass-embedded@1.86.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
       vitepress-plugin-group-icons:
-        specifier: ^1.3.5
-        version: 1.5.1
+        specifier: ^1.5.2
+        version: 1.5.2
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
@@ -248,6 +260,9 @@ importers:
       '@monaco-editor/react':
         specifier: ^4.7.0
         version: 4.7.0(monaco-editor@0.52.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
       '@xterm/addon-fit':
         specifier: ^0.10.0
         version: 0.10.0(@xterm/xterm@5.5.0)
@@ -262,7 +277,7 @@ importers:
         version: 5.1.1
       jotai:
         specifier: ^2.12.3
-        version: 2.12.3(@types/react@19.1.1)(react@19.1.0)
+        version: 2.12.3(@types/react@19.1.2)(react@19.1.0)
       lucide-react:
         specifier: ^0.488.0
         version: 0.488.0(react@19.1.0)
@@ -278,10 +293,10 @@ importers:
     devDependencies:
       '@types/react':
         specifier: catalog:react
-        version: 19.1.1
+        version: 19.1.2
       '@types/react-dom':
         specifier: catalog:react
-        version: 19.1.2(@types/react@19.1.1)
+        version: 19.1.2(@types/react@19.1.2)
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
@@ -309,10 +324,10 @@ importers:
         version: 22.14.1
       '@types/react':
         specifier: catalog:react
-        version: 19.1.1
+        version: 19.1.2
       '@types/react-dom':
         specifier: catalog:react
-        version: 19.1.2(@types/react@19.1.1)
+        version: 19.1.2(@types/react@19.1.2)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
         version: 4.3.4(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
@@ -1291,8 +1306,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react@19.1.1':
-    resolution: {integrity: sha512-ePapxDL7qrgqSF67s0h9m412d9DbXyC1n59O2st+9rjuuamWsZuD2w55rqY12CbzsZ7uVXb5Nw0gEp9Z8MMutQ==}
+  '@types/react@19.1.2':
+    resolution: {integrity: sha512-oxLPMytKchWGbnQM9O7D67uPa9paTNxO7jVoNMXgkkErULBPhPARCfkKL9ytcIJJRGjbsVwW4ugJzyFFvm/Tiw==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -3222,8 +3237,8 @@ packages:
       yaml:
         optional: true
 
-  vitepress-plugin-group-icons@1.5.1:
-    resolution: {integrity: sha512-IF4xZ5C/BNbod7QFJk3z3XnxckJPw1Dc1pHUQp7FaJxPRt0Y7j11fM1krSR1S8D5FBEpbYp7KJI9XVmrpFOU5w==}
+  vitepress-plugin-group-icons@1.5.2:
+    resolution: {integrity: sha512-zen07KxZ83y3eecou4EraaEgwIriwHaB5Q0cHAmS4yO1UZEQvbljTylHPqiJ7LNkV39U8VehfcyquAJXg/26LA==}
 
   vitepress@1.6.3:
     resolution: {integrity: sha512-fCkfdOk8yRZT8GD9BFqusW3+GggWYZ/rYncOfmgcDtP3ualNHCAg+Robxp2/6xfH1WwPHtGpPwv7mbA3qomtBw==}
@@ -4185,11 +4200,11 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/react-dom@19.1.2(@types/react@19.1.1)':
+  '@types/react-dom@19.1.2(@types/react@19.1.2)':
     dependencies:
-      '@types/react': 19.1.1
+      '@types/react': 19.1.2
 
-  '@types/react@19.1.1':
+  '@types/react@19.1.2':
     dependencies:
       csstype: 3.1.3
 
@@ -5410,9 +5425,9 @@ snapshots:
 
   jju@1.4.0: {}
 
-  jotai@2.12.3(@types/react@19.1.1)(react@19.1.0):
+  jotai@2.12.3(@types/react@19.1.2)(react@19.1.0):
     optionalDependencies:
-      '@types/react': 19.1.1
+      '@types/react': 19.1.2
       react: 19.1.0
 
   js-tokens@4.0.0: {}
@@ -6373,7 +6388,7 @@ snapshots:
       sass: 1.86.3
       sass-embedded: 1.86.3
 
-  vitepress-plugin-group-icons@1.5.1:
+  vitepress-plugin-group-icons@1.5.2:
     dependencies:
       '@iconify-json/logos': 1.2.4
       '@iconify-json/vscode-icons': 1.2.19

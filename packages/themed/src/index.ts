@@ -1,7 +1,7 @@
-export const DEFAULT_THEME = 'dark' as const;
+export const DEFAULT_THEME = 'dark';
 
-export const THEME_ATTRIBUTE_NAME = 'data-theme' as const;
-export const THEME_LOCALSTORAGE_KEY = 'user-preferred-theme' as const;
+export const THEME_ATTRIBUTE_NAME = 'data-theme';
+export const THEME_LOCALSTORAGE_KEY = 'user-preferred-theme';
 
 /**
  * Either light or dark. Some functions only accept/return those. Some functions can also take other strings.
@@ -27,7 +27,7 @@ export function getTheme(
   return (
     getThemeFromLocalstorage(localstorageThemeKey) ??
     getPreferredColorScheme() ??
-    getTheme() ??
+    getThemeFromLocalstorage() ??
     fallback ??
     DEFAULT_THEME
   );
@@ -38,11 +38,7 @@ export function getTheme(
  *
  * @returns void
  */
-export function setTheme(
-  theme: ThemeOption | string,
-  toLocalStorage: boolean = true,
-  key: string = THEME_LOCALSTORAGE_KEY,
-) {
+export function setTheme(theme: ThemeOption | string, toLocalStorage = true, key: string = THEME_LOCALSTORAGE_KEY) {
   document.documentElement.setAttribute(THEME_ATTRIBUTE_NAME, theme);
 
   if (toLocalStorage) {
@@ -120,6 +116,7 @@ export function toggleTheme(): ThemeOption {
  * @returns the preferred theme. or `undefined`
  */
 export function getPreferredColorScheme(): ThemeOption | undefined {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- no, it's not guaranteed to exist. Thanks eslint :)
   if (window.matchMedia) {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';

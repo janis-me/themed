@@ -19,14 +19,18 @@ function setupThemed() {
   const toggleThemeButton = document.getElementById('toggle-theme-button');
   const getThemeButton = document.getElementById('get-theme-button');
 
-  toggleThemeButton.addEventListener('click', () => {
-    const newTheme = toggleTheme();
-    setTheme(newTheme);
-  });
+  if (toggleThemeButton) {
+    toggleThemeButton.addEventListener('click', () => {
+      const newTheme = toggleTheme();
+      setTheme(newTheme);
+    });
+  }
 
-  getThemeButton.addEventListener('click', () => {
-    alert(`The current theme is: ${getThemeFromDocument()}`);
-  });
+  if (getThemeButton) {
+    getThemeButton.addEventListener('click', () => {
+      alert(`The current theme is: ${getThemeFromDocument()}`);
+    });
+  }
 }
 
 setupThemed();

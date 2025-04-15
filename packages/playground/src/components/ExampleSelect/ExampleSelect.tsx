@@ -5,9 +5,7 @@ import { EXAMPLES } from '../../constants';
 
 import './ExampleSelect.scss';
 
-export interface ExampleSelectProps {}
-
-export default function ExampleSelect({}: ExampleSelectProps) {
+export default function ExampleSelect() {
   const [example, setExample] = useAtom(exampleAtom);
 
   const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = event => {

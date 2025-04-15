@@ -1,6 +1,7 @@
-import { useTheme } from '@janis.me/react-themed/js';
 import MonacoEditor, { Monaco, OnChange, OnMount } from '@monaco-editor/react';
 import { useEffect, useRef } from 'react';
+
+import { useTheme } from '@janis.me/react-themed/js';
 
 import './Editor.scss';
 
@@ -19,13 +20,13 @@ export default function Editor({ value, path, readonly = false, onChange, onMoun
 
   const handleMount: OnMount = (editor, monaco) => {
     monacoRef.current = monaco;
-    monacoRef.current?.editor.setTheme(theme === 'dark' ? 'vs-dark' : 'vs');
+    monacoRef.current.editor.setTheme(theme === 'dark' ? 'vs-dark' : 'vs');
     onMount?.(editor, monaco);
   };
 
   useEffect(() => {
     monacoRef.current?.editor.setTheme(theme === 'dark' ? 'vs-dark' : 'vs');
-  }, [theme, monacoRef.current]);
+  }, [theme]);
 
   return (
     <MonacoEditor
@@ -34,7 +35,7 @@ export default function Editor({ value, path, readonly = false, onChange, onMoun
       path={path}
       value={value}
       onMount={handleMount}
-      onChange={onChange}
+      onChange={(val, ev) => onChange?.(val, ev)}
       options={{
         readOnly: readonly,
         minimap: { enabled: false },

@@ -22,8 +22,12 @@ export function compile(value: string, terminal: XTerm): string {
       alertAscii: true,
       alertColor: true,
       logger: {
-        debug: message => terminal.writeln(message),
-        warn: message => terminal.writeln(`${COLOR.yellow}Warning: ${message}`),
+        debug: message => {
+          terminal.writeln(message);
+        },
+        warn: message => {
+          terminal.writeln(`${COLOR.yellow}Warning: ${message}`);
+        },
       },
       importers: [
         {
@@ -37,7 +41,7 @@ export function compile(value: string, terminal: XTerm): string {
           load(canonicalUrl) {
             const sanitized = canonicalUrl.href.replace('pkg:', '').replace('.scss', '');
             const path = sanitized.split('@janis.me/themed')[1] as keyof typeof themed;
-            const contents = themed[path]?.default;
+            const contents = themed[path].default;
 
             if (!contents) throw new Error(`Could not resolve module ${canonicalUrl}`);
 

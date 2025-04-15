@@ -23,7 +23,7 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
-      external: [...(Object.keys(pkg.peerDependencies) || {}), 'react/jsx-runtime'],
+      external: [...Object.keys(pkg.peerDependencies), 'react/jsx-runtime'],
       preserveEntrySignatures: 'strict',
     },
   },
