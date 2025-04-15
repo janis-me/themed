@@ -1,19 +1,19 @@
+import { FitAddon } from '@xterm/addon-fit';
+import { WebLinksAddon } from '@xterm/addon-web-links';
 import { Terminal as XTerm } from '@xterm/xterm';
+import { Resizable } from 're-resizable';
 import { useEffect, useRef } from 'react';
+
+import { useTheme } from '@janis.me/react-themed/js';
 
 import '@xterm/xterm/css/xterm.css';
 import './Terminal.scss';
 
-import { Resizable } from 're-resizable';
-
-import { useTheme } from '@janis.me/react-themed/js';
-
 export interface TerminalProps {
   onMount: (xterm: XTerm) => void;
-  onResize?: (terminalMeta: { rows: number; cols: number }) => void;
 }
 
-export default function Terminal({ onMount, onResize }: TerminalProps) {
+export default function Terminal({ onMount }: TerminalProps) {
   const { theme } = useTheme();
   const terminalElementRef = useRef<HTMLDivElement>(null);
   const terminalRef = useRef<XTerm>(null);
@@ -25,19 +25,11 @@ export default function Terminal({ onMount, onResize }: TerminalProps) {
         foreground: theme === 'dark' ? '#fafafa' : '#1e1e1e',
       };
     }
-  }, [theme, terminalRef.current]);
+  }, [theme]);
 
   useEffect(() => {
-    const initializeXterm = async () => {
-      if (terminalRef.current) throw new Error('Terminal already initialized');
-      if (!terminalElementRef.current) throw new Error('Terminal element ref is null');
-
-      const { Terminal: XTerm } = await import('@xterm/xterm');
-      const { FitAddon } = await import('@xterm/addon-fit');
-      const { WebLinksAddon } = await import('@xterm/addon-web-links');
-
-      const element = terminalElementRef.current;
-
+    const initializeXterm = () => {
+      console.log('Initializing terminal');
       const fitAddon = new FitAddon();
       const webLinksAddon = new WebLinksAddon();
 
@@ -51,37 +43,29 @@ export default function Terminal({ onMount, onResize }: TerminalProps) {
         },
       });
 
-      terminalRef.current = terminal;
-
       terminal.loadAddon(fitAddon);
       terminal.loadAddon(webLinksAddon);
-      terminal.open(element);
-
-      const resizeObserver = new ResizeObserver(() => {
-        fitAddon.fit();
-        onResize?.({ rows: terminal.rows, cols: terminal.cols });
-      });
-
-      resizeObserver.observe(element);
 
       onMount(terminal);
 
-      return [terminal, resizeObserver] as const;
+      return terminal;
     };
 
-    const res = initializeXterm();
+    const terminal = initializeXterm();
+
+    terminalRef.current = terminal;
+    const element = terminalElementRef.current;
+    if (element) {
+      element.innerHTML = '';
+      terminal.open(element);
+    }
 
     return () => {
-      res
-        .then(([terminal, resizeObserver]) => {
-          terminal.dispose();
-          resizeObserver.disconnect();
-        })
-        .catch((error: unknown) => {
-          console.error('Terminal error:', error);
-        });
+      console.log('Disposing terminal');
+      terminal.dispose();
     };
-  }, [onMount, onResize, theme]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- theme updates are not handled here
+  }, [onMount]);
 
   return (
     <Resizable
