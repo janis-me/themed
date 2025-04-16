@@ -46,7 +46,7 @@
     "@janis.me/typescript-config": "workspace:*",
     "@types/node": "catalog:",
     "prettier": "catalog:",
-    "sass": "catalog:",
+    "sass-embedded": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plugin-dts": "^4.5.3",
