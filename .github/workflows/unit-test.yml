@@ -31,5 +31,7 @@ jobs:
         cache: 'pnpm'
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
-    - run: npm run build
-    - run: npm test
+    - run: pnpm build
+- ```
+    - run: pnpm dlx playwright install
+    - run: pnpm test
