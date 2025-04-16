@@ -32,6 +32,5 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
     - run: pnpm build
-- ```
     - run: pnpm dlx playwright install
     - run: pnpm test
