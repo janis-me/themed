@@ -1,9 +1,7 @@
 import { assert, expect, test } from 'vitest';
 
-import { jsx } from './utils';
-
-test('properly handles form inputs', () => {
-  const testElem = jsx`<h1 id="title" style={{color: "red";}}>Hello, Vitest!</h1>;`;
+test('general rendering', () => {
+  const testElem = `<h1 id="title" style="color: red">Hello, Vitest!</h1>;`;
 
   document.body.innerHTML = testElem;
 
@@ -16,8 +14,6 @@ test('properly handles form inputs', () => {
 
   // Ensure the title text is correct
   expect(title.textContent).toBe('Hello, Vitest!');
-
-  // Check if styles are applied (optional)
-  const color = getComputedStyle(title).color;
-  console.log(color);
+  expect(title.style.color).toBe('red');
+  expect(getComputedStyle(title).color).toBe('rgb(255, 0, 0)');
 });
