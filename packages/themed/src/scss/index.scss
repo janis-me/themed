@@ -2,15 +2,48 @@
 @use 'sass:meta';
 @use 'sass:list';
 
-// An empty map that will be filled with the given themes, once the `@themes` mixin was called
-$themes-map: ();
-// List of all keys in the themes to check which keys exist.
-$theme-keys: ();
-// The string used to prefix all CSS variables
-$prefix: 'themed';
+// ------------
+// global SCSS variables
+// ------------
 
-@function verify-themes($themes) {
-  @if not meta.type-of($themes-map) == 'map' {
+// An empty map that will be filled with the given themes, once the `@check` mixin was called
+$__global__themes-map: ();
+// List of all keys in the themes to check which keys exist.
+$__global__theme-keys: ();
+// The string used to prefix all CSS variables
+$__global__prefix: 'themed';
+
+// ------------
+// Helper methods/mixins
+// ------------
+
+// A function that applies the given plugins to each value of every theme.
+// This can be used to dynamically alter themes, adding more variables to them etc.
+@function _apply-plugins($themes, $plugins...) {
+  $result-map: $themes;
+
+  @each $theme-name, $theme-map in $themes {
+    $theme-result: $theme-map;
+
+    @each $plugin in $plugins {
+      $plugin-result: $theme-result;
+
+      @each $key, $value in $theme-map {
+        $result: meta.call($plugin, $key, $value, $theme-name, $themes);
+        $plugin-result: map.merge($plugin-result, $result);
+      }
+
+      $theme-result: map.merge($theme-result, $plugin-result);
+    }
+
+    $result-map: map.deep-merge($result-map, (#{$theme-name}: $theme-result));
+  }
+
+  @return $result-map;
+}
+
+@function _verify-themes($themes) {
+  @if not meta.type-of($__global__themes-map) == 'map' {
     @error "The given themes variable is not a valid SCSS map.";
     @return false;
   }
@@ -48,37 +81,42 @@ $prefix: 'themed';
   @return true;
 }
 
+// ------------
+// public facing functions / mixins
+// ------------
+
 @mixin make-css-variable($prefix, $key, $value) {
   --#{$prefix}-#{$key}: #{$value};
 }
 
 // Given a map of themes, checks all maps to be valid, have equal keys etc,
-// Then, saves the themes to global variables to do compile-time checks later and
-// creates CSS variables for each theme.
-// the `prefix` is used for the CSS variable, for example
-@mixin register($themes, $prefix: 'themed') {
-  @if not verify-themes($themes) {
-    @error "Unable to check themes, see error above.";
+// Then, saves the themes to global variables to do compile-time checks later
+// the `prefix` is used for the CSS variables only.
+@mixin check($themes, $prefix: 'themed', $plugins: []) {
+  @if not _verify-themes($themes) {
+    @error "Error while checking themes. See error above.";
   }
 
   // Populate the global themes variable. This is later used just for validation etc.
-  $themes-map: $themes !global;
+  $__global__themes-map: $themes !global;
   // Register valid keys. We checked that all maps have the same keys, so we just get the ones from the first theme.
-  $theme-keys: map.keys(list.nth(map.values($themes-map), 1)) !global;
+  $__global__theme-keys: map.keys(list.nth(map.values($__global__themes-map), 1)) !global;
   // Prefix used for CSS variables
-  $prefix: $prefix !global;
+  $__global__prefix: $prefix !global;
 }
 
 // Verifies themes and then applies them to the documentElement.
-@mixin apply($themes, $prefix: 'themed') {
-  @include register($themes, $prefix);
+@mixin apply($themes, $prefix: 'themed', $plugins: []) {
+  @include check($themes, $prefix);
 
-  @each $theme-name, $theme-map in $themes {
+  $_themes: _apply-plugins($themes, $plugins...);
+
+  @each $theme-name, $theme-map in $_themes {
     html[data-theme='#{$theme-name}'] {
       // Register the default variables for each theme
       @each $key, $val in $theme-map {
         @include make-css-variable($prefix, $key, $val);
-
+        // Add extra content for each theme.
         @content ($prefix, $key, $val, $theme-name);
       }
     }
@@ -89,68 +127,39 @@ $prefix: 'themed';
 // You could also just use the `var()` directly, but this function
 // provides a nice way to check for validity and shows a better error message
 @function themed($name, $verify: true) {
-  @if list.length($themes-map) == 0 {
+  @if list.length($__global__themes-map) == 0 {
     @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($theme-keys, $name) == null {
+  } @else if $verify and list.index($__global__theme-keys, $name) == null {
     @error "'#{$name}' is not defined in your themes.";
   }
 
-  @return var(--#{$prefix}-#{$name});
+  @return var(--#{$__global__prefix}-#{$name});
 }
 
 // Return a themes variable without any type-checking or using CSS variables,
 // Useful for custom theming logic on a component level
 @function unthemed($name, $theme: null, $verify: true) {
-  @if list.length($themes-map) == 0 {
+  @if list.length($__global__themes-map) == 0 {
     @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($theme-keys, $name) == null {
+  } @else if $verify and list.index($__global__theme-keys, $name) == null {
     @error "'#{$name}' is not defined in your themes.";
   }
 
   @if $theme {
-    $themes-entry: map.get($themes-map, $theme);
+    $themes-entry: map.get($__global__themes-map, $theme);
     @return map.get($themes-entry, $name);
   }
 
-  $primary-theme-name: list.nth(map.keys($themes-map), 1);
-  $primary-theme: map.get($themes-map, $primary-theme-name);
+  $primary-theme-name: list.nth(map.keys($__global__themes-map), 1);
+  $primary-theme: map.get($__global__themes-map, $primary-theme-name);
 
   @return map.get($primary-theme, $name);
-}
-
-// ------------
-// Helper methods/mixins
-// ------------
-
-// A function that applies the given transformer function to each value of all themes.
-// This can be used to dynamically alter themes, adding more variables to them.
-@function modify-themes($themes, $transformers...) {
-  $result-map: $themes;
-
-  @each $theme-name, $theme-map in $themes {
-    $theme-result: $theme-map;
-
-    @each $transformer in $transformers {
-      $transformer-result: $theme-result;
-
-      @each $key, $value in $theme-map {
-        $result: meta.call($transformer, $key, $value, $theme-name, $themes);
-        $transformer-result: map.merge($transformer-result, $result);
-      }
-
-      $theme-result: map.merge($theme-result, $transformer-result);
-    }
-
-    $result-map: map.deep-merge($result-map, (#{$theme-name}: $theme-result));
-  }
-
-  @return $result-map;
 }

@@ -26,12 +26,12 @@ body {
 }
 `;
 
-const EXAMPLE_MODIFIERS = `@use '@janis.me/themed';
-@use '@janis.me/themed/modifiers';
+const EXAMPLE_PLUGINS = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
 
 @use 'sass:meta';
 
-$raw-theme-map: (
+$themes: (
   light: (
     'text': #1e1f24,
     'background': #f1f1f1,
@@ -48,18 +48,15 @@ $raw-theme-map: (
   )
 );
 
-// modify-themes is used to apply any number of modifiers onto the themes.
-$theme-map: themed.modify-themes(
-  $raw-theme-map,
-  modifiers.fill(),
-  modifiers.colorspace(),
-  modifiers.alpha(),
-  modifiers.lightness()
-);
-
 $theme-prefix: 'my-var';
 
-@include themed.apply($theme-map, $theme-prefix);
+@include themed.apply($themes, $theme-prefix, $plugins: [
+  // This is valid SCSS, not an error. Don't let it fool you.
+  plugins.fill(),
+  plugins.colorspace(),
+  plugins.alpha(),
+  plugins.lightness()
+]);
 `;
 
 const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
@@ -94,7 +91,7 @@ $theme-prefix: 'my-var';
 
 export const EXAMPLES = {
   simple: EXAMPLE_SIMPLE,
-  modifiers: EXAMPLE_MODIFIERS,
+  plugins: EXAMPLE_PLUGINS,
   customization: EXAMPLE_CUSTOMIZATION,
 };
 

@@ -5,12 +5,12 @@ import { COLOR } from './constants';
 
 const themed = {
   '': await import('@janis.me/themed?raw'),
-  '/modifiers': await import('@janis.me/themed/modifiers?raw'),
-  '/modifiers/alpha': await import('@janis.me/themed/modifiers/alpha?raw'),
-  '/modifiers/colorspace': await import('@janis.me/themed/modifiers/colorspace?raw'),
-  '/modifiers/fill': await import('@janis.me/themed/modifiers/fill?raw'),
-  '/modifiers/lightness': await import('@janis.me/themed/modifiers/lightness?raw'),
-  '/modifiers/saturation': await import('@janis.me/themed/modifiers/saturation?raw'),
+  '/plugins': await import('@janis.me/themed/plugins?raw'),
+  '/plugins/alpha': await import('@janis.me/themed/plugins/alpha?raw'),
+  '/plugins/colorspace': await import('@janis.me/themed/plugins/colorspace?raw'),
+  '/plugins/fill': await import('@janis.me/themed/plugins/fill?raw'),
+  '/plugins/lightness': await import('@janis.me/themed/plugins/lightness?raw'),
+  '/plugins/saturation': await import('@janis.me/themed/plugins/saturation?raw'),
 };
 
 export function compile(value: string, terminal: XTerm): string {
