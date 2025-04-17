@@ -22,6 +22,7 @@
     ".": "./dist/index.scss",
     "./plugins": "./dist/plugins.scss",
     "./plugins/*": "./dist/plugins/*.scss",
+    "./utils": "./dist/utils.scss",
     "./js": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"

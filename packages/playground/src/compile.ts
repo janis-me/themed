@@ -4,7 +4,8 @@ import * as sass from 'sass';
 import { COLOR } from './constants';
 
 const themed = {
-  '': await import('@janis.me/themed?raw'),
+  '/index': await import('@janis.me/themed?raw'),
+  '/utils': await import('@janis.me/themed/utils?raw'),
   '/plugins': await import('@janis.me/themed/plugins?raw'),
   '/plugins/alpha': await import('@janis.me/themed/plugins/alpha?raw'),
   '/plugins/colorspace': await import('@janis.me/themed/plugins/colorspace?raw'),
@@ -14,13 +15,58 @@ const themed = {
   '/plugins/p3': await import('@janis.me/themed/plugins/p3?raw'),
 };
 
-export function compile(value: string, terminal: XTerm): string {
+function canonicalize(url: string, _: sass.CanonicalizeContext): URL {
+  const sanitizedUrl = url.replace('pkg:', '');
+
+  if (sanitizedUrl.startsWith('@janis.me/themed') && import.meta.env.MODE === 'development') {
+    if (sanitizedUrl === '@janis.me/themed') {
+      return new URL(`pkg:${sanitizedUrl}/index.scss`);
+    } else {
+      return new URL(`pkg:${sanitizedUrl}.scss`);
+    }
+  }
+
+  return new URL(`https://unpkg.com/${sanitizedUrl}`);
+}
+
+async function load(url: URL): Promise<sass.ImporterResult> {
+  if (url.href.startsWith('pkg:')) {
+    console.log(`Loading ${url} from local @janis.me/themed installation`);
+    let fileUrl = url.href.replace('pkg:@janis.me/themed', '');
+    fileUrl = fileUrl.replace('.scss', '');
+
+    return {
+      contents: themed[fileUrl as keyof typeof themed].default,
+      syntax: 'scss',
+    };
+  }
+
+  if (url.href.startsWith('./utils')) {
+    return {
+      contents: themed['/utils'].default,
+      syntax: 'scss',
+    };
+  }
+
+  const unpkgRes = await fetch(url.href);
+  if (!unpkgRes.ok) {
+    throw new Error(`Failed to fetch ${url.href}: ${unpkgRes.statusText}`);
+  }
+  const content = await unpkgRes.text();
+
+  return {
+    contents: content,
+    syntax: 'scss',
+  };
+}
+
+export async function compile(value: string, terminal: XTerm): Promise<string> {
   terminal.clear();
   terminal.writeln('Compiling...');
   const startTime = performance.now();
 
   try {
-    const res = sass.compileString(value, {
+    const res = await sass.compileStringAsync(value, {
       alertAscii: true,
       alertColor: true,
       logger: {
@@ -33,25 +79,8 @@ export function compile(value: string, terminal: XTerm): string {
       },
       importers: [
         {
-          canonicalize(url) {
-            const sanitized = url.replace('pkg:', '');
-            if (!sanitized.startsWith('@janis.me/themed'))
-              throw new Error(`@use and @import statements only work with '@janis.me/themed'`);
-
-            return new URL(`pkg:${sanitized}`);
-          },
-          load(canonicalUrl) {
-            const sanitized = canonicalUrl.href.replace('pkg:', '').replace('.scss', '');
-            const path = sanitized.split('@janis.me/themed')[1] as keyof typeof themed;
-            const contents = themed[path].default;
-
-            if (!contents) throw new Error(`Could not resolve module ${canonicalUrl}`);
-
-            return {
-              contents,
-              syntax: 'scss',
-            };
-          },
+          canonicalize,
+          load,
         },
       ],
     });

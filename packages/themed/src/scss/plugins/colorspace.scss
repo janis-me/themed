@@ -1,24 +1,43 @@
 @use 'sass:meta';
 @use 'sass:color';
 
-@function colorspace-modifier($key, $value, $theme-name, $themes) {
-  @if meta.type-of($value) == 'color' {
-    $results: (#{$key}: color.to-space($value, $colorspace-space));
-    @return $results;
+$__themed__plugin-colorspace__name: 'themed-plugin-colorspace';
+
+// globals;
+$__themed__plugin-colorspace__space: null;
+
+@function colorspace-modifier($themes, $prefix) {
+  $result-map: $themes;
+
+  @each $theme-name, $theme-map in $themes {
+    $theme-result: $theme-map;
+
+    @each $key, $value in $theme-map {
+      @if meta.type-of($value) == 'color' {
+        $theme-result: map.merge($theme-result, (#{$key}: color.to-space($value, $colorspace-space)));
+      }
+    }
+
+    $result-map: map.deep-merge(
+      $result-map,
+      (
+        '#{$theme-name}': $theme-result,
+      )
+    );
   }
 
-  @return ();
+  @return $result-map;
 }
 
-// Ugly way of returning a "dynamic" function:
-// Just use SCSS globals...
-$colorspace-space: oklch;
-
 // The colorspace modifier converts every color in the theme to oklch space.
-@function colorspace($space: null) {
+@function colorspace($space) {
+  @debug meta.type-of($space);
+
   @if $space {
     $colorspace-space: $space !global;
+  } @else {
+    @error "[#{$__themed__plugin-colorspace__name}]: Please provide a valid colorspace See https://developer.mozilla.org/en-US/docs/Glossary/Color_space#named_color_spaces.";
   }
 
-  @return meta.get-function(colorspace-modifier);
+  @return ('name': $__themed__plugin-p3__name, 'extend': meta.get-function('__themed__plugin-p3__extend'));
 }

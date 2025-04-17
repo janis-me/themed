@@ -132,8 +132,8 @@ $__themed__prefix: 'themed';
   @each $plugin in $plugins {
     $plugin-name: map.get($plugin, 'name');
 
-    @if map.has-key($plugin, 'flag') {
-      $plugin-flag-mixin: map.get($plugin, 'flag');
+    @if map.has-key($plugin, 'extend') {
+      $plugin-flag-mixin: map.get($plugin, 'extend');
 
       @if meta.type-of($plugin-flag-mixin) == 'mixin' {
         // the 'core' of flag plugins: Apply the defined mixins.
