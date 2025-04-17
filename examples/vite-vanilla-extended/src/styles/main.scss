@@ -1,6 +1,9 @@
 @use 'sass:meta';
 @use 'sass:color';
 
+@use './themes.scss';
+@use '@janis.me/themed/plugins';
+
 @import './button.scss';
 @import './header.scss';
 
@@ -9,7 +12,8 @@
 // In this example, we generate each variable of the dark theme with a lighter value.
 // NOTE: Because these CSS variables are not included in the theme map, they can also not be type-checked.
 // Another note: The $theme-map and $theme-prefix variables are defined in globals.scss
-@include apply($theme-map, $theme-prefix) using ($prefix, $key, $value, $theme) {
+@include apply(themes.$themes, $theme-prefix, $plugins: plugins.p3(themes.$high-contrast) plugins.fill()) using
+  ($prefix, $key, $value, $theme) {
   @if $theme == 'dark' and meta.type-of($value) == 'color' {
     @include make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
   }

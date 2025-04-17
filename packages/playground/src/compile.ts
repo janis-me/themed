@@ -11,6 +11,7 @@ const themed = {
   '/plugins/fill': await import('@janis.me/themed/plugins/fill?raw'),
   '/plugins/lightness': await import('@janis.me/themed/plugins/lightness?raw'),
   '/plugins/saturation': await import('@janis.me/themed/plugins/saturation?raw'),
+  '/plugins/p3': await import('@janis.me/themed/plugins/p3?raw'),
 };
 
 export function compile(value: string, terminal: XTerm): string {

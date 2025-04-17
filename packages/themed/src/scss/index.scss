@@ -1,3 +1,5 @@
+@use './utils';
+
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:list';
@@ -7,11 +9,11 @@
 // ------------
 
 // An empty map that will be filled with the given themes, once the `@check` mixin was called
-$__global__themes-map: ();
-// List of all keys in the themes to check which keys exist.
-$__global__theme-keys: ();
+$__themed__themes-map: ();
+// List of all keys in the (primary) theme to check which keys exist.
+$__themed__theme-keys: ();
 // The string used to prefix all CSS variables
-$__global__prefix: 'themed';
+$__themed__prefix: 'themed';
 
 // ------------
 // Helper methods/mixins
@@ -22,28 +24,29 @@ $__global__prefix: 'themed';
 @function _apply-plugins($themes, $plugins...) {
   $result-map: $themes;
 
-  @each $theme-name, $theme-map in $themes {
-    $theme-result: $theme-map;
+  @each $plugin in $plugins {
+    $plugin-name: map.get($plugin, 'name');
 
-    @each $plugin in $plugins {
-      $plugin-result: $theme-result;
+    @if map.has-key($plugin, 'modify') {
+      $plugin-modify-function: map.get($plugin, 'modify');
+      $plugin-result: $result-map;
 
-      @each $key, $value in $theme-map {
-        $result: meta.call($plugin, $key, $value, $theme-name, $themes);
-        $plugin-result: map.merge($plugin-result, $result);
+      @if meta.type-of($plugin-modify-function) == 'function' {
+        // Call the plugin 'modify' function with all themes and the prefix.
+        $plugin-result: meta.call($plugin-modify-function, $result-map, $__themed__prefix);
+      } @else {
+        @warn "Themed: Modify function for plugin '#{$plugin-name}' is not a valid function. Skipping.";
       }
 
-      $theme-result: map.merge($theme-result, $plugin-result);
+      $result-map: map.deep-merge($result-map, $plugin-result);
     }
-
-    $result-map: map.deep-merge($result-map, (#{$theme-name}: $theme-result));
   }
 
   @return $result-map;
 }
 
 @function _verify-themes($themes) {
-  @if not meta.type-of($__global__themes-map) == 'map' {
+  @if not meta.type-of($__themed__themes-map) == 'map' {
     @error "The given themes variable is not a valid SCSS map.";
     @return false;
   }
@@ -81,41 +84,71 @@ $__global__prefix: 'themed';
   @return true;
 }
 
+// Applies the given plugins and calls _veryify-themes to check if the themes are valid.
+// This function is called by the `check` and `apply` mixins.
+// It's worth noting that SCSS explicitly discourages functions from having side-effects like setting global variables.
+// We do this, however, to allow users of this library to be able to use @include apply() and @include check
+// Without having to do something like meta.call(check())...
+//
+// This function basically just exists so we only have to call _apply-plugins once in the @apply mixin.
+@function _apply-and-check($themes, $prefix, $plugins) {
+  $_themes: _apply-plugins($themes, $plugins...);
+
+  @if not _verify-themes($_themes) {
+    @error "Error while checking themes. See error above.";
+  }
+
+  // Populate the global themes variable. This is later used just for validation etc.
+  $__themed__themes-map: $themes !global;
+  // Register valid keys. We checked that all maps have the same keys, so we just get the ones from the first theme.
+  $__themed__theme-keys: map.keys(list.nth(map.values($__themed__themes-map), 1)) !global;
+  // Prefix used for CSS variables
+  $__themed__prefix: $prefix !global;
+
+  @return $_themes;
+}
+
 // ------------
 // public facing functions / mixins
 // ------------
-
-@mixin make-css-variable($prefix, $key, $value) {
-  --#{$prefix}-#{$key}: #{$value};
-}
 
 // Given a map of themes, checks all maps to be valid, have equal keys etc,
 // Then, saves the themes to global variables to do compile-time checks later
 // the `prefix` is used for the CSS variables only.
 @mixin check($themes, $prefix: 'themed', $plugins: []) {
-  @if not _verify-themes($themes) {
-    @error "Error while checking themes. See error above.";
+  // This if check is used just to call the _apply-and-check function.
+  // We split this from the 'check' mixin to be able to get the applied plugins in
+  // the 'apply' mixin. This way we don't have to apply plugins twice.
+  @if meta.call(meta.get-function(_apply-and-check), $themes, $prefix, $plugins) {
   }
-
-  // Populate the global themes variable. This is later used just for validation etc.
-  $__global__themes-map: $themes !global;
-  // Register valid keys. We checked that all maps have the same keys, so we just get the ones from the first theme.
-  $__global__theme-keys: map.keys(list.nth(map.values($__global__themes-map), 1)) !global;
-  // Prefix used for CSS variables
-  $__global__prefix: $prefix !global;
 }
 
 // Verifies themes and then applies them to the documentElement.
 @mixin apply($themes, $prefix: 'themed', $plugins: []) {
-  @include check($themes, $prefix);
+  // This applies all 'modify' plugins and checks that all themes are valid.
+  $_themes: _apply-and-check($themes, $prefix, $plugins);
 
-  $_themes: _apply-plugins($themes, $plugins...);
+  // Next, we execute all 'flag' plugins:
+  @each $plugin in $plugins {
+    $plugin-name: map.get($plugin, 'name');
+
+    @if map.has-key($plugin, 'flag') {
+      $plugin-flag-mixin: map.get($plugin, 'flag');
+
+      @if meta.type-of($plugin-flag-mixin) == 'mixin' {
+        // the 'core' of flag plugins: Apply the defined mixins.
+        @include meta.apply($plugin-flag-mixin, $_themes, $prefix);
+      } @else {
+        @warn "Themed: Filter mixin for plugin '#{$plugin-name}' is not a valid mixin. Skipping.";
+      }
+    }
+  }
 
   @each $theme-name, $theme-map in $_themes {
     html[data-theme='#{$theme-name}'] {
       // Register the default variables for each theme
       @each $key, $val in $theme-map {
-        @include make-css-variable($prefix, $key, $val);
+        @include utils.make-css-variable($prefix, $key, $val);
         // Add extra content for each theme.
         @content ($prefix, $key, $val, $theme-name);
       }
@@ -127,39 +160,39 @@ $__global__prefix: 'themed';
 // You could also just use the `var()` directly, but this function
 // provides a nice way to check for validity and shows a better error message
 @function themed($name, $verify: true) {
-  @if list.length($__global__themes-map) == 0 {
-    @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
+  @if list.length($__themed__themes-map) == 0 {
+    @error "There are no themes registered. You probably forgot to call 'check' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($__global__theme-keys, $name) == null {
+  } @else if $verify and list.index($__themed__theme-keys, $name) == null {
     @error "'#{$name}' is not defined in your themes.";
   }
 
-  @return var(--#{$__global__prefix}-#{$name});
+  @return var(--#{$__themed__prefix}-#{$name});
 }
 
 // Return a themes variable without any type-checking or using CSS variables,
 // Useful for custom theming logic on a component level
 @function unthemed($name, $theme: null, $verify: true) {
-  @if list.length($__global__themes-map) == 0 {
-    @error "There are no themes registered. You probably forgot to call 'register' or 'apply'";
+  @if list.length($__themed__themes-map) == 0 {
+    @error "There are no themes registered. You probably forgot to call 'check' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "'#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($__global__theme-keys, $name) == null {
+  } @else if $verify and list.index($__themed__theme-keys, $name) == null {
     @error "'#{$name}' is not defined in your themes.";
   }
 
   @if $theme {
-    $themes-entry: map.get($__global__themes-map, $theme);
+    $themes-entry: map.get($__themed__themes-map, $theme);
     @return map.get($themes-entry, $name);
   }
 
-  $primary-theme-name: list.nth(map.keys($__global__themes-map), 1);
-  $primary-theme: map.get($__global__themes-map, $primary-theme-name);
+  $primary-theme-name: list.nth(map.keys($__themed__themes-map), 1);
+  $primary-theme: map.get($__themed__themes-map, $primary-theme-name);
 
   @return map.get($primary-theme, $name);
 }

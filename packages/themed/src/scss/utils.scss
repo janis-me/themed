@@ -1,0 +1,3 @@
+@mixin make-css-variable($prefix, $key, $value) {
+  --#{$prefix}-#{$key}: #{$value};
+}

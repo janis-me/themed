@@ -38,6 +38,7 @@ $themes: (
     'grey-1': #fcfcfd,
     'grey-2': #f9f9fb,
     'grey-3': #eff0f3,
+    'teal-9': #16b6b3,
   ),
   dark: (
     'text': #eeeef0,
@@ -45,18 +46,23 @@ $themes: (
     'grey-1': #202123,
     'grey-2': #27282a,
     'grey-3': #303033,
+    'teal-9': #16b6b3,
   )
 );
 
+$high-contrast: (
+  light: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+  ),
+  dark: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+  ),
+);
+
+
 $theme-prefix: 'my-var';
 
-@include themed.apply($themes, $theme-prefix, $plugins: [
-  // This is valid SCSS, not an error. Don't let it fool you.
-  plugins.fill(),
-  plugins.colorspace(),
-  plugins.alpha(),
-  plugins.lightness()
-]);
+@include themed.apply($themes, $theme-prefix, $plugins: plugins.fill() plugins.p3($high-contrast));
 `;
 
 const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
