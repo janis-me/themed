@@ -7,12 +7,10 @@ const themed = {
   index: await import('@janis.me/themed?raw'),
   utils: await import('@janis.me/themed/utils?raw'),
   plugins: await import('@janis.me/themed/plugins?raw'),
-  'plugins/alpha': await import('@janis.me/themed/plugins/alpha?raw'),
   'plugins/colorspace': await import('@janis.me/themed/plugins/colorspace?raw'),
   'plugins/fill': await import('@janis.me/themed/plugins/fill?raw'),
-  'plugins/lightness': await import('@janis.me/themed/plugins/lightness?raw'),
-  'plugins/saturation': await import('@janis.me/themed/plugins/saturation?raw'),
   'plugins/p3': await import('@janis.me/themed/plugins/p3?raw'),
+  'plugins/variants': await import('@janis.me/themed/plugins/variants?raw'),
 };
 
 type Logger = (log: string) => void;

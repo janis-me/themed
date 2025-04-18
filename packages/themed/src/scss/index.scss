@@ -26,6 +26,8 @@ $__themed__prefix: 'themed';
 
   @each $plugin in $plugins {
     $plugin-name: map.get($plugin, 'name');
+    @debug "Themed: Applying plugin '#{$plugin-name}'";
+    @debug "Themed: Plugin '#{$plugin-name}' has the following options: #{map.keys($plugin)}";
 
     @if map.has-key($plugin, 'modify') {
       $plugin-modify-function: map.get($plugin, 'modify');

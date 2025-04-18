@@ -136,6 +136,35 @@ $high-contrast: (
 @include themed.apply($themes, $plugins: plugins.p3($high-contrast));
 `;
 
+const EXAMPLE_PLUGIN_VARIANTS = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+$variants: plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9));
+
+@include themed.apply($themes, $plugins: [$variants]);
+`;
+
 const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
 
 @use 'sass:meta';
@@ -171,6 +200,7 @@ export const EXAMPLES = {
   'multiple-plugins': EXAMPLE_PLUGINS,
   'plugin-fill': EXAMPLE_PLUGIN_FILL,
   'plugin-p3': EXAMPLE_PLUGIN_P3,
+  'plugin-variants': EXAMPLE_PLUGIN_VARIANTS,
   customization: EXAMPLE_CUSTOMIZATION,
 };
 
