@@ -1,0 +1,49 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+$__themed__plugin-fill__name: 'themed-plugin-fill';
+
+@function __themed__plugin-fill__modify($themes, $prefix) {
+  $result-map: ();
+
+  // Get the primary theme name
+  $primary-theme-name: list.nth(map.keys($themes), 1);
+  $primary-theme: map.get($themes, $primary-theme-name);
+
+  // Loop through all themes
+  @each $theme-name, $theme-map in $themes {
+    $theme-result: $theme-map;
+
+    // Skip the primary theme
+    @if $theme-name != $primary-theme-name {
+      // Loop through all keys in the primary theme
+      @each $key, $value in $primary-theme {
+        // Check if the key exists in the current theme
+        @if not map.has-key($theme-map, $key) {
+          // Add the missing key to the result map with the value from the primary theme
+          $theme-result: map.merge(
+            $theme-result,
+            (
+              '#{$key}': $value,
+            )
+          );
+        }
+      }
+    }
+
+    $result-map: map.deep-merge(
+      $result-map,
+      (
+        '#{$theme-name}': $theme-result,
+      )
+    );
+  }
+
+  @return $result-map;
+}
+
+// The fill modifier ensures that all 'secondary' themes have the values of the 'primary' theme by copying missing values
+@function fill() {
+  @return ('name': $__themed__plugin-fill__name, 'modify': meta.get-function(__themed__plugin-fill__modify));
+}

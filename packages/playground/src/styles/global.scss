@@ -6,4 +6,4 @@
 
 $theme-map: meta.module-variables('themes');
 
-@include themed.register($theme-map);
+@include themed.check($theme-map);

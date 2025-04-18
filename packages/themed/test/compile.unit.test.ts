@@ -3,12 +3,12 @@ import { describe, expect, it } from 'vitest';
 
 const themed = {
   '': await import('../src/scss/index.scss?raw'),
-  '/modifiers': await import('../src/scss/modifiers.scss?raw'),
-  '/modifiers/alpha': await import('../src/scss/modifiers/alpha.scss?raw'),
-  '/modifiers/colorspace': await import('../src/scss/modifiers/colorspace.scss?raw'),
-  '/modifiers/fill': await import('../src/scss/modifiers/fill.scss?raw'),
-  '/modifiers/lightness': await import('../src/scss/modifiers/lightness.scss?raw'),
-  '/modifiers/saturation': await import('../src/scss/modifiers/saturation.scss?raw'),
+  '/modifiers': await import('../src/scss/plugins.scss?raw'),
+  '/plugins/alpha': await import('../src/scss/plugins/alpha.scss?raw'),
+  '/plugins/colorspace': await import('../src/scss/plugins/colorspace.scss?raw'),
+  '/plugins/fill': await import('../src/scss/plugins/fill.scss?raw'),
+  '/plugins/lightness': await import('../src/scss/plugins/lightness.scss?raw'),
+  '/plugins/saturation': await import('../src/scss/plugins/saturation.scss?raw'),
 };
 
 const compile = async (input: string) => {

@@ -1,3 +1,9 @@
+// Importing scss doesn't do anything, apart from triggering vite to re-build on changes to these files.
+// currently, we stop importing until vite-plugin-dts is able to re-build on scss changes.
+// See https://github.com/qmhc/vite-plugin-dts/issues/335
+// import './scss/index.scss';
+// import './scss/modifiers.scss';
+
 export const DEFAULT_THEME = 'dark';
 
 export const THEME_ATTRIBUTE_NAME = 'data-theme';

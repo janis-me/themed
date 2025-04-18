@@ -1,25 +1,37 @@
-$light: (
-  'grey-1': #fdfcfe,
-  'grey-2': #faf9fc,
-  'grey-3': #f1eff5,
-  'grey-6': #dbd7e3,
-  'grey-12': #221e28,
+$themes: (
+  light: (
+    'grey-1': #fdfcfe,
+    'grey-2': #faf9fc,
+    'grey-3': #f1eff5,
+    'grey-6': #dbd7e3,
+    'grey-12': #221e28,
 
-  'teal-9': #16b6b3,
-  'teal-10': #00aaa7,
-  // The variables below will be 'filled' in for all other themes using the `fill` modifier.
-  // see https://themed.janis.me/guide/modifiers.html#modifiers-fill
-  'default-padding': 8px,
-  'border-radius': 3px,
+    'teal-9': #16b6b3,
+    'teal-10': #00aaa7,
+    // The variables below will be 'filled' in for all other themes using the `fill` modifier.
+    // see https://themed.janis.me/guide/modifiers.html#modifiers-fill
+    'default-padding': 8px,
+    'border-radius': 3px,
+  ),
+  dark: (
+    'grey-1': #1e1e1e,
+    'grey-2': #242424,
+    'grey-3': #2d2d2d,
+    'grey-6': #414141,
+    'grey-12': #ededed,
+
+    'teal-9': #16b6b3,
+    'teal-10': #00aaa7,
+  ),
 );
 
-$dark: (
-  'grey-1': #1e1e1e,
-  'grey-2': #242424,
-  'grey-3': #2d2d2d,
-  'grey-6': #414141,
-  'grey-12': #ededed,
-
-  'teal-9': #16b6b3,
-  'teal-10': #00aaa7,
+$high-contrast: (
+  light: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+    'teal-10': oklch(0.67 0.1534 192.5378),
+  ),
+  dark: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+    'teal-10': oklch(0.67 0.1534 192.5378),
+  ),
 );

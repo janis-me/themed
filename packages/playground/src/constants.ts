@@ -26,18 +26,60 @@ body {
 }
 `;
 
-const EXAMPLE_MODIFIERS = `@use '@janis.me/themed';
-@use '@janis.me/themed/modifiers';
+const EXAMPLE_PLUGINS = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
 
 @use 'sass:meta';
 
-$raw-theme-map: (
+$themes: (
   light: (
     'text': #1e1f24,
     'background': #f1f1f1,
     'grey-1': #fcfcfd,
     'grey-2': #f9f9fb,
     'grey-3': #eff0f3,
+    'teal-9': #16b6b3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+$high-contrast: (
+  light: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+  ),
+  dark: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+  ),
+);
+
+
+$theme-prefix: 'my-var';
+
+@include themed.apply($themes, $theme-prefix, $plugins: plugins.fill() plugins.p3($high-contrast));
+`;
+
+const EXAMPLE_PLUGIN_FILL = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    // These values is only defined in the 'primary' theme
+    'teal-9': #16b6b3,
+    'default-padding': 1rem,
   ),
   dark: (
     'text': #eeeef0,
@@ -48,18 +90,79 @@ $raw-theme-map: (
   )
 );
 
-// modify-themes is used to apply any number of modifiers onto the themes.
-$theme-map: themed.modify-themes(
-  $raw-theme-map,
-  modifiers.fill(),
-  modifiers.colorspace(),
-  modifiers.alpha(),
-  modifiers.lightness()
-);
-
+// Extra tip: This is how you can define a custom prefix for your variables
 $theme-prefix: 'my-var';
 
-@include themed.apply($theme-map, $theme-prefix);
+// The fill plugin will copy over all values from the 'primary' theme to the 'dark' theme
+@include themed.apply($themes, $theme-prefix, $plugins: plugins.fill());
+`;
+
+const EXAMPLE_PLUGIN_P3 = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+// Colors that should be overwritten for high-gammut displays
+// Browser support is limited, so it's defined behind a media/supports query
+$high-contrast: (
+  light: (
+    'teal-9': oklch(0.75 0.1208 193.52),
+  ),
+  dark: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+  ),
+);
+
+
+@include themed.apply($themes, $plugins: plugins.p3($high-contrast));
+`;
+
+const EXAMPLE_PLUGIN_VARIANTS = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+$variants: plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9));
+
+@include themed.apply($themes, $plugins: [$variants]);
 `;
 
 const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
@@ -94,11 +197,16 @@ $theme-prefix: 'my-var';
 
 export const EXAMPLES = {
   simple: EXAMPLE_SIMPLE,
-  modifiers: EXAMPLE_MODIFIERS,
+  'multiple-plugins': EXAMPLE_PLUGINS,
+  'plugin-fill': EXAMPLE_PLUGIN_FILL,
+  'plugin-p3': EXAMPLE_PLUGIN_P3,
+  'plugin-variants': EXAMPLE_PLUGIN_VARIANTS,
   customization: EXAMPLE_CUSTOMIZATION,
 };
 
 export const COLOR = {
+  default: '\x1b[0;0m',
   yellow: '\x1b[0;33m',
   red: '\x1b[0;31m',
+  green: '\x1b[0;32m',
 };

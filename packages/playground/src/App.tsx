@@ -21,8 +21,13 @@ function App() {
 
   useEffect(() => {
     if (editorValue && xTermRef.current) {
-      const res = compile(editorValue, xTermRef.current);
-      setResultValue(res);
+      compile(editorValue, xTermRef.current)
+        .then(setResultValue)
+        .catch((error: unknown) => {
+          if (xTermRef.current) {
+            xTermRef.current.writeln((error as Error).message);
+          }
+        });
     } else {
       setResultValue('');
     }
