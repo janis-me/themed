@@ -76,7 +76,7 @@ const createUnpkgImporter = (successLogger: Logger, warningLogger: Logger): sass
     // 4b. If subpath given, point at that .scss (add extension if missing)
     let file = pkgPath;
     if (!file.endsWith('.scss') && !file.endsWith('.sass')) file += '.scss';
-    return new URL(file, `https://unpkg.com/${pkgName}`);
+    return new URL(`https://unpkg.com/${pkgName}/${file}`);
   },
 
   /**
@@ -109,14 +109,18 @@ const createUnpkgImporter = (successLogger: Logger, warningLogger: Logger): sass
 
     for (const p of candidates) {
       const url = `${origin}${p}`;
-      const res = await fetch(url);
-      if (res.ok) {
-        const contents = await res.text();
-        successLogger(`Successfully loaded ${url}`);
-        return {
-          contents,
-          syntax: p.endsWith('.sass') ? 'indented' : 'scss',
-        };
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const contents = await res.text();
+          successLogger(`Successfully loaded ${url}`);
+          return {
+            contents,
+            syntax: p.endsWith('.sass') ? 'indented' : 'scss',
+          };
+        }
+      } catch {
+        // Candidate failed, try next
       }
     }
 

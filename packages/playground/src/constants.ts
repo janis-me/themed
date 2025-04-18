@@ -65,6 +65,77 @@ $theme-prefix: 'my-var';
 @include themed.apply($themes, $theme-prefix, $plugins: plugins.fill() plugins.p3($high-contrast));
 `;
 
+const EXAMPLE_PLUGIN_FILL = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    // These values is only defined in the 'primary' theme
+    'teal-9': #16b6b3,
+    'default-padding': 1rem,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+  )
+);
+
+// Extra tip: This is how you can define a custom prefix for your variables
+$theme-prefix: 'my-var';
+
+// The fill plugin will copy over all values from the 'primary' theme to the 'dark' theme
+@include themed.apply($themes, $theme-prefix, $plugins: plugins.fill());
+`;
+
+const EXAMPLE_PLUGIN_P3 = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+// Colors that should be overwritten for high-gammut displays
+// Browser support is limited, so it's defined behind a media/supports query
+$high-contrast: (
+  light: (
+    'teal-9': oklch(0.75 0.1208 193.52),
+  ),
+  dark: (
+    'teal-9': oklch(0.7 0.1617 192.68),
+  ),
+);
+
+
+@include themed.apply($themes, $plugins: plugins.p3($high-contrast));
+`;
+
 const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
 
 @use 'sass:meta';
@@ -97,7 +168,9 @@ $theme-prefix: 'my-var';
 
 export const EXAMPLES = {
   simple: EXAMPLE_SIMPLE,
-  plugins: EXAMPLE_PLUGINS,
+  'multiple-plugins': EXAMPLE_PLUGINS,
+  'plugin-fill': EXAMPLE_PLUGIN_FILL,
+  'plugin-p3': EXAMPLE_PLUGIN_P3,
   customization: EXAMPLE_CUSTOMIZATION,
 };
 
