@@ -102,6 +102,8 @@ export const EXAMPLES = {
 };
 
 export const COLOR = {
+  default: '\x1b[0;0m',
   yellow: '\x1b[0;33m',
   red: '\x1b[0;31m',
+  green: '\x1b[0;32m',
 };
