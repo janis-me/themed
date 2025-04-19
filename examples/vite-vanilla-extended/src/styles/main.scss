@@ -10,11 +10,8 @@
 
 // This actually applies the base theme to the documentElement.
 // Everything after the `using` keyword is used to dynamically generate more CSS variables.
-// In this example, we generate each variable of the dark theme with a lighter value.
-// NOTE: Because these CSS variables are not included in the theme map, they can also not be type-checked.
-// Another note: The $theme-map and $theme-prefix variables are defined in globals.scss
-@include apply(themes.$themes, $theme-prefix, $plugins: plugins.p3(themes.$high-contrast) plugins.fill()) using
-  ($prefix, $key, $value, $theme) {
+// The actual configuration is done in the `global.scss` file.
+@include apply() using ($prefix, $key, $value, $theme) {
   @if $theme == 'dark' and meta.type-of($value) == 'color' {
     @include utils.make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
   }
