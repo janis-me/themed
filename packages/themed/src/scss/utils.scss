@@ -30,6 +30,7 @@
   $string: string-replace($string, ']', '');
   $string: string-replace($string, '{', '');
   $string: string-replace($string, '}', '');
+  $string: string-replace($string, '%', '');
 
   @return $string;
 }

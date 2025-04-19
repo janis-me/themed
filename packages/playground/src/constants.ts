@@ -17,7 +17,8 @@ $themes: (
   ),
 );
 
-@include apply($themes);
+@include configure($themes);
+@include apply();
 
 html,
 body {
@@ -50,7 +51,9 @@ $themes: (
 );
 
 $theme-prefix: 'my-var';
-@include apply($themes, $theme-prefix) using ($prefix, $key, $value, $theme) {
+@include configure($themes, $theme-prefix);
+
+@include apply() using ($prefix, $key, $value, $theme) {
   @if $theme == 'dark' and meta.type-of($value) == 'color' {
     @include utils.make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
   }
@@ -93,7 +96,22 @@ $high-contrast: (
 
 $theme-prefix: 'my-var';
 
-@include themed.apply($themes, $theme-prefix, $plugins: plugins.fill() plugins.p3($high-contrast));
+@include themed.configure($themes, $theme-prefix, $plugins: [
+  // first, ensure all themes receive the same values
+  plugins.fill(),
+  // then, create some variants of the colors. Some alpha variations
+  plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9)),
+  // and some lightness variations
+  plugins.variants($channels: (lightness), $operation: change, $steps: (20%, 40%, 60%, 80%, 90%)),
+  // Some extra high contrast colors.
+  plugins.p3($high-contrast),
+  // the colorspace plugin plays along nicely with the 'variants' plugin
+  // to ensure all colors are in the same space.
+  // In a real world example, you would probably want to use the 'oklch' colorspace
+  // but we chose 'hsl' to visualize them in the output editor.
+  plugins.colorspace(hsl),
+]);
+@include themed.apply();
 `;
 
 const EXAMPLE_PLUGIN_FILL = `@use '@janis.me/themed';
@@ -126,7 +144,8 @@ $theme-prefix: 'my-var';
 
 // The fill plugin will copy over all values from the 'primary' theme to the 'dark' theme
 // (this is valid SCSS, don't let the error fool you.)
-@include themed.apply($themes, $theme-prefix, $plugins: [ plugins.fill() ]);
+@include themed.configure($themes, $theme-prefix, $plugins: [ plugins.fill() ]);
+@include themed.apply();
 `;
 
 const EXAMPLE_PLUGIN_P3 = `@use '@janis.me/themed';
@@ -165,7 +184,8 @@ $high-contrast: (
 );
 
 // (this is valid SCSS, don't let the error fool you.)
-@include themed.apply($themes, $plugins: [plugins.p3($high-contrast)]);
+@include themed.configure($themes, $plugins: [plugins.p3($high-contrast)]);
+@include themed.apply();
 `;
 
 const EXAMPLE_PLUGIN_VARIANTS = `@use '@janis.me/themed';
@@ -195,7 +215,8 @@ $themes: (
 $variants: plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9));
 
 // (this is valid SCSS, don't let the error fool you.)
-@include themed.apply($themes, $plugins: [$variants]);
+@include themed.configure($themes, $plugins: [$variants]);
+@include themed.apply();
 `;
 
 const EXAMPLE_PLUGIN_COLORSPACE = `@use '@janis.me/themed';
@@ -223,7 +244,8 @@ $themes: (
 );
 
 // (this is valid SCSS, don't let the error fool you.)
-@include themed.apply($themes, $plugins: [plugins.colorspace(oklch)]);
+@include themed.configure($themes, $plugins: [plugins.colorspace(oklch)]);
+@include themed.apply();
 `;
 
 export const EXAMPLES = {

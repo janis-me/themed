@@ -21,8 +21,10 @@ $themes: (
   ),
 );
 
+@include configure($themes);
+
 // Calling `apply` creates the styles for all themes.
-@include apply($themes);
+@include apply();
 
 // Everything below this is just to showcase.
 
