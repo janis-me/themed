@@ -26,9 +26,6 @@ $__themed__prefix: 'themed';
 
   @each $plugin in $plugins {
     $plugin-name: map.get($plugin, 'name');
-    @debug "Themed: Applying plugin '#{$plugin-name}'";
-    @debug "Themed: Plugin '#{$plugin-name}' has the following options: #{map.keys($plugin)}";
-
     @if map.has-key($plugin, 'modify') {
       $plugin-modify-function: map.get($plugin, 'modify');
       $plugin-result: $result-map;
@@ -141,7 +138,7 @@ $__themed__prefix: 'themed';
         // the 'core' of flag plugins: Apply the defined mixins.
         @include meta.apply($plugin-flag-mixin, $_themes, $prefix);
       } @else {
-        @warn "Themed: Filter mixin for plugin '#{$plugin-name}' is not a valid mixin. Skipping.";
+        @warn "Themed: Extend mixin for plugin '#{$plugin-name}' is not a valid mixin. Skipping.";
       }
     }
   }
@@ -172,7 +169,7 @@ $__themed__prefix: 'themed';
     @error "'#{$name}' is not defined in your themes.";
   }
 
-  @return var(--#{$__themed__prefix}-#{$name});
+  @return utils.get-css-variable($__themed__prefix, $name);
 }
 
 // Return a themes variable without any type-checking or using CSS variables,

@@ -26,6 +26,37 @@ body {
 }
 `;
 
+const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
+@use '@janis.me/themed/utils';
+
+@use 'sass:meta';
+@use 'sass:color';
+
+$themes: (
+  'light': (
+    'text': #212529,
+    'background': #fafafa,
+    'grey-1': #343a40,
+    'grey-2': #495057,
+    'grey-3': #6c757d,
+  ),
+  'dark': (
+    'text': #fafafa,
+    'background': #212529,
+    'grey-1': #f8f9fa,
+    'grey-2': #e9ecef,
+    'grey-3': #dee2e6,
+  ),
+);
+
+$theme-prefix: 'my-var';
+@include apply($themes, $theme-prefix) using ($prefix, $key, $value, $theme) {
+  @if $theme == 'dark' and meta.type-of($value) == 'color' {
+    @include utils.make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
+  }
+}
+`;
+
 const EXAMPLE_PLUGINS = `@use '@janis.me/themed';
 @use '@janis.me/themed/plugins';
 
@@ -94,7 +125,8 @@ $themes: (
 $theme-prefix: 'my-var';
 
 // The fill plugin will copy over all values from the 'primary' theme to the 'dark' theme
-@include themed.apply($themes, $theme-prefix, $plugins: plugins.fill());
+// (this is valid SCSS, don't let the error fool you.)
+@include themed.apply($themes, $theme-prefix, $plugins: [ plugins.fill() ]);
 `;
 
 const EXAMPLE_PLUGIN_P3 = `@use '@janis.me/themed';
@@ -132,8 +164,8 @@ $high-contrast: (
   ),
 );
 
-
-@include themed.apply($themes, $plugins: plugins.p3($high-contrast));
+// (this is valid SCSS, don't let the error fool you.)
+@include themed.apply($themes, $plugins: [plugins.p3($high-contrast)]);
 `;
 
 const EXAMPLE_PLUGIN_VARIANTS = `@use '@janis.me/themed';
@@ -162,46 +194,46 @@ $themes: (
 
 $variants: plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9));
 
+// (this is valid SCSS, don't let the error fool you.)
 @include themed.apply($themes, $plugins: [$variants]);
 `;
 
-const EXAMPLE_CUSTOMIZATION = `@use '@janis.me/themed' as *;
+const EXAMPLE_PLUGIN_COLORSPACE = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
 
 @use 'sass:meta';
-@use 'sass:color';
 
 $themes: (
-  'light': (
-    'text': #212529,
-    'background': #fafafa,
-    'grey-1': #343a40,
-    'grey-2': #495057,
-    'grey-3': #6c757d,
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
   ),
-  'dark': (
-    'text': #fafafa,
-    'background': #212529,
-    'grey-1': #f8f9fa,
-    'grey-2': #e9ecef,
-    'grey-3': #dee2e6,
-  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
 );
 
-$theme-prefix: 'my-var';
-@include apply($themes, $theme-prefix) using ($prefix, $key, $value, $theme) {
-  @if $theme == 'dark' and meta.type-of($value) == 'color' {
-    @include make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
-  }
-}
+// (this is valid SCSS, don't let the error fool you.)
+@include themed.apply($themes, $plugins: [plugins.colorspace(oklch)]);
 `;
 
 export const EXAMPLES = {
   simple: EXAMPLE_SIMPLE,
+  customization: EXAMPLE_CUSTOMIZATION,
   'multiple-plugins': EXAMPLE_PLUGINS,
   'plugin-fill': EXAMPLE_PLUGIN_FILL,
   'plugin-p3': EXAMPLE_PLUGIN_P3,
   'plugin-variants': EXAMPLE_PLUGIN_VARIANTS,
-  customization: EXAMPLE_CUSTOMIZATION,
+  'plugin-colorspace': EXAMPLE_PLUGIN_COLORSPACE,
 };
 
 export const COLOR = {

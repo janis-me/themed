@@ -1,3 +1,50 @@
+@use 'sass:string';
+@use 'sass:list';
+
+@function string-replace($string, $character, $replacement) {
+  $split: string.split($string, $character);
+
+  @if list.length($split) == 1 {
+    @return $string;
+  }
+
+  $result-string: list.nth($split, 1);
+
+  // Skip the first part, as it is already in the result string
+  @for $i from 2 through list.length($split) {
+    $result-string: #{$result-string}#{$replacement}#{list.nth($split, $i)};
+  }
+
+  @return $result-string;
+}
+
+@function remove-special-characters($string) {
+  $string: string-replace($string, ' ', '-');
+  $string: string-replace($string, '_', '-');
+
+  $string: string-replace($string, '.', '');
+  $string: string-replace($string, ':', '');
+  $string: string-replace($string, '(', '');
+  $string: string-replace($string, ')', '');
+  $string: string-replace($string, '[', '');
+  $string: string-replace($string, ']', '');
+  $string: string-replace($string, '{', '');
+  $string: string-replace($string, '}', '');
+
+  @return $string;
+}
+
+// Creates a css variable with the given prefix, key and value
+// All special characters in the key are removed
+// (dots, colons, brackets, etc.)
 @mixin make-css-variable($prefix, $key, $value) {
+  $key: remove-special-characters($key);
+
   --#{$prefix}-#{$key}: #{$value};
+}
+
+@function get-css-variable($prefix, $key) {
+  $key: remove-special-characters($key);
+
+  @return var(--#{$prefix}-#{$key});
 }
