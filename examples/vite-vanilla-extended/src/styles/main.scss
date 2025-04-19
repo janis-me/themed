@@ -3,6 +3,7 @@
 
 @use './themes.scss';
 @use '@janis.me/themed/plugins';
+@use '@janis.me/themed/utils';
 
 @import './button.scss';
 @import './header.scss';
@@ -15,7 +16,7 @@
 @include apply(themes.$themes, $theme-prefix, $plugins: plugins.p3(themes.$high-contrast) plugins.fill()) using
   ($prefix, $key, $value, $theme) {
   @if $theme == 'dark' and meta.type-of($value) == 'color' {
-    @include make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
+    @include utils.make-css-variable($prefix, '#{$key}--light', color.change($value, $lightness: 30%));
   }
 }
 
