@@ -59,20 +59,20 @@ describe('compile', () => {
   describe('fails on invalid usage', () => {
     const baseInput = `@use '@janis.me/themed';@use 'sass:map';`;
 
-    it('fails on missing apply argument', async () => {
-      const input = `${baseInput}@include themed.apply();`;
+    it('fails on missing configure argument', async () => {
+      const input = `${baseInput}@include themed.configure();`;
 
       await expect(() => compile(input)).rejects.toThrowError(`Error: Missing argument $themes`);
     });
 
-    it('fails on invalid apply argument', async () => {
-      const input = `${baseInput}@include themed.apply('test');`;
+    it('fails on invalid configure argument', async () => {
+      const input = `${baseInput}@include themed.configure('test');`;
 
       await expect(() => compile(input)).rejects.toThrowError(`Error: $map: "test" is not a map.`);
     });
 
-    it('fails on invalid apply argument', async () => {
-      const input = `${baseInput}@include themed.apply(());`;
+    it('fails on invalid configure argument', async () => {
+      const input = `${baseInput}@include themed.configure(());`;
 
       await expect(() => compile(input)).rejects.toThrowError(`The map of themes is empty.`);
     });
@@ -93,7 +93,7 @@ describe('compile', () => {
           )
         );
       `;
-      const input = `${baseInput}\n${themes}\n@include themed.apply($themes);`;
+      const input = `${baseInput}\n${themes}\n@include themed.configure($themes);`;
 
       await expect(() => compile(input)).rejects.toThrowError(`Theme 'dark' is missing the key 'background'`);
     });
@@ -107,7 +107,7 @@ describe('compile', () => {
           )
         );
       `;
-      const input = `${baseInput}\n${themes}\n@include themed.apply($themes);`;
+      const input = `${baseInput}\n${themes}\n@include themed.configure($themes);`;
 
       await expect(() => compile(input)).rejects.toThrowError(
         `Theme 'dark' has an extra key 'color' not present in other themes`,
@@ -131,7 +131,7 @@ describe('compile', () => {
           )
         );
       `;
-      const input = `${baseInput}\n${themes}\n@include themed.apply($themes);`;
+      const input = `${baseInput}\n${themes}\n@include themed.configure($themes);\n@include themed.apply()`;
 
       const res = await compile(input);
 
@@ -159,7 +159,7 @@ describe('compile', () => {
           )
         );
       `;
-      const input = `${baseInput}\n${themes}\n@include themed.apply($themes);`;
+      const input = `${baseInput}\n${themes}\n@include themed.configure($themes);\n@include themed.apply()`;
 
       const res = await compile(input);
 
@@ -187,7 +187,7 @@ describe('compile', () => {
           )
         );
       `;
-      const input = `${baseInput}\n${themes}\n@include themed.apply($themes, 'test');`;
+      const input = `${baseInput}\n${themes}\n@include themed.configure($themes, 'test');\n@include themed.apply()`;
 
       const res = await compile(input);
 

@@ -8,5 +8,5 @@
 
 $theme-prefix: 'my-var';
 
-// Calling `check` defines the theme-map, enabling type-checking.
-@include themed.check(themes.$themes, $theme-prefix, $plugins: plugins.p3(themes.$high-contrast) plugins.fill());
+// Calling `configure` defines the theme-map, enabling type-checking.
+@include themed.configure(themes.$themes, $theme-prefix, $plugins: plugins.p3(themes.$high-contrast) plugins.fill());
