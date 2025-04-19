@@ -16,4 +16,4 @@
 $theme-map: meta.module-variables('themes');
 
 // Calling `register` defines the theme-map.
-@include themed.register($theme-map);
+@include themed.check($theme-map);

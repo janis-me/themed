@@ -13,6 +13,7 @@ function setupThemed() {
 
   toggleThemeButton.addEventListener('click', () => {
     const newTheme = toggleTheme();
+    // `setTheme` will set the new theme, and also save it to localstorage
     setTheme(newTheme);
   });
 

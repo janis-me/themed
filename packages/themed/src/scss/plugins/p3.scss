@@ -1,0 +1,50 @@
+@use '../utils';
+
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:color';
+
+$__themed__plugin-p3__name: 'themed-plugin-p3';
+
+// globals;
+$__themed__plugin-p3__overrides-map: null;
+
+@mixin __themed__plugin-p3__extend($themes, $prefix) {
+  @media (color-gamut: p3) {
+    @supports (color: color(display-p3 0 0 0 / 1)) {
+      // Check the existing themes. If the override exists, add this override as a value behind the media/supports query.
+      @each $theme-name, $theme-map in $__themed__plugin-p3__overrides-map {
+        $original-map: map.get($themes, $theme-name);
+
+        html[data-theme='#{$theme-name}'] {
+          @each $key, $value in $theme-map {
+            // Check if the key exists in the original map
+            @if map.has-key($original-map, $key) {
+              @include utils.make-css-variable($prefix, $key, $value);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// public facing plugin function
+@function p3($overrides) {
+  @if not $overrides or meta.type-of($overrides) != 'map' {
+    @error "[#{$__themed__plugin-p3__name}]: The given p3 overrides is not a valid map.";
+    @return null;
+  }
+
+  @if list.length(map.keys($overrides)) == 0 {
+    @error "[#{$__themed__plugin-p3__name}]: The given p3 overrides map is empty.";
+    @return null;
+  }
+
+  @if $overrides {
+    $__themed__plugin-p3__overrides-map: $overrides !global;
+  }
+
+  @return ('name': $__themed__plugin-p3__name, 'extend': meta.get-mixin('__themed__plugin-p3__extend'));
+}

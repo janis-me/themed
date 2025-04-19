@@ -2,39 +2,53 @@ import * as sass from 'sass-embedded';
 import { describe, expect, it } from 'vitest';
 
 const themed = {
-  '': await import('../src/scss/index.scss?raw'),
-  '/modifiers': await import('../src/scss/modifiers.scss?raw'),
-  '/modifiers/alpha': await import('../src/scss/modifiers/alpha.scss?raw'),
-  '/modifiers/colorspace': await import('../src/scss/modifiers/colorspace.scss?raw'),
-  '/modifiers/fill': await import('../src/scss/modifiers/fill.scss?raw'),
-  '/modifiers/lightness': await import('../src/scss/modifiers/lightness.scss?raw'),
-  '/modifiers/saturation': await import('../src/scss/modifiers/saturation.scss?raw'),
+  index: await import('../src/scss/index.scss?raw'),
+  utils: await import('../src/scss//utils.scss?raw'),
+  plugins: await import('../src/scss//plugins.scss?raw'),
+  'plugins/colorspace': await import('../src/scss//plugins/colorspace.scss?raw'),
+  'plugins/fill': await import('../src/scss//plugins/fill.scss?raw'),
+  'plugins/p3': await import('../src/scss//plugins/p3.scss?raw'),
+  'plugins/variants': await import('../src/scss//plugins/variants.scss?raw'),
 };
+
+const createThemedImporter = (_: (log: string) => void): sass.Importer => ({
+  canonicalize(specifier: string, _: sass.CanonicalizeContext) {
+    let sanitizedUrl = specifier.replace('pkg:', '');
+
+    if (sanitizedUrl.startsWith('@janis.me/themed')) {
+      sanitizedUrl = sanitizedUrl.replace('.scss', '');
+      if (sanitizedUrl === '@janis.me/themed') {
+        return new URL(`pkg:${sanitizedUrl}/index.scss`);
+      } else {
+        return new URL(`pkg:${sanitizedUrl}.scss`);
+      }
+    }
+
+    return null;
+  },
+  load(canonicalUrl: URL): sass.ImporterResult {
+    if (canonicalUrl.href.startsWith('pkg:@janis.me/themed')) {
+      let name = canonicalUrl.href.replace('pkg:@janis.me/themed/', '');
+      name = name.replace('.scss', '');
+
+      if (name in themed) {
+        return {
+          contents: themed[name as keyof typeof themed].default,
+          syntax: 'scss',
+        };
+      }
+    }
+
+    throw new Error(`themed importer: could not load ${canonicalUrl.href}`);
+  },
+});
 
 const compile = async (input: string) => {
   const res = await sass.compileStringAsync(input, {
     importers: [
-      {
-        canonicalize(url) {
-          const sanitized = url.replace('pkg:', '');
-          if (!sanitized.startsWith('@janis.me/themed'))
-            throw new Error(`@use and @import statements only work with '@janis.me/themed'`);
-
-          return new URL(`pkg:${sanitized}`);
-        },
-        load(canonicalUrl) {
-          const sanitized = canonicalUrl.href.replace('pkg:', '').replace('.scss', '');
-          const path = sanitized.split('@janis.me/themed')[1] as keyof typeof themed;
-          const contents = themed[path].default;
-
-          if (!contents) throw new Error(`Could not resolve module ${canonicalUrl}`);
-
-          return {
-            contents,
-            syntax: 'scss',
-          };
-        },
-      },
+      createThemedImporter(str => {
+        console.log(str);
+      }),
     ],
   });
 

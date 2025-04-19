@@ -1,0 +1,45 @@
+@use 'sass:meta';
+@use 'sass:color';
+@use 'sass:map';
+
+$__themed__plugin-colorspace__name: 'themed-plugin-colorspace';
+
+// globals;
+$__themed__plugin-colorspace__space: null;
+
+@function __themed__plugin-colorspace__modify($themes, $prefix) {
+  $result-map: $themes;
+
+  @each $theme-name, $theme-map in $themes {
+    $theme-result: $theme-map;
+
+    @each $key, $value in $theme-map {
+      @if meta.type-of($value) == 'color' {
+        $theme-result: map.merge($theme-result, (#{$key}: color.to-space($value, $__themed__plugin-colorspace__space)));
+      }
+    }
+
+    $result-map: map.deep-merge(
+      $result-map,
+      (
+        '#{$theme-name}': $theme-result,
+      )
+    );
+  }
+
+  @return $result-map;
+}
+
+// The colorspace modifier converts every color in the theme to oklch space.
+@function colorspace($space) {
+  @if $space {
+    $__themed__plugin-colorspace__space: $space !global;
+  } @else {
+    @error "[#{$__themed__plugin-colorspace__name}]: Please provide a valid colorspace See https://developer.mozilla.org/en-US/docs/Glossary/Color_space#named_color_spaces.";
+  }
+
+  @return (
+    'name': $__themed__plugin-colorspace__name,
+    'modify': meta.get-function(__themed__plugin-colorspace__modify)
+  );
+}
