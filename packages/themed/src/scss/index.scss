@@ -94,6 +94,7 @@ $__themed__prefix: 'themed';
 // the `prefix` is used for the CSS variables only.
 @mixin configure($themes, $prefix: 'themed', $plugins: []) {
   @if meta.type-of($plugins) != 'list' {
+    // Not an error. https://github.com/microsoft/vscode-css-languageservice/issues/231
     $plugins: [$plugins];
   }
 
