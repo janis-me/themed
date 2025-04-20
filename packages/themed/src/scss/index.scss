@@ -22,7 +22,7 @@ $__themed__prefix: 'themed';
 
 // A function that applies the given plugins to each value of every theme.
 // This can be used to dynamically alter themes, adding more variables to them etc.
-@function _apply-plugins($themes, $plugins...) {
+@function _apply-plugins($themes, $plugins) {
   $result-map: $themes;
 
   @each $plugin in $plugins {
@@ -93,7 +93,11 @@ $__themed__prefix: 'themed';
 // Then, saves the themes to global variables to do compile-time checks later
 // the `prefix` is used for the CSS variables only.
 @mixin configure($themes, $prefix: 'themed', $plugins: []) {
-  $_themes: _apply-plugins($themes, $plugins...);
+  @if meta.type-of($plugins) != 'list' {
+    $plugins: [$plugins];
+  }
+
+  $_themes: _apply-plugins($themes, $plugins);
 
   @if not _verify-themes($_themes) {
     @error "Error while checking themes. See error above.";
