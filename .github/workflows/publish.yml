@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   publish:
+    environment: prod
     runs-on: ubuntu-latest
     strategy:
       matrix:
