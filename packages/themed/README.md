@@ -1,1 +1,1 @@
-/home/janis/Documents/code/themed/README.md
+../../README.md
