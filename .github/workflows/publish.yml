@@ -20,6 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
 
@@ -32,9 +34,6 @@ jobs:
 
       - name: Install
         run: pnpm install --frozen-lockfile --prefer-offline
-
-      - name: Build
-        run: pnpm build
 
       - name: Publish to npm
         run: pnpm -r publish --access public --no-git-checks
