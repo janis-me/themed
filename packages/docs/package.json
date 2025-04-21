@@ -1,5 +1,7 @@
 {
   "name": "@janis.me/themed-docs",
+  "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "vitepress build",
