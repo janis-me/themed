@@ -13,3 +13,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+a {
+  color: themed('teal-7');
+  text-decoration: none;
+
+  &:hover {
+    color: themed('teal-8');
+  }
+}

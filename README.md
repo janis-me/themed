@@ -5,21 +5,27 @@
 </p>
 <br/>
 <p align="center">
+  <a href="https://themed.janis.me">
+    <img src="https://img.shields.io/badge/Documentation-online-blue" alt="build status">
+  </a>
+  <a href="https://playground.themed.janis.me">
+    <img src="https://img.shields.io/badge/Playground-online-green" alt="build status">
+  </a>
   <a href="https://npmjs.com/package/@janis.me/themed">
-    <img src="https://img.shields.io/npm/v/%40komplett%2Freact-themed?labelColor=orange&color=grey" alt="npm package">
+    <img alt="@janis.me/themed on npm" src="https://img.shields.io/npm/v/%40janis.me%2Fthemed?label=npm%20(themed)&labelColor=orange&color=grey">
   </a>
   <a href="https://npmjs.com/package/@janis.me/react-themed">
-    <img alt="NPM Version" src="https://img.shields.io/npm/v/%40komplett%2Freact-themed?label=react&labelColor=%2361dafb&color=grey">
+    <img alt="@janis.me/react-themed on npm" src="https://img.shields.io/npm/v/%40janis.me%2Freact-themed?label=npm%20(react-themed)&labelColor=%2361dafb&color=grey">
   </a>
-  <a href="https://app.netlify.com/sites/komplett-themed/deploys">
-    <img src="https://api.netlify.com/api/v1/badges/028ea096-26a7-4c1d-a3cb-5fa1b4b7aa58/deploy-status?branch=main" alt="build status">
+  <a href="https://app.netlify.com/sites/themed-docs/deploys">
+    <img alt="docs deployment" src="https://img.shields.io/netlify/028ea096-26a7-4c1d-a3cb-5fa1b4b7aa58?style=flat&logo=netlify&label=docs">
   </a>
-  <a href="https://themed.komplett.io">
-    <img src="https://img.shields.io/badge/Documentation-online-blue" alt="build status">
+  <a href="https://app.netlify.com/sites/themed-playground/deploys">
+    <img alt="Playground deployment" src="https://img.shields.io/netlify/366b1572-c264-4390-abe5-132bf3a9b6a4?style=flat&logo=netlify&label=playground">
   </a>
 </p>
 <p align="center" style="font-size: 1.5rem;">
-  @komplett/<b>themed</b>: SCSS-native themes made simple
+  @janis.me/<b>themed</b>: SCSS-native themes made simple
 </p>
 <br/>
 
@@ -28,7 +34,7 @@
 > [!WARNING]  
 > This is in early development. Expect things to break and change before it hits 1.0.0
 
-**Visit our [Documentation](https://themed.komplett.io)**
+**Visit our [Documentation](https://themed.janis.me)**
 
 ---
 
@@ -38,6 +44,7 @@
 - 🌐 Produces nice **SCSS AND CSS** variables, so you can use all SCSS features with theming.
 - 🖌 **Multi-theme**: You can either use classic dark/light themes, or define as many as you want!
 - 🚀 **Extra features** like JS/TS methods for interactivity built in.
+- 🔌 **Built-in plugin** support like wide-gammut colors, auto-generated color variants and more.
 - 🎭 **Customizable**: Adjust nearly every aspect of how you use themes.
 - 🌈 Prints **human-readable** errors when doing something wrong.
 - First class **React support** with `@janis.me/react-themed`.
@@ -65,8 +72,9 @@ $themes: (
   ),
 );
 
-// Register the themes. They will be checked for validity, uniformity etc.
-@include themes($theme-map);
+// Configure the themes. They will be checked for validity, uniformity etc.
+@include configure($theme-map);
+@include apply();
 
 // Use the themed function to get type-checked theming!
 body {
@@ -90,9 +98,13 @@ Using SCSS' meta package and error/type checking. you get nice error hints!
 
 ## Installation:
 
-One way is to just copy the stuff in `./packages/themed/src/index.scss` and put them into your app.
+```bash
+npm install @janis.me/themed
+# or
+pnpm add @janis.me/themed
+```
 
-Alternatively, use `npm install -D @janis.me/themed` and follow the example above, or look at one of the examples in the `examples` folder.
+you can also just copy the stuff in `packages/themed` if you prefer.
 
 ### React
 
@@ -110,7 +122,7 @@ For react, install `@janis.me/react-themed` and place a <ThemeProvider> at the a
 
 **Q: Can I use this with tailwind?**
 
-A: Probably not? Tailwind probably has it's own thing going on. This is as raw as SCSS gets.
+A: Yes! We even want to add native support for it via a plugin. You can just define CSS variables as you normally would and then pass them to tailwind.
 
 **Q: What dependencies does this have?**
 
@@ -118,7 +130,8 @@ A: None, except for SCSS. We do suggest to use tools like Vite though, just to m
 
 **Q: And what about build tools, bundling and CSS output. Anything to be aware of?**
 
-A: Yes, good that you ask. We use global SCSS variables to keep track of the registered themes. Those SCSS variables are lexically scoped to modules, so you will only be able to use the "themed" function in the same scope.
+A: TL:DR: Just call `themed.configure()` in a `global.scss` file and `@use` that. Then you're good.
+Long answer: Yes, good that you ask. We use global SCSS variables to keep track of the registered themes. Those SCSS variables are lexically scoped to modules, so you will only be able to use the "themed" function in the same scope.
 Meaning, if you want to use themed functions in multiple files, make sure that they all `@use` a file that defines the themes. See the `vite-vanilla-extended` or `vite-react` examples for this, they define a `global.scss` file.
 This is, of course, only needed on compile time. The CSS output will always be the same.
 

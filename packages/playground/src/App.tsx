@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { Resizable } from 're-resizable';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { editorAtom, exampleAtom } from './atoms';
+import { editorAtom, exampleAtom, headerAtom } from './atoms';
 import { compile } from './compile';
 import Editor from './components/Editor/Editor';
 import Header from './components/Header/Header';
@@ -17,6 +17,7 @@ function App() {
 
   const [editorValue, setEditorValue] = useAtom(editorAtom);
   const [example, setExample] = useAtom(exampleAtom);
+  const [header] = useAtom(headerAtom);
   const [resultValue, setResultValue] = useState<string>('');
 
   useEffect(() => {
@@ -35,6 +36,10 @@ function App() {
 
   useEffect(() => {
     if (example) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('example', example);
+      history.pushState({}, '', url);
+
       setEditorValue(EXAMPLES[example]);
     }
   }, [example, setEditorValue]);
@@ -53,7 +58,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
+      {header && <Header />}
       <div className="app__container">
         <Resizable
           className="app__editor-input"

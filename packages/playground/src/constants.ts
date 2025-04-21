@@ -217,7 +217,7 @@ $themes: (
 // 3. the steps or 'values' to use. Either a list or a single value.
 @include themed.configure($themes, $plugins: plugins.variants(
   ('alpha' 'change' (0.1, 0.9)),
-  ('red' 'change' (0.1, 0.9))
+  ('lightness', 'scale', (-60%, -40%, 40%, 60%))
 ));
 @include themed.apply();
 `;
@@ -247,7 +247,7 @@ $themes: (
 );
 
 // (this is valid SCSS, don't let the error fool you.)
-@include themed.configure($themes, $plugins: [plugins.colorspace(oklch)]);
+@include themed.configure($themes, $plugins: plugins.colorspace(oklch));
 @include themed.apply();
 `;
 
