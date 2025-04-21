@@ -99,10 +99,11 @@ $theme-prefix: 'my-var';
 @include themed.configure($themes, $theme-prefix, $plugins: [
   // first, ensure all themes receive the same values
   plugins.fill(),
-  // then, create some variants of the colors. Some alpha variations
-  plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9)),
-  // and some lightness variations
-  plugins.variants($channels: (lightness), $operation: change, $steps: (20%, 40%, 60%, 80%, 90%)),
+  // then, create some variants of the colors.
+  plugins.variants(
+    ('alpha', 'change', (0.1, 0.9)),
+    ('saturation', 'adjust', (20%, 40%, 60%, 80%, 90%))
+  ),
   // Some extra high contrast colors.
   plugins.p3($high-contrast),
   // the colorspace plugin plays along nicely with the 'variants' plugin
@@ -143,8 +144,7 @@ $themes: (
 $theme-prefix: 'my-var';
 
 // The fill plugin will copy over all values from the 'primary' theme to the 'dark' theme
-// (this is valid SCSS, don't let the error fool you.)
-@include themed.configure($themes, $theme-prefix, $plugins: [ plugins.fill() ]);
+@include themed.configure($themes, $theme-prefix, $plugins: plugins.fill());
 @include themed.apply();
 `;
 
@@ -183,8 +183,7 @@ $high-contrast: (
   ),
 );
 
-// (this is valid SCSS, don't let the error fool you.)
-@include themed.configure($themes, $plugins: [plugins.p3($high-contrast)]);
+@include themed.configure($themes, $plugins: plugins.p3($high-contrast));
 @include themed.apply();
 `;
 
@@ -212,10 +211,14 @@ $themes: (
   )
 );
 
-$variants: plugins.variants($channels: (alpha), $operation: change, $steps: (0.1, 0.9));
-
-// (this is valid SCSS, don't let the error fool you.)
-@include themed.configure($themes, $plugins: [$variants]);
+// Each argument must be a tuple with the following values:
+// 1. the channel to change, see the corresponding operation documentation https://sass-lang.com/documentation/modules/color/#adjust
+// 2. the operation to perform, either change, scale or adjust. See https://sass-lang.com/documentation/modules/color/
+// 3. the steps or 'values' to use. Either a list or a single value.
+@include themed.configure($themes, $plugins: plugins.variants(
+  ('alpha' 'change' (0.1, 0.9)),
+  ('red' 'change' (0.1, 0.9))
+));
 @include themed.apply();
 `;
 

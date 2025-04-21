@@ -7,9 +7,8 @@
 $__themed__plugin-variants__name: 'themed-plugin-variants';
 
 $__themed__plugin-variants__channels: null;
+$__themed__plugin-variants__operations: null;
 $__themed__plugin-variants__steps: null;
-$__themed__plugin-variants__colorspace: null;
-$__themed__plugin-variants__operation: null;
 
 $__themed__plugin-variants__allowed-channels: (
   'red',
@@ -28,22 +27,8 @@ $__themed__plugin-variants__allowed-channels: (
 );
 $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
 
-@function change-channel($color, $channel, $value) {
-  $fn: meta.get-function('change', $module: 'color');
-  $args: (
-    $channel: $value,
-  );
-  @return meta.call($fn, $color, $args...);
-}
-@function adjust-channel($color, $channel, $value) {
-  $fn: meta.get-function('adjust', $module: 'color');
-  $args: (
-    $channel: $value,
-  );
-  @return meta.call($fn, $color, $args...);
-}
-@function scale-channel($color, $channel, $value) {
-  $fn: meta.get-function('scale', $module: 'color');
+@function apply-variant($color, $operation, $channel, $value) {
+  $fn: meta.get-function($operation, $module: 'color');
   $args: (
     $channel: $value,
   );
@@ -60,20 +45,14 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
     // Loop through all variables
     @each $key, $value in $theme-map {
       @if meta.type-of($value) == 'color' {
-        @each $channel in $__themed__plugin-variants__channels {
-          @each $step in $__themed__plugin-variants__steps {
-            $new-value: $value;
+        @for $i from 1 through list.length($__themed__plugin-variants__channels) {
+          $channel: list.nth($__themed__plugin-variants__channels, $i);
+          $operation: list.nth($__themed__plugin-variants__operations, $i);
+          $steps: list.nth($__themed__plugin-variants__steps, $i);
 
-            @if $__themed__plugin-variants__operation == 'change' {
-              $new-value: change-channel($value, $channel, $step);
-            } @else if $__themed__plugin-variants__operation == 'adjust' {
-              $new-value: adjust-channel($value, $channel, $step);
-            } @else if $__themed__plugin-variants__operation == 'scale' {
-              $new-value: scale-channel($value, $channel, $step);
-            }
-
+          @each $step in $steps {
+            $new-value: apply-variant($value, $operation, $channel, $step);
             $channel-prefix: string.slice($channel, 1, 1);
-
             $theme-result: map.merge($theme-result, (#{$key}--#{$channel-prefix}#{$step}: $new-value));
           }
         }
@@ -91,29 +70,68 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
   @return $result-map;
 }
 
-@function variants($channels, $operation, $steps, $colorspace: null) {
-  @each $channel in $channels {
-    @if list.index($__themed__plugin-variants__allowed-channels, $channel) == null {
-      @error "The variant '#{$variant}' is not allowed. Allowed variants are: #{list.join($__themed__plugin-variants__allowed-variants, ', ')}.";
+// Arguments are given as a list of lists, always specifying channel, operation and steps
+// e.g. (('red', 'change', 10), ('green', 'adjust', (10, 20, 30)), ('blue', 'scale', 0.5))
+// They can also be given as a single list, e.g.
+// red adjust (10, 20, 30) alpha change (0.5, 0.6, 0.7)
+@function __themed__plugin-variants__parse-arguments($args) {
+  $channels: ();
+  $operations: ();
+  $steps: ();
+
+  @for $i from 1 through list.length($args) {
+    $arg: list.nth($args, $i);
+
+    @if $i % 3 == 1 {
+      @if list.index($__themed__plugin-variants__allowed-channels, $arg) == null {
+        @error "The channel '#{$arg}' is not allowed. Allowed channels are: #{list.join($__themed__plugin-variants__allowed-channels, ', ')}.";
+      }
+
+      $channels: list.append($channels, $arg);
+    } @else if $i % 3 == 2 {
+      @if list.index($__themed__plugin-variants__allowed-operations, $arg) == null {
+        @error "The operation '#{$arg}' is not allowed. Allowed operations are: #{list.join($__themed__plugin-variants__allowed-operations, ', ')}.";
+      }
+
+      $operations: list.append($operations, $arg);
+    } @else if $i % 3 == 0 {
+      @if meta.type-of($arg) == 'list' {
+        $steps: list.append($steps, $arg);
+      } @else {
+        $steps: list.append($steps, ($arg));
+      }
     }
   }
 
-  @if list.index($__themed__plugin-variants__allowed-operations, $operation) == null {
-    @error "The operation '#{$operation}' is not allowed. Allowed operations are: #{list.join($__themed__plugin-variants__allowed-operations, ', ')}.";
+  @return ($channels, $operations, $steps);
+}
+
+@function variants($args...) {
+  $args-list: [];
+
+  @for $i from 1 through list.length($args) {
+    $arg: list.nth($args, $i);
+
+    @if meta.type-of($arg) == 'list' {
+      $args-list: list.join($args-list, $arg);
+    } @else {
+      @error "Each entry of the arguments list must be a list. Got '#{$arg}' of type '#{meta.type-of($arg)}'.";
+    }
   }
 
-  @if meta.type-of($steps) != 'list' {
-    @error "The steps must be a list. Got '#{meta.type-of($steps)}'. Note, that the type of value differs between the values you set. See https://sass-lang.com/documentation/modules/color/ for more info";
-  }
+  @debug $args-list;
 
-  @if $colorspace != null and meta.type-of($colorspace) != 'string' {
-    @error "The colorspace must be a string. Got '#{meta.type-of($colorspace)}'. See https://developer.mozilla.org/en-US/docs/Glossary/Color_space#named_color_spaces";
-  }
+  $parsed-args: __themed__plugin-variants__parse-arguments($args-list);
+
+  @debug $parsed-args;
+
+  $channels: list.nth($parsed-args, 1);
+  $operations: list.nth($parsed-args, 2);
+  $steps: list.nth($parsed-args, 3);
 
   $__themed__plugin-variants__channels: $channels !global;
-  $__themed__plugin-variants__operation: $operation !global;
+  $__themed__plugin-variants__operations: $operations !global;
   $__themed__plugin-variants__steps: $steps !global;
-  $__themed__plugin-variants__colorspace: $colorspace !global;
 
   @return ('name': $__themed__plugin-variants__name, 'modify': meta.get-function(__themed__plugin-variants__modify));
 }

@@ -1,7 +1,7 @@
 {
   "name": "vite-vanilla",
   "version": "0.0.0",
-  "private": false,
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "vite build",
