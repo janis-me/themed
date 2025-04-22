@@ -8,7 +8,7 @@
   <a href="https://themed.janis.me">
     <img src="https://img.shields.io/badge/Documentation-online-blue" alt="build status">
   </a>
-  <a href="https://playground.themed.janis.me">
+  <a href="https://themed-playground.janis.me">
     <img src="https://img.shields.io/badge/Playground-online-green" alt="build status">
   </a>
   <a href="https://npmjs.com/package/@janis.me/themed">
