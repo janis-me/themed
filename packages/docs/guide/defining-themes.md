@@ -7,15 +7,16 @@ In [the previous section](/guide/global-setup), we showed a code snippet like th
 ```scss [global.scss]
 @forward '@janis.me/themed';
 
-@use '@janis.me/themed' as *;
 @use 'sass:meta';
+@use '@janis.me/themed';
+
 @use './themes.scss';
 
 // This get's all themes defined in ./themes.scss as a map.
 // You can also just define a map here, like described in `getting started`.
-$theme-map: meta.module-variables('themes');
+$themes: meta.module-variables('themes');
 
-@include apply($theme-map);
+@include themed.configure($themes);
 ```
 
 :::
@@ -70,11 +71,11 @@ $themes-map: (
 ```scss [global.scss]
 @forward '@janis.me/themed';
 
-@use '@janis.me/themed' as *;
+@use '@janis.me/themed';
 @use 'sass:meta';
 @use './themes.scss';
 
-@include apply(themes.$themes-map);
+@include themed.configure(themes.$themes-map);
 ```
 
 :::
@@ -98,26 +99,7 @@ You can also still use all [utility functions](/guide/utility-functions) we prov
 
 You will often have values that don't change across themes, for example paddings/margins, font sizes etc. You have a couple of options:
 
-1. Define them outside of `themed`, for example with plain SCSS variables
-2. re-define them in all themes, either by manually repeating them, or with a "default" set of variables in a map, for example:
-
-```scss
-$defaults: (
-  "padding": 8px,
-  "font-size": 1rem,
-)
-
-$light: map.merge($defaults, (
-  "my-color": #fefefe
-))
-
-$dark: map.merge($defaults, (
-  "my-color": #212121
-))
-
-```
-
-3. Use the built-in `fill` modifier. With this, you can automatically fill in values from the [primary theme](/guide/defining-themes#the-primary-theme) to all other themes. This is, however, quite costly and might slow down your compilation time.
+1. Use the built-in `fill` modifier. With this, you can automatically fill in values from the [primary theme](/guide/defining-themes#the-primary-theme) to all other themes.
 
 ::: code-group
 
@@ -146,8 +128,25 @@ $theme-map: themed.modify-themes($raw-theme-map, modifiers.fill());
 
 :::
 
-This will compare all themes against the [primary theme](/guide/defining-themes#the-primary-theme) and fill in missing values.
+2. Define them outside of `themed`, for example with plain SCSS variables
+3. re-define them in all themes, either by manually repeating them, or with a "default" set of variables in a map, for example:
+
+```scss
+$defaults: (
+  "padding": 8px,
+  "font-size": 1rem,
+)
+
+$light: map.merge($defaults, (
+  "my-color": #fefefe
+))
+
+$dark: map.merge($defaults, (
+  "my-color": #212121
+))
+
+```
 
 ## Modifying themes
 
-One of the most important aspects of `themed` is the way you can easily build themes with modifiers. In the next section, [modifiers](/guide/modifiers), we will have a look at them.
+One of the most important aspects of `themed` is the way you can easily build themes with plugins. In the next section, [plugins](/guide/plugins), we will have a look at them.

@@ -44,7 +44,7 @@
 - 🌐 Produces nice **SCSS AND CSS** variables, so you can use all SCSS features with theming.
 - 🖌 **Multi-theme**: You can either use classic dark/light themes, or define as many as you want!
 - 🚀 **Extra features** like JS/TS methods for interactivity built in.
-- 🔌 **Built-in plugin** support like wide-gammut colors, auto-generated color variants and more.
+- 🔌 **Built-in plugins** like wide-gammut colors, auto-generated color variants and more.
 - 🎭 **Customizable**: Adjust nearly every aspect of how you use themes.
 - 🌈 Prints **human-readable** errors when doing something wrong.
 - First class **React support** with `@janis.me/react-themed`.

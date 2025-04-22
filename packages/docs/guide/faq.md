@@ -8,7 +8,7 @@
 :::
 
 ::: details Q: Can I use this with tailwind? {open}
-Probably not? Tailwind probably has it's own thing going on. This is as raw as SCSS gets.
+Yes! We even want to add native support for it via a plugin. You can just define CSS variables as you normally would and then pass them to tailwind.
 :::
 
 ::: details Q: What dependencies does this have? {open}
@@ -23,4 +23,8 @@ Meaning, if you want to use themed functions in multiple files, make sure that t
 See the vite-vanilla-extended or vite-react examples for this, they define a global.scss file.
 
 This is, of course, only needed on compile time. The CSS output will always be the same.
+:::
+
+::: details Q: Do I have to use the `themed` function? {open}
+Not at all. Even though it does provide compile-time checks, which can be nice, you can also just use the CSS variables using `var(--themed-color-1)` etc.
 :::
