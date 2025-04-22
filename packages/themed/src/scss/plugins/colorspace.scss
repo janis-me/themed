@@ -7,7 +7,7 @@ $__themed__plugin-colorspace__name: 'themed-plugin-colorspace';
 // globals;
 $__themed__plugin-colorspace__space: null;
 
-@function __themed__plugin-colorspace__modify($themes, $prefix) {
+@function __themed__plugin-colorspace__extend-all($themes, $prefix) {
   $result-map: $themes;
 
   @each $theme-name, $theme-map in $themes {
@@ -40,6 +40,6 @@ $__themed__plugin-colorspace__space: null;
 
   @return (
     'name': $__themed__plugin-colorspace__name,
-    'extend-all': meta.get-function(__themed__plugin-colorspace__modify)
+    'extend-all': meta.get-function(__themed__plugin-colorspace__extend-all)
   );
 }

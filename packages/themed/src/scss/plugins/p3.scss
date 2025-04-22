@@ -10,7 +10,7 @@ $__themed__plugin-p3__name: 'themed-plugin-p3';
 // globals;
 $__themed__plugin-p3__overrides-map: null;
 
-@mixin __themed__plugin-p3__extend($themes, $prefix) {
+@mixin __themed__plugin-p3__pre-apply($themes, $prefix) {
   @media (color-gamut: p3) {
     @supports (color: color(display-p3 0 0 0 / 1)) {
       // Check the existing themes. If the override exists, add this override as a value behind the media/supports query.
@@ -46,5 +46,5 @@ $__themed__plugin-p3__overrides-map: null;
     $__themed__plugin-p3__overrides-map: $overrides !global;
   }
 
-  @return ('name': $__themed__plugin-p3__name, 'pre-apply': meta.get-mixin('__themed__plugin-p3__extend'));
+  @return ('name': $__themed__plugin-p3__name, 'pre-apply': meta.get-mixin('__themed__plugin-p3__pre-apply'));
 }

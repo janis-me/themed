@@ -35,7 +35,7 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
   @return meta.call($fn, $color, $args...);
 }
 
-@function __themed__plugin-variants__modify($themes, $prefix) {
+@function __themed__plugin-variants__extend-all($themes, $prefix) {
   $result-map: ();
 
   // Loop through all themes
@@ -131,6 +131,6 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
 
   @return (
     'name': $__themed__plugin-variants__name,
-    'extend-all': meta.get-function(__themed__plugin-variants__modify)
+    'extend-all': meta.get-function(__themed__plugin-variants__extend-all)
   );
 }
