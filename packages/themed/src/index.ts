@@ -44,11 +44,15 @@ export function getTheme(
  *
  * @returns void
  */
-export function setTheme(theme: ThemeOption | string, toLocalStorage = true, key: string = THEME_LOCALSTORAGE_KEY) {
+export function setTheme(
+  theme: ThemeOption | string,
+  toLocalStorage = true,
+  localStorageKey: string = THEME_LOCALSTORAGE_KEY,
+) {
   document.documentElement.setAttribute(THEME_ATTRIBUTE_NAME, theme);
 
   if (toLocalStorage) {
-    setThemeInLocalstorage(theme, key);
+    setThemeInLocalstorage(theme, localStorageKey);
   }
 }
 
@@ -60,6 +64,19 @@ export function setTheme(theme: ThemeOption | string, toLocalStorage = true, key
  */
 export function setDefaultTheme() {
   setTheme(getTheme(), false);
+}
+
+/**
+ * Gets the current theme (light or dark) and reverses it, returning the new theme.
+ * Only works with dark/light themes. If you pass something else, will default to 'DEFAULT_THEME' (dark)
+ *
+ * When no theme is currently set on the documentElement, this will default to setting 'light'
+ *
+ * @returns The new theme
+ */
+export function toggleTheme(): ThemeOption {
+  const current = getTheme();
+  return current === 'dark' ? 'light' : 'dark';
 }
 
 /**
@@ -83,37 +100,26 @@ export function setThemeToDocument(theme: ThemeOption | string) {
 /**
  * Sets the theme in localstorage.
  *
- * @param key The key to set the theme in localstorage (default: 'user-preferred-theme')
+ * @param localStorageKey The key to set the theme in localstorage (default: 'user-preferred-theme')
  *
  * @returns void
  */
-export function getThemeFromLocalstorage(key: string = THEME_LOCALSTORAGE_KEY): ThemeOption | string | null {
-  return localStorage.getItem(key);
+export function getThemeFromLocalstorage(
+  localStorageKey: string = THEME_LOCALSTORAGE_KEY,
+): ThemeOption | string | null {
+  return localStorage.getItem(localStorageKey);
 }
 
 /**
  * Sets the theme in localstorage.
  *
  * @param theme The theme to set in localstorage
- * @param key The key to set the theme in localstorage (default: 'user-preferred-theme')
+ * @param localStorageKey The key to set the theme in localstorage (default: 'user-preferred-theme')
  *
  * @returns void
  */
-export function setThemeInLocalstorage(theme: ThemeOption | string, key: string = THEME_LOCALSTORAGE_KEY) {
-  localStorage.setItem(key, theme);
-}
-
-/**
- * Gets the current theme (light or dark) and reverses it, returning the new theme.
- * Only works with dark/light themes. If you pass something else, will default to 'DEFAULT_THEME' (dark)
- *
- * When no theme is currently set on the documentElement, this will default to setting 'light'
- *
- * @returns The new theme
- */
-export function toggleTheme(): ThemeOption {
-  const current = getTheme();
-  return current === 'dark' ? 'light' : 'dark';
+export function setThemeInLocalstorage(theme: ThemeOption | string, localStorageKey: string = THEME_LOCALSTORAGE_KEY) {
+  localStorage.setItem(localStorageKey, theme);
 }
 
 /**

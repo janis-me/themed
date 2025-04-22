@@ -14,6 +14,38 @@
     gap: 16px;
   }
 
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+
+    a {
+      color: themed('grey-11');
+
+      &:hover {
+        color: themed('grey-12');
+      }
+    }
+
+    > * {
+      height: 100%;
+      min-width: fit-content;
+      vertical-align: middle;
+      transition: all 200ms ease-in-out;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+
+      &:hover {
+        background-color: themed('grey-3');
+      }
+    }
+  }
+
   h1 {
     font-size: 1.3rem;
 
@@ -28,14 +60,12 @@
   }
 
   &__theme-toggle {
-    color: themed('grey-12');
+    color: themed('grey-11');
     background-color: transparent;
     border: none;
-    cursor: pointer;
-    transition: all 200ms ease-in-out;
 
     &:hover {
-      color: themed('grey-11');
+      color: themed('grey-12');
     }
   }
 }
