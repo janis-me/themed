@@ -38,6 +38,7 @@
     "build:watch": "vite build --watch",
     "format": "prettier . --write",
     "prepublishOnly": "pnpm install && pnpm build",
+    "prepack": "pnpm -c exec ../scripts/prepack.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

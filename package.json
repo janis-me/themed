@@ -27,7 +27,6 @@
     "build:watch": "pnpm --parallel --filter=@janis.me/themed --filter=@janis.me/react-themed build:watch",
     "format": "prettier --write .",
     "lint": "eslint --flag unstable_config_lookup_from_file .",
-    "prepack": "pnpm -c exec ./prepack.sh",
     "publish:react-themed": "pnpm publish packages/react-themed --access public",
     "publish:themed": "pnpm publish packages/themed --access public",
     "test": "vitest"

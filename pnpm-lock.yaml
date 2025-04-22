@@ -353,6 +353,8 @@ importers:
         specifier: ^4.5.0
         version: 4.5.3(@types/node@22.14.1)(rollup@4.40.0)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
 
+  packages/scripts: {}
+
   packages/themed:
     devDependencies:
       '@janis.me/linter-config':
