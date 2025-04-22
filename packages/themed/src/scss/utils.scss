@@ -1,5 +1,7 @@
 @use 'sass:string';
 @use 'sass:list';
+@use 'sass:meta';
+@use 'sass:color';
 
 @function string-replace($string, $character, $replacement) {
   $split: string.split($string, $character);
@@ -48,4 +50,12 @@
   $key: remove-special-characters($key);
 
   @return var(--#{$prefix}-#{$key});
+}
+
+@function apply-variant($color, $operation, $channel, $value) {
+  $fn: meta.get-function($operation, $module: 'color');
+  $args: (
+    $channel: $value,
+  );
+  @return meta.call($fn, $color, $args...);
 }

@@ -115,6 +115,62 @@ $theme-prefix: 'my-var';
 @include themed.apply();
 `;
 
+const EXAMPLE_PLUGIN_ALPHA = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+@include themed.configure($themes, $plugins: plugins.alpha('change', (0.2, 0.5, 0.8)));
+@include themed.apply();
+`;
+
+const EXAMPLE_PLUGIN_COLORSPACE = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+@include themed.configure($themes, $plugins: plugins.colorspace(oklch));
+@include themed.apply();
+`;
+
 const EXAMPLE_PLUGIN_FILL = `@use '@janis.me/themed';
 @use '@janis.me/themed/plugins';
 
@@ -222,43 +278,15 @@ $themes: (
 @include themed.apply();
 `;
 
-const EXAMPLE_PLUGIN_COLORSPACE = `@use '@janis.me/themed';
-@use '@janis.me/themed/plugins';
-
-@use 'sass:meta';
-
-$themes: (
-  light: (
-    'text': #1e1f24,
-    'background': #f1f1f1,
-    'grey-1': #fcfcfd,
-    'grey-2': #f9f9fb,
-    'grey-3': #eff0f3,
-    'teal-9':#29c5c3,
-  ),
-  dark: (
-    'text': #eeeef0,
-    'background': #1e1e20,
-    'grey-1': #202123,
-    'grey-2': #27282a,
-    'grey-3': #303033,
-    'teal-9': #16b6b3,
-  )
-);
-
-// (this is valid SCSS, don't let the error fool you.)
-@include themed.configure($themes, $plugins: plugins.colorspace(oklch));
-@include themed.apply();
-`;
-
 export const EXAMPLES = {
   simple: EXAMPLE_SIMPLE,
   customization: EXAMPLE_CUSTOMIZATION,
   'multiple-plugins': EXAMPLE_PLUGINS,
+  'plugin-alpha': EXAMPLE_PLUGIN_ALPHA,
+  'plugin-colorspace': EXAMPLE_PLUGIN_COLORSPACE,
   'plugin-fill': EXAMPLE_PLUGIN_FILL,
   'plugin-p3': EXAMPLE_PLUGIN_P3,
   'plugin-variants': EXAMPLE_PLUGIN_VARIANTS,
-  'plugin-colorspace': EXAMPLE_PLUGIN_COLORSPACE,
 };
 
 export const COLOR = {
