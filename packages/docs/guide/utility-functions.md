@@ -2,13 +2,28 @@
 
 Themed offers serval functions via `@janis.me/themed/js` that might be of help. Currently, there is no validation being done when setting themes. So you very much can set a theme that wasn't defined. Be careful.
 
-## `getTheme()`
+## `getTheme(localstorageThemeKey: string, fallback: string)`
 
-Just get's the current theme from the `data-theme` attribute as string.
+Gets the current theme from different sources, trying to show the user the most-preferred theme.
 
-## `setTheme(theme: string)`
+The order of importance is
 
-Set's the theme.
+1. The theme stored in localstorage (if any).
+2. The preferred user colorscheme (prefers-color-scheme)
+3. The current theme set on the documentElement (if any).
+4. The given `fallback` theme (if any).
+5. The default theme, which is 'dark'. Be gentle on eyes.
+
+## `setTheme(theme: string, toLocalStorage: boolean, localStorageKey: string)`
+
+Set the theme to the `document element` and localstorage (if `toLocalStorage` is not set to `false`).
+
+## `setDefaultTheme()`
+
+When your site is first loaded, you might want to set the default theme for the user.
+This way, you don't have to set the `data-theme` attribute yourself, and the user will instantly see their preferred theme.
+
+This will not save anything to localstorage, so we don't assume the users preferences
 
 ## `toggleTheme()`
 
@@ -16,14 +31,28 @@ Assumes the only themes are `light` and `dark`, and toggles between them, like
 
 ```ts
 const current = getTheme();
-const next = current === 'light' ? 'dark' : 'light';
-
-setTheme(next);
-
-return next;
+return current === 'dark' ? 'light' : 'dark';
 ```
 
-As per this logic, when the current theme is something that's neither light nor dark, it will always set the theme to `light`.
+As per this logic, when the current theme is something that's neither light nor dark, it will always set the theme to `dark`.
+
+This function does NOT set the theme. It's just used to get the 'inverse'
+
+## `getThemeFromDocument()`
+
+Get the currently active theme from the `data-theme` attribute.
+
+## `setThemeToDocument(theme: string)`
+
+Sets the given theme to the `data-theme` attribute, but not localstorage. use `setTheme` for that.
+
+## `getThemeFromLocalstorage(localStorageKey: string)`
+
+Get the currently active theme from localstorage
+
+## `setThemeInLocalstorage(theme: string)`
+
+Sets the given theme to localStorage, but not the `data-theme` attribute.
 
 ## `getPreferredColorScheme()`
 

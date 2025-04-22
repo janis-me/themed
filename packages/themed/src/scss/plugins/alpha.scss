@@ -1,0 +1,64 @@
+@use '../utils';
+
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:color';
+
+$__themed__plugin-alpha__name: 'themed-plugin-alpha';
+
+$__themed__plugin-alpha__operation: null;
+$__themed__plugin-alpha__steps: null;
+
+$__themed__plugin-alpha__allowed-operations: ('change', 'adjust', 'scale');
+
+@function __themed__plugin-alpha__extend-all($themes, $prefix) {
+  $result-map: ();
+
+  // Loop through all themes
+  @each $theme-name, $theme-map in $themes {
+    $theme-result: $theme-map;
+
+    // Loop through all variables
+    @each $key, $value in $theme-map {
+      @if meta.type-of($value) == 'color' {
+        $channel: 'alpha';
+        $operation: $__themed__plugin-alpha__operation;
+        $steps: $__themed__plugin-alpha__steps;
+
+        @each $step in $steps {
+          $new-value: utils.apply-variant($value, $operation, $channel, $step);
+          $channel-prefix: 'a';
+          $theme-result: map.merge($theme-result, (#{$key}--#{$channel-prefix}#{$step}: $new-value));
+        }
+      }
+    }
+
+    $result-map: map.deep-merge(
+      $result-map,
+      (
+        '#{$theme-name}': $theme-result,
+      )
+    );
+  }
+
+  @return $result-map;
+}
+
+@function alpha($operation, $steps) {
+  @if not $operation or meta.type-of($operation) != 'string' {
+    @error "[#{$__themed__plugin-alpha__name}] The given operation is not a valid string.";
+  }
+  @if list.index($__themed__plugin-alpha__allowed-operations, $operation) == null {
+    @error "[#{$__themed__plugin-alpha__name}] The given operation is not a valid operation. Allowed operations are: #{string.join($__themed__plugin-alpha__allowed-operations, ', ')}.";
+  }
+  @if not $steps or meta.type-of($steps) != 'list' {
+    @error "[#{$__themed__plugin-alpha__name}] The given steps is not a valid list.";
+  }
+
+  $__themed__plugin-alpha__operation: $operation !global;
+  $__themed__plugin-alpha__steps: $steps !global;
+
+  @return ('name': $__themed__plugin-alpha__name, 'extend-all': meta.get-function(__themed__plugin-alpha__extend-all));
+}

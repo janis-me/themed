@@ -5,16 +5,16 @@ outline: deep
 # Getting started!
 
 ::: tip
-You can also just look at some [examples on github](https://github.com/janis-me/themed/tree/main/examples) if you want to dive in quickly.
+You can also just look at some [examples on github](https://github.com/janis-me/themed/tree/main/examples) or the [playground](https://playground.themed.janis.me) if you want to dive in quickly.
 :::
 
 ## Installation
 
-First, install themed or copy it's source, as described in [Installation](/guide/installation)
+First, install themed as described in [Installation](/guide/installation)
 ::: code-group
 
 ```sh [npm]
-$ npm add -D @janis.me/themed
+$ npm install -D @janis.me/themed
 ```
 
 ```sh [pnpm]
@@ -31,7 +31,7 @@ $ bun add -D @janis.me/themed
 
 :::
 
-Use it inside SCSS with the `@use .. as *` rule. This way, you can use all mixins and functions without any headache.
+Use it inside SCSS with `@use '@janis.me/themed' as *;`. All mixins and functions like `configure` and `apply` will be available in this modules scope.
 
 ::: code-group
 
@@ -41,7 +41,7 @@ Use it inside SCSS with the `@use .. as *` rule. This way, you can use all mixin
 
 :::
 
-## Define a theme
+## Define your themes
 
 Now, define your first themes! You can either define just a dark and light theme, or define more. We will start with just two, but read [Defining Themes](/guide/defining-themes) for advanced usage.
 
@@ -77,11 +77,12 @@ $themes: (
 
 ## Apply themes
 
-And finally, register those themes with the `themes` mixin. In it's simplest form, this mixin just verifies your themes and creates the CSS variables for you.
+We call `configure` to check the themes and register them in the current module scope. It can do more though! We'll get to it.
+And finally, apply those themes with the `apply` mixin. This creates the CSS variables for you.
 
 ::: code-group
 
-```scss [style.scss] {20}
+```scss [style.scss] {20-21}
 @use '@janis.me/themed' as *;
 
 $themes: (
@@ -101,18 +102,24 @@ $themes: (
   ),
 );
 
-@include apply($themes);
+@include configure($themes);
+@include apply();
 ```
 
 :::
 
-Try to change the name of a variable in one of the themes. You should get an error that your themes don't match.
+::: info
+You have to call both `configure` and `apply`. You probably even want to call `configure` in a `global.scss` file so it can be re-imported across your codebase.
+For this simple example, we call both in the index.scss file. See [Global setup](/guide/global-setup) for more info.
+:::
+
+Try to change the name of a variable in the dark theme. You get a nice error like
+
+```sh
+[sass] Error: "[themed] Theme 'light' is missing the key 'grey-5'"
+```
 
 Now, you can use the `themed` function **anywhere in this file** to retrieve values from your themes.
-
-::: warning
-Be aware, that using the themed function in different files might require some more setup. See [Global setup](/guide/global-setup) for more info.
-:::
 
 ## Using the `themed` function
 
@@ -138,6 +145,7 @@ $themes: (
   ),
 );
 
+@include configure($themes);
 @include apply($themes);
 
 html,
@@ -169,9 +177,9 @@ Or, use one of the utility functions that `themed` offers out of the box in any 
 ::: code-group
 
 ```js [index.js] {1-3}
-import { setTheme } from '@janis.me/themed/js';
+import { setDefaultTheme } from '@janis.me/themed/js';
 
-setTheme('light');
+setDefaultTheme('light');
 ```
 
 :::

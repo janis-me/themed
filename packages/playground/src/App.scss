@@ -12,7 +12,8 @@
   }
 }
 
-.header {
+.app:not(:has(.header)) {
+  grid-template-rows: 1fr;
 }
 
 .app__editor-input {
