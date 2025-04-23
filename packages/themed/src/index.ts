@@ -170,11 +170,14 @@ export function watchThemeAttribute(listener: (theme: ThemeOption | string | nul
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
       if (mutation.type === 'attributes' && mutation.attributeName === THEME_ATTRIBUTE_NAME) {
-        const newTheme = getTheme();
+        const newTheme = getThemeFromDocument();
         listener(newTheme);
       }
     });
   });
+
+  // Call the listener with the current theme
+  listener(getThemeFromDocument());
 
   observer.observe(document.documentElement, {
     attributes: true,
