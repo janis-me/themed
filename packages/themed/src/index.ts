@@ -14,6 +14,11 @@ export const THEME_LOCALSTORAGE_KEY = 'user-preferred-theme';
  */
 export type ThemeOption = 'light' | 'dark';
 
+function isLocalStorageAvailable() {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  return window && 'localStorage' in window && window.localStorage;
+}
+
 /**
  * Gets the current theme from different sources, trying to show the user the most-preferred theme.
  *
@@ -30,13 +35,9 @@ export function getTheme(
   localstorageThemeKey: string = THEME_LOCALSTORAGE_KEY,
   fallback?: string,
 ): ThemeOption | string {
-  return (
-    getThemeFromLocalstorage(localstorageThemeKey) ??
-    getPreferredColorScheme() ??
-    getThemeFromLocalstorage() ??
-    fallback ??
-    DEFAULT_THEME
-  );
+  const localstorageTheme = isLocalStorageAvailable() ? getThemeFromLocalstorage(localstorageThemeKey) : undefined;
+
+  return localstorageTheme ?? getPreferredColorScheme() ?? getThemeFromDocument() ?? fallback ?? DEFAULT_THEME;
 }
 
 /**
@@ -50,8 +51,7 @@ export function setTheme(
   localStorageKey: string = THEME_LOCALSTORAGE_KEY,
 ) {
   document.documentElement.setAttribute(THEME_ATTRIBUTE_NAME, theme);
-
-  if (toLocalStorage) {
+  if (toLocalStorage && isLocalStorageAvailable()) {
     setThemeInLocalstorage(theme, localStorageKey);
   }
 }
@@ -118,7 +118,10 @@ export function getThemeFromLocalstorage(
  *
  * @returns void
  */
-export function setThemeInLocalstorage(theme: ThemeOption | string, localStorageKey: string = THEME_LOCALSTORAGE_KEY) {
+export function setThemeInLocalstorage(
+  theme: ThemeOption | string,
+  localStorageKey: string = THEME_LOCALSTORAGE_KEY,
+): void {
   localStorage.setItem(localStorageKey, theme);
 }
 
