@@ -1,6 +1,6 @@
 {
   "name": "@janis.me/themed",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "description": "SCSS-native themes made simple",
   "keywords": [
@@ -40,8 +40,8 @@
     "build": "vite build",
     "build:watch": "vite build --watch",
     "format": "prettier . --write",
-    "prepublishOnly": "pnpm install && pnpm build",
     "prepack": "pnpm -c exec ../scripts/prepack.sh",
+    "prepublishOnly": "pnpm install && pnpm build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
