@@ -216,6 +216,58 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
 
+  packages/generator:
+    dependencies:
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@janis.me/linter-config':
+        specifier: workspace:*
+        version: link:../linter-config
+      '@janis.me/react-themed':
+        specifier: workspace:*
+        version: link:../react-themed
+      '@janis.me/sass-loader':
+        specifier: workspace:*
+        version: link:../sass-loader
+      '@janis.me/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      immutable:
+        specifier: ^5.1.1
+        version: 5.1.1
+      jotai:
+        specifier: ^2.12.3
+        version: 2.12.3(@types/react@19.1.2)(react@19.1.0)
+      lucide-react:
+        specifier: ^0.488.0
+        version: 0.488.0(react@19.1.0)
+      react:
+        specifier: catalog:react
+        version: 19.1.0
+      react-dom:
+        specifier: catalog:react
+        version: 19.1.0(react@19.1.0)
+      sass:
+        specifier: 'catalog:'
+        version: 1.86.3
+    devDependencies:
+      '@types/react':
+        specifier: catalog:react
+        version: 19.1.2
+      '@types/react-dom':
+        specifier: catalog:react
+        version: 19.1.2(@types/react@19.1.2)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
+      prettier:
+        specifier: 'catalog:'
+        version: 3.5.3
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3)
+
   packages/linter-config:
     devDependencies:
       '@eslint/js':
@@ -254,18 +306,15 @@ importers:
       '@janis.me/react-themed':
         specifier: workspace:*
         version: link:../react-themed
-      '@janis.me/themed':
+      '@janis.me/sass-loader':
         specifier: workspace:*
-        version: link:../themed
+        version: link:../sass-loader
       '@janis.me/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
       '@monaco-editor/react':
         specifier: ^4.7.0
         version: 4.7.0(monaco-editor@0.52.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@vitejs/plugin-react':
-        specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
       '@xterm/addon-fit':
         specifier: ^0.10.0
         version: 0.10.0(@xterm/xterm@5.5.0)
@@ -293,6 +342,9 @@ importers:
       react-dom:
         specifier: catalog:react
         version: 19.1.0(react@19.1.0)
+      sass:
+        specifier: 'catalog:'
+        version: 1.86.3
     devDependencies:
       '@types/react':
         specifier: catalog:react
@@ -300,12 +352,12 @@ importers:
       '@types/react-dom':
         specifier: catalog:react
         version: 19.1.2(@types/react@19.1.2)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.3.4(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
       prettier:
         specifier: 'catalog:'
         version: 3.5.3
-      sass:
-        specifier: 'catalog:'
-        version: 1.86.3
       vite:
         specifier: 'catalog:'
         version: 6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3)
@@ -352,6 +404,25 @@ importers:
       vite-plugin-dts:
         specifier: ^4.5.0
         version: 4.5.3(@types/node@22.14.1)(rollup@4.40.0)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3))
+
+  packages/sass-loader:
+    dependencies:
+      '@janis.me/linter-config':
+        specifier: workspace:*
+        version: link:../linter-config
+      '@janis.me/themed':
+        specifier: workspace:*
+        version: link:../themed
+      '@janis.me/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      sass:
+        specifier: 'catalog:'
+        version: 1.86.3
+    devDependencies:
+      vite:
+        specifier: 'catalog:'
+        version: 6.2.6(@types/node@22.14.1)(jiti@2.4.2)(sass-embedded@1.86.3)(sass@1.86.3)
 
   packages/scripts: {}
 
