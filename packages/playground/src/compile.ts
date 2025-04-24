@@ -1,19 +1,9 @@
 import { Terminal as XTerm } from '@xterm/xterm';
 import * as sass from 'sass';
 
-import { COLOR } from './constants';
+import { createThemedImporter } from '@janis.me/sass-loader';
 
-const themed = {
-  index: await import('@janis.me/themed?raw'),
-  utils: await import('@janis.me/themed/utils?raw'),
-  plugins: await import('@janis.me/themed/plugins?raw'),
-  generators: await import('@janis.me/themed/generators?raw'),
-  'plugins/alpha': await import('@janis.me/themed/plugins/alpha?raw'),
-  'plugins/colorspace': await import('@janis.me/themed/plugins/colorspace?raw'),
-  'plugins/fill': await import('@janis.me/themed/plugins/fill?raw'),
-  'plugins/p3': await import('@janis.me/themed/plugins/p3?raw'),
-  'plugins/variants': await import('@janis.me/themed/plugins/variants?raw'),
-};
+import { COLOR } from './constants';
 
 type Logger = (log: string) => void;
 
@@ -125,38 +115,6 @@ const createUnpkgImporter = (successLogger: Logger, warningLogger: Logger): sass
     }
 
     throw new Error(`unpkg importer: could not load ${canonicalUrl.href}`);
-  },
-});
-
-const createThemedImporter = (_: (log: string) => void): sass.Importer => ({
-  canonicalize(specifier: string, _: sass.CanonicalizeContext) {
-    let sanitizedUrl = specifier.replace('pkg:', '');
-
-    if (sanitizedUrl.startsWith('@janis.me/themed')) {
-      sanitizedUrl = sanitizedUrl.replace('.scss', '');
-      if (sanitizedUrl === '@janis.me/themed') {
-        return new URL(`pkg:${sanitizedUrl}/index.scss`);
-      } else {
-        return new URL(`pkg:${sanitizedUrl}.scss`);
-      }
-    }
-
-    return null;
-  },
-  load(canonicalUrl: URL): sass.ImporterResult {
-    if (canonicalUrl.href.startsWith('pkg:@janis.me/themed')) {
-      let name = canonicalUrl.href.replace('pkg:@janis.me/themed/', '');
-      name = name.replace('.scss', '');
-
-      if (name in themed) {
-        return {
-          contents: themed[name as keyof typeof themed].default,
-          syntax: 'scss',
-        };
-      }
-    }
-
-    throw new Error(`themed importer: could not load ${canonicalUrl.href}`);
   },
 });
 

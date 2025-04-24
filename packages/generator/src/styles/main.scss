@@ -1,0 +1,24 @@
+@include apply();
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  color: themed('gray-12');
+  background-color: themed('gray-1');
+  font-family: 'IBM Plex Mono', monospace;
+
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: themed('primary-7');
+  text-decoration: none;
+
+  &:hover {
+    color: themed('primary-8');
+  }
+}

@@ -1,0 +1,22 @@
+@forward '@janis.me/react-themed';
+
+@use 'sass:meta';
+@use '@janis.me/react-themed' as themed;
+@use '@janis.me/react-themed/generators';
+@use '@janis.me/react-themed/plugins';
+
+$themes: generators.generate(
+  $primary: oklch(0.7 0.1176 192.68),
+  $target-space: oklch,
+);
+
+@include themed.configure(
+  $themes,
+  $plugins: plugins.alpha(
+      $operation: 'change',
+      $steps: (
+        0.2,
+        0.9,
+      )
+    )
+);

@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+
+  height: 50vh;
+  background: themed('primary-1');
+  background: linear-gradient(
+    in oklch 120deg,
+    themed('primary-2') 0%,
+    themed('primary-3') 40%,
+    themed('primary-4') 100%
+  );
+
+  pre {
+    background-color: themed('primary-4--a09');
+  }
+
+  h1 {
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+  }
+}
