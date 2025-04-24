@@ -21,7 +21,10 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.scss",
-    "./modifiers": "./dist/modifiers.scss",
+    "./plugins": "./dist/plugins.scss",
+    "./plugins/*": "./dist/plugins/*.scss",
+    "./utils": "./dist/utils.scss",
+    "./generators": "./dist/generators.scss",
     "./js": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
