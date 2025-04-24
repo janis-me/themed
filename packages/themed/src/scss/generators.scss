@@ -74,66 +74,35 @@ $__themed__primary-chroma-steps-dark: (
 }
 
 $__themed__gray-lightness-steps-light: (99%, 98%, 95%, 93%, 91%, 88%, 85%, 79%, 64%, 61%, 50%, 24%);
-$__themed__gray-chroma-steps-light: (
-  0.0014,
-  0.002,
-  0.004,
-  0.005,
-  0.007,
-  0.008,
-  0.011,
-  0.015,
-  0.015,
-  0.015,
-  0.012,
-  0.009
-);
 $__themed__gray-lightness-steps-dark: (23%, 26%, 29%, 32%, 34%, 37%, 42%, 50%, 55%, 59%, 77%, 94%);
-$__themed__gray-chroma-steps-dark: (0.026, 0.025, 0.034, 0.046, 0.051, 0.051, 0.051, 0.051, 0.051, 0.051, 0.051, 0.016);
 
 @function _generate-gray-scale($color, $mode, $space: oklch) {
   $palette: (); // start empty list
 
   $steps: ();
   $lightness-steps: ();
-  $chroma-steps: ();
 
   @if $mode == 'light' {
     $lightness-steps: $__themed__gray-lightness-steps-light;
-    $chroma-steps: $__themed__gray-chroma-steps-light;
     // "sanitize" the color by ensuring it's roughly a 'solid grey'
-    $color: color.change(
-      $color,
-      $lightness: list.nth($lightness-steps, 9),
-      $chroma: list.nth($chroma-steps, 9),
-      $space: oklch
-    );
+    $color: color.change($color, $lightness: list.nth($lightness-steps, 9), $space: oklch);
   } @else if $mode == 'dark' {
     $lightness-steps: $__themed__gray-lightness-steps-dark;
-    $chroma-steps: $__themed__gray-chroma-steps-dark;
 
     // "sanitize" the color by ensuring it's roughly a 'solid grey'
-    $color: color.change(
-      $color,
-      $lightness: list.nth($lightness-steps, 9),
-      $chroma: list.nth($chroma-steps, 9),
-      $space: oklch
-    );
+    $color: color.change($color, $lightness: list.nth($lightness-steps, 9), $space: oklch);
   } @else {
     @error "[themed-generate] Invalid mode. Use 'light' or 'dark'.";
   }
 
   $s-lightness: color.channel($color, 'lightness');
-  $s-chroma: color.channel($color, 'chroma');
 
   @for $i from 1 through 12 {
     $t-lightness: list.nth($lightness-steps, $i);
-    $t-chroma: list.nth($chroma-steps, $i);
 
     $lightness: $t-lightness - $s-lightness;
-    $chroma: $t-chroma - $s-chroma;
 
-    $shade: color.adjust($color, $lightness: $lightness, $chroma: $chroma, $space: oklch);
+    $shade: color.adjust($color, $lightness: $lightness, $space: oklch);
 
     // reconstruct with same hue, append to list
     $palette: list.append($palette, $shade);
@@ -183,20 +152,20 @@ $__themed__gray-chroma-steps-dark: (0.026, 0.025, 0.034, 0.046, 0.051, 0.051, 0.
 
   @if $gray == null {
     // A 0-chroma version of the primary color.
-    $gray: color.change($primary, $chroma: 0, $space: oklch);
+    $gray: color.change($primary-oklch, $chroma: 0, $space: oklch);
   }
 
   @if $info == null {
-    $info: color.change($primary, $hue: 220, $space: oklch);
+    $info: color.change($primary-oklch, $hue: 220, $space: oklch);
   }
   @if $success == null {
-    $success: color.change($primary, $hue: 140, $space: oklch);
+    $success: color.change($primary-oklch, $hue: 140, $space: oklch);
   }
   @if $warning == null {
-    $warning: color.change($primary, $hue: 90, $space: oklch);
+    $warning: color.change($primary-oklch, $hue: 90, $space: oklch);
   }
   @if $error == null {
-    $error: color.change($primary, $hue: 20, $space: oklch);
+    $error: color.change($primary-oklch, $hue: 20, $space: oklch);
   }
 
   $gray: color.to-space($gray, oklch);
@@ -230,8 +199,8 @@ $__themed__gray-chroma-steps-dark: (0.026, 0.025, 0.034, 0.046, 0.051, 0.051, 0.
 
   $result-themes: map.deep-merge($result-themes, _add-colors($primary-light, 'light', 'primary', $target-space));
   $result-themes: map.deep-merge($result-themes, _add-colors($primary-dark, 'dark', 'primary', $target-space));
-  $result-themes: map.deep-merge($result-themes, _add-colors($gray-light, 'light', 'grey', $target-space));
-  $result-themes: map.deep-merge($result-themes, _add-colors($gray-dark, 'dark', 'grey', $target-space));
+  $result-themes: map.deep-merge($result-themes, _add-colors($gray-light, 'light', 'gray', $target-space));
+  $result-themes: map.deep-merge($result-themes, _add-colors($gray-dark, 'dark', 'gray', $target-space));
   $result-themes: map.deep-merge($result-themes, _add-colors($info-light, 'light', 'info', $target-space));
   $result-themes: map.deep-merge($result-themes, _add-colors($info-dark, 'dark', 'info', $target-space));
   $result-themes: map.deep-merge($result-themes, _add-colors($success-light, 'light', 'success', $target-space));
