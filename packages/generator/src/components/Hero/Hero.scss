@@ -1,8 +1,10 @@
-.header {
+.hero {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: column;
+  position: relative;
+  padding: 0 20%;
 
   height: 50vh;
   background: themed('primary-1');
@@ -14,7 +16,9 @@
   );
 
   pre {
-    background-color: themed('primary-4--a09');
+    background-color: themed('gray-1--a04');
+    padding: 8px 16px;
+    border-radius: 3px;
   }
 
   h1 {
@@ -22,5 +26,22 @@
     text-transform: uppercase;
     letter-spacing: 0.2em;
     font-weight: bold;
+  }
+
+  p {
+    position: absolute;
+    bottom: 0;
+    color: themed('primary-12');
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  &__colors {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__theme-toggle {
+    margin-top: 16px;
   }
 }

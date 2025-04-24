@@ -6,7 +6,7 @@
 @use '@janis.me/react-themed/plugins';
 
 $themes: generators.generate(
-  $primary: oklch(0.7 0.1176 192.68),
+  $primary: #16b6b3,
   $target-space: oklch,
 );
 
@@ -16,6 +16,7 @@ $themes: generators.generate(
       $operation: 'change',
       $steps: (
         0.2,
+        0.4,
         0.9,
       )
     )
