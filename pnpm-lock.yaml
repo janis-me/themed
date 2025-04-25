@@ -339,6 +339,9 @@ importers:
       immutable:
         specifier: ^5.1.1
         version: 5.1.1
+      include-media:
+        specifier: ^2.0.0
+        version: 2.0.0
       jotai:
         specifier: ^2.12.3
         version: 2.12.3(@types/react@19.1.2)(react@19.1.0)

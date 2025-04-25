@@ -12,6 +12,8 @@ export default defineConfig({
       { text: 'Getting Started', link: '/guide/getting-started' },
       { text: 'Guide', link: '/guide/global-setup' },
       { text: 'Why themed?', link: '/guide/why-themed' },
+      { text: 'Playground', link: 'https://themed.janis.me/playground' },
+      { text: 'Generator', link: 'https://themed.janis.me/generator' },
     ],
 
     sidebar: [
