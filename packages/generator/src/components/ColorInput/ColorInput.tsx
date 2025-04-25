@@ -9,11 +9,19 @@ export interface ColorInputProps {
 }
 
 export default function ColorInput({ label, color, setColor }: ColorInputProps) {
+  const handleChange = (newColor: string) => {
+    if (newColor.startsWith('#NaN')) {
+      return;
+    }
+
+    setColor(newColor);
+  };
+
   return (
     <label className="color-input">
       <span>{label}</span>
-      <HexColorInput placeholder="auto" className="color-input__input" color={color} onChange={setColor} />
-      <HexColorPicker className="color-input__picker" color={color} onChange={setColor} />
+      <HexColorInput placeholder="auto" className="color-input__input" color={color} onChange={handleChange} />
+      <HexColorPicker className="color-input__picker" color={color} onChange={handleChange} />
     </label>
   );
 }

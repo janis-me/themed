@@ -1,10 +1,11 @@
 .hero {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-flow: column;
+  padding: 0 64px;
+  gap: 32px;
+
   position: relative;
-  padding: 0 20%;
 
   height: 50vh;
   background: themed('primary-1');
@@ -28,20 +29,92 @@
     font-weight: bold;
   }
 
-  p {
-    position: absolute;
-    bottom: 0;
-    color: themed('primary-12');
-    text-align: center;
-    text-wrap: pretty;
+  &__center {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    p {
+      position: absolute;
+      bottom: 8px;
+      font-size: 0.8rem;
+      color: themed('primary-9');
+    }
+
+    @include media('<desktop') {
+      justify-content: start;
+    }
+
+    @include media('<830px') {
+      p {
+        display: none;
+      }
+    }
+  }
+
+  &__right {
+    background-color: themed('gray-1');
+    height: 80%;
+    width: 600px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+
+    pre {
+      display: block;
+    }
+
+    @include media('<desktop') {
+      justify-content: start;
+    }
+
+    @include media('<830px') {
+      display: none;
+    }
+  }
+
+  &__toggles {
+    display: flex;
+    position: sticky;
+    top: 0;
+  }
+
+  &__toggle {
+    flex-grow: 1;
+    border-bottom: 2px solid themed('primary-4');
+    border-radius: 0;
+
+    &--active {
+      border-bottom: 2px solid themed('primary-8');
+    }
   }
 
   &__colors {
-    display: flex;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 16px;
   }
 
-  &__theme-toggle {
+  &__buttons {
     margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+
+  @include media('<desktop') {
+    padding: 80px 32px 0 32px;
+    align-items: start;
+  }
+
+  @include media('<830px') {
+    height: auto;
+    min-height: 50vh;
   }
 }

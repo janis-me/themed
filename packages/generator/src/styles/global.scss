@@ -1,11 +1,12 @@
 @forward '@janis.me/react-themed';
+@forward 'include-media';
 
 @use 'sass:meta';
 @use '@janis.me/react-themed' as themed;
 @use '@janis.me/react-themed/generators';
 @use '@janis.me/react-themed/plugins';
 
-$themes: generators.generate(
+$themes: generators.theme(
   $primary: #16b6b3,
   $target-space: oklch,
 );

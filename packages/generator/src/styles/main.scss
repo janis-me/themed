@@ -27,8 +27,13 @@ h3,
 h4,
 p,
 input,
+select,
 button {
   color: themed('gray-12');
+}
+
+p {
+  text-wrap: pretty;
 }
 
 label {
