@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 import * as sass from 'sass';
 
@@ -10,8 +11,6 @@ import ColorspaceSelect from '../ColorspaceSelect/ColorspaceSelect';
 
 import './Hero.scss';
 
-import clsx from 'clsx';
-
 const COLOR_DEBOUNCE_TIME = 100;
 
 const getSassTemplate = (
@@ -23,43 +22,42 @@ const getSassTemplate = (
   error: string,
   colorspace: string,
 ) => {
-  if (gray === '') gray = 'null';
-  if (info === '') info = 'null';
-  if (success === '') success = 'null';
-  if (warning === '') warning = 'null';
-  if (error === '') error = 'null';
+  const includeIfDefined = (name: string, value: string) => {
+    if (value === '') {
+      return '';
+    }
 
-  return `@use '@janis.me/themed' as themed;
+    return `  $${name}: ${value},\n`;
+  };
+
+  return `@use '@janis.me/themed';
 @use '@janis.me/themed/generators';
 @use '@janis.me/themed/plugins';
 
 $themes: generators.theme(
   $primary: ${primary},
-  $gray: ${gray},
-  $info: ${info},
-  $success: ${success},
-  $warning: ${warning},
-  $error: ${error},
-  $target-space: ${colorspace},
+${includeIfDefined('gray', gray)}${includeIfDefined('info', info)}${includeIfDefined('success', success)}${includeIfDefined('warning', warning)}${includeIfDefined('error', error)}  $target-space: ${colorspace},
 );
 
+// The plugins are optional,
+// but that's what's used for this website. 
 @include themed.configure(
   $themes,
   $plugins: plugins.alpha(
-      $operation: 'change',
-      $steps: (
-        0.2,
-        0.4,
-        0.9,
-      )
+    $operation: 'change',
+    $steps: (
+      0.2,
+      0.4,
+      0.9,
     )
+  )
 );
 
 @include themed.apply();
 `;
 };
 
-export default function Header() {
+export default function Hero() {
   const { setTheme, toggleTheme } = useTheme();
 
   const [primary, setPrimary] = useState('#16b6b3');
@@ -104,7 +102,9 @@ export default function Header() {
   return (
     <div className="hero">
       <div className="hero__center">
-        <pre>@janis.me/themed</pre>
+        <a href="https://themed.janis.me" rel="noopener noreferrer" target="_blank" className="hero__tag">
+          <code>@janis.me/themed</code>
+        </a>
         <h1>Generator</h1>
         <div className="hero__colors">
           <ColorInput label="primary" color={primary} setColor={setPrimary} />
@@ -135,7 +135,7 @@ export default function Header() {
           All colors you see are generated on the fly. When you change a color, the sass compiler runs and uses
           @janis.me/themed to generate colors.
           <br />
-          Because colors are defined in hex format, you might not see any difference below in the oklch format - because
+          Because colors are defined in hex format, you might not see any difference in the pallet below - because
           chroma doesn&apos;t change.
           <br />
           Colors left at &apos;auto&apos; will be generated based on the chroma/lightness of the primary color.

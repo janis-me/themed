@@ -1,5 +1,5 @@
 import { formatCss, parse } from '@terrazzo/use-color';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './Palette.scss';
 
@@ -41,7 +41,7 @@ export default function Palette() {
       <h2>Palette</h2>
       <div className="palette__colors">
         {colors.map(color => (
-          <Fragment key={color}>
+          <div key={color} className="palette__color-group">
             <span className="palette__color palette__color--heading">{color}</span>
             {Array.from({ length: colorSteps }, (_, i) => {
               const backgroundColorString = `${color}-${String(i + 1)}`;
@@ -66,7 +66,7 @@ export default function Palette() {
                 </div>
               );
             })}
-          </Fragment>
+          </div>
         ))}
       </div>
     </div>

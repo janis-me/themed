@@ -2,12 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 64px;
+  padding: 64px;
   gap: 32px;
 
-  position: relative;
-
-  height: 50vh;
   background: themed('primary-1');
   background: linear-gradient(
     in oklch 120deg,
@@ -16,10 +13,18 @@
     themed('primary-4') 100%
   );
 
-  pre {
+  &__tag {
     background-color: themed('gray-1--a04');
     padding: 8px 16px;
     border-radius: 3px;
+    color: themed('gray-11');
+    margin-left: -8px;
+
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      color: themed('gray-12');
+    }
   }
 
   h1 {
@@ -39,33 +44,31 @@
     position: relative;
 
     p {
-      position: absolute;
-      bottom: 8px;
       font-size: 0.8rem;
       color: themed('primary-9');
+
+      @include media('<phone') {
+        display: none;
+      }
     }
 
     @include media('<desktop') {
       justify-content: start;
     }
-
-    @include media('<830px') {
-      p {
-        display: none;
-      }
-    }
   }
 
   &__right {
     background-color: themed('gray-1');
-    height: 80%;
+    height: 400px;
     width: 600px;
     overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
 
     pre {
+      padding: 0 16px;
       display: block;
+      overflow: hidden;
     }
 
     @include media('<desktop') {
@@ -96,16 +99,20 @@
   &__colors {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 16px;
   }
 
   &__buttons {
     margin-top: 16px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 16px;
     width: 100%;
+  }
+
+  @include media('>1280px') {
+    padding: 80px 128px;
   }
 
   @include media('<desktop') {
@@ -113,8 +120,11 @@
     align-items: start;
   }
 
+  @include media('<phone') {
+    padding: 64px 16px;
+  }
+
   @include media('<830px') {
     height: auto;
-    min-height: 50vh;
   }
 }

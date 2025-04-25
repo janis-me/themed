@@ -3,6 +3,11 @@
 @use 'sass:list';
 @use 'sass:map';
 
+$__themed__default-hue-blue: 240;
+$__themed__default-hue-green: 140;
+$__themed__default-hue-yellow: 90;
+$__themed__default-hue-red: 20;
+
 $__themed__primary-lightness-steps-light: (99%, 98%, 96%, 93%, 90%, 86%, 80%, 73%, 61%, 57%, 55%, 32%);
 $__themed__primary-chroma-steps-light: (0.002, 0.008, 0.017, 0.032, 0.047, 0.06, 0.07, 0.1, 0.16, 0.167, 0.164, 0.085);
 
@@ -16,7 +21,7 @@ $__themed__primary-chroma-steps-dark: (
   0.106,
   0.115,
   0.132,
-  0.064,
+  0.094,
   0.164,
   0.121,
   0.043
@@ -76,6 +81,10 @@ $__themed__primary-chroma-steps-dark: (
 $__themed__gray-lightness-steps-light: (99%, 98%, 95%, 93%, 91%, 88%, 85%, 79%, 64%, 61%, 50%, 24%);
 $__themed__gray-lightness-steps-dark: (23%, 26%, 29%, 32%, 34%, 37%, 42%, 50%, 55%, 59%, 77%, 94%);
 
+// The max amount of chroma we allow in the gray scale.
+// This is a bit generous, but helps to force 'gray' colors to be at least somewhat gray.
+$__themed__gray-chroma-limit: 0.04;
+
 @function _generate-gray-scale($color, $mode, $space: oklch) {
   $palette: (); // start empty list
 
@@ -103,6 +112,10 @@ $__themed__gray-lightness-steps-dark: (23%, 26%, 29%, 32%, 34%, 37%, 42%, 50%, 5
     $lightness: $t-lightness - $s-lightness;
 
     $shade: color.adjust($color, $lightness: $lightness, $space: oklch);
+
+    @if color.channel($shade, 'chroma') > $__themed__gray-chroma-limit {
+      $shade: color.change($shade, $chroma: $__themed__gray-chroma-limit, $space: oklch);
+    }
 
     // reconstruct with same hue, append to list
     $palette: list.append($palette, $shade);
@@ -143,21 +156,22 @@ $__themed__gray-lightness-steps-dark: (23%, 26%, 29%, 32%, 34%, 37%, 42%, 50%, 5
   $primary-oklch: color.to-space($primary, oklch);
 
   @if $gray == null {
-    // A 0-chroma version of the primary color.
-    $gray: color.change($primary-oklch, $chroma: 0, $space: oklch);
+    // A low-chroma version of the primary color.
+    // The chroma here could be 0, but a little tint of the primary color looks nicer.
+    $gray: color.change($primary-oklch, $chroma: calc($__themed__gray-chroma-limit / 2), $space: oklch);
   }
 
   @if $info == null {
-    $info: color.change($primary-oklch, $hue: 220, $space: oklch);
+    $info: color.change($primary-oklch, $hue: $__themed__default-hue-blue, $space: oklch);
   }
   @if $success == null {
-    $success: color.change($primary-oklch, $hue: 140, $space: oklch);
+    $success: color.change($primary-oklch, $hue: $__themed__default-hue-green, $space: oklch);
   }
   @if $warning == null {
-    $warning: color.change($primary-oklch, $hue: 90, $space: oklch);
+    $warning: color.change($primary-oklch, $hue: $__themed__default-hue-yellow, $space: oklch);
   }
   @if $error == null {
-    $error: color.change($primary-oklch, $hue: 20, $space: oklch);
+    $error: color.change($primary-oklch, $hue: $__themed__default-hue-red, $space: oklch);
   }
 
   $gray: color.to-space($gray, oklch);
