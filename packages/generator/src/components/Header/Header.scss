@@ -1,0 +1,44 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 56px;
+
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 16px;
+  background-color: themed('primary-1--a04');
+  backdrop-filter: blur(5px);
+  z-index: 1;
+
+  a {
+    color: themed('gray-11');
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &:hover {
+      color: themed('gray-12');
+    }
+  }
+
+  @include media('<1280px') {
+    font-size: 0.8rem;
+    height: 56px;
+  }
+
+  @include media('<desktop') {
+    padding: 0 32px;
+  }
+
+  @include media('<tablet') {
+    padding: 0 16px;
+  }
+
+  @include media('<phone') {
+    padding: 0 18px;
+    justify-content: center;
+  }
+}

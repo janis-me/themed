@@ -1,0 +1,13 @@
+.colorspace-select {
+  display: flex;
+  flex-flow: column;
+  gap: 6px;
+
+  &__select {
+    border: none;
+    background-color: themed('gray-1');
+    padding: 8px 16px;
+    width: 120px;
+    border-radius: 3px;
+  }
+}

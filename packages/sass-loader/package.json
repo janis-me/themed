@@ -1,0 +1,18 @@
+{
+  "name": "@janis.me/sass-loader",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@janis.me/linter-config": "workspace:*",
+    "@janis.me/themed": "workspace:*",
+    "@janis.me/typescript-config": "workspace:*",
+    "sass": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}

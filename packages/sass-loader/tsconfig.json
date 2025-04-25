@@ -1,5 +1,5 @@
 {
-  "extends": "@janis.me/typescript-config/react.json",
+  "extends": "@janis.me/typescript-config/base.json",
   "compilerOptions": {
     "types": ["vite/client"]
   },
