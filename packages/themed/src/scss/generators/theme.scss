@@ -147,7 +147,16 @@ $__themed__gray-chroma-limit: 0.04;
   @return $result;
 }
 
-@function theme($primary, $gray: null, $info: null, $success: null, $warning: null, $error: null, $target-space: rgb) {
+@function theme(
+  $primary,
+  $gray: null,
+  $info: null,
+  $success: null,
+  $warning: null,
+  $error: null,
+  $target-space: rgb,
+  $gray-chroma-limit: null
+) {
   @if meta.type-of($primary) != 'color' {
     @error "[themed-generate] $primary must be a valid color.";
   }
@@ -156,9 +165,13 @@ $__themed__gray-chroma-limit: 0.04;
   $primary-oklch: color.to-space($primary, oklch);
 
   @if $gray == null {
+    @if $gray-chroma-limit == null {
+      $gray-chroma-limit: calc($__themed__gray-chroma-limit / 4);
+    }
+
     // A low-chroma version of the primary color.
     // The chroma here could be 0, but a little tint of the primary color looks nicer.
-    $gray: color.change($primary-oklch, $chroma: calc($__themed__gray-chroma-limit / 2), $space: oklch);
+    $gray: color.change($primary-oklch, $chroma: $gray-chroma-limit, $space: oklch);
   }
 
   @if $info == null {
