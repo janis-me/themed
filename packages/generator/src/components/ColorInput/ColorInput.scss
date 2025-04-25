@@ -1,0 +1,27 @@
+.color-input {
+  display: flex;
+  flex-flow: column;
+  gap: 6px;
+
+  &__input {
+    border: none;
+    background-color: themed('gray-1');
+    padding: 8px 16px;
+    border-radius: 3px;
+  }
+
+  &__picker {
+    z-index: 1;
+    &.react-colorful {
+      display: none;
+      position: absolute;
+      margin-top: 80px;
+    }
+  }
+
+  &:focus-within {
+    .color-input__picker {
+      display: flex;
+    }
+  }
+}

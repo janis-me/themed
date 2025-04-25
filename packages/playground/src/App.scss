@@ -9,6 +9,19 @@
     position: relative;
     overflow: hidden;
     display: flex;
+
+    @include media('<desktop') {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+
+      .app__editor-input,
+      .app__editor-output {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        border-bottom: 1px solid themed('grey-6');
+      }
+    }
   }
 }
 

@@ -47,7 +47,8 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
           @each $step in $steps {
             $new-value: utils.apply-variant($value, $operation, $channel, $step);
             $channel-prefix: string.slice($channel, 1, 1);
-            $theme-result: map.merge($theme-result, (#{$key}--#{$channel-prefix}#{$step}: $new-value));
+            $sanitized-step: utils.remove-special-characters('#{$step}');
+            $theme-result: map.merge($theme-result, (#{$key}--#{$channel-prefix}#{$sanitized-step}: $new-value));
           }
         }
       }

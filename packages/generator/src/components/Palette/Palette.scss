@@ -1,0 +1,36 @@
+.palette {
+  margin-bottom: 32px;
+  width: 100%;
+  padding: 0 20%;
+
+  &__colors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 3px 8px;
+  }
+
+  &__color {
+    display: flex;
+    flex-flow: column;
+    padding: 8px;
+
+    &--heading {
+      font-weight: bold;
+      justify-content: end;
+      border-bottom: 1px solid themed('gray-6');
+    }
+  }
+
+  @include media('<1920px') {
+    padding: 0 64px;
+  }
+  @include media('<desktop') {
+    padding: 0 32px;
+  }
+  @include media('<tablet') {
+    padding: 0 16px;
+  }
+  @include media('<phone') {
+    padding: 0 8px;
+  }
+}
