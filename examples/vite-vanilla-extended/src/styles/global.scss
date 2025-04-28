@@ -6,7 +6,9 @@
 
 @use 'sass:meta';
 
-$theme-prefix: 'my-var';
+$config: (
+  'prefix': 'my-var',
+);
 
 // Calling `configure` defines the theme-map, enabling type-checking.
-@include themed.configure(themes.$themes, $theme-prefix, $plugins: plugins.p3(themes.$high-contrast) plugins.fill());
+@include themed.configure(themes.$themes, $config, plugins.p3(themes.$high-contrast), plugins.fill());

@@ -17,11 +17,11 @@ hero:
       text: Get started!
       link: /guide/getting-started
     - theme: alt
+      text: Generate a theme!
+      link: https://themed.janis.me/generator
+    - theme: alt
       text: Documentation
       link: /guide/global-setup
-    - theme: alt
-      text: Why themed?
-      link: /guide/why-themed
 
 features:
   - title: Type-Safe
@@ -66,7 +66,7 @@ features:
 - 🌈 Prints **human-readable** errors when doing something wrong.
 - <ReactLogo /> First class **React** support with `@janis.me/react-themed`.
 
-And no, CSS variables are not a solution. Read though our [Guide](/guide/why-themed) so we can convince you.
+And no, CSS variables are not a solution. Read though our [Guide](/guide/why-themed) to find out more.
 
 # As easy as it gets:
 
@@ -102,7 +102,7 @@ $ bun add -D @janis.me/themed
 
 :::
 
-### 3. Define themes
+### 3. Define themes (or [generate](/guide/generators))
 
 ::: code-group
 
@@ -126,7 +126,7 @@ $themes: (
   ),
 );
 
-@include apply($themes);
+@include configure($themes);
 ```
 
 :::
@@ -135,7 +135,9 @@ $themes: (
 
 ::: code-group
 
-```scss [style.scss] {23-27}
+```scss [style.scss]
+@include apply();
+
 html,
 body {
   color: themed('text');
