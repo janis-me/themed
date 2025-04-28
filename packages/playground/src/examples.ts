@@ -63,12 +63,12 @@ $theme-prefix: 'my-var';
 export const EXAMPLE_GENERATORS = `@use '@janis.me/themed' as *;
 @use '@janis.me/themed/generators';
 
-// You probably want to
-// 1) define info/success/warning/error colors yourself
-// 2) use the 'oklch' colorspace
-$themes: generators.colors($primary: #3584E4, $gray: #241F31, $target-space: rgb);
+$themes: ();
 
-@include configure($themes);
+// In production use, you probably want to
+// 1) define info/success/warning/error colors yourself
+// 2) use the 'oklch' colorspace combined with the 'p3' plugin
+@include configure($themes, generators.colors($primary: #3584E4, $target-space: rgb));
 @include apply();
 `;
 
