@@ -34,16 +34,17 @@ const getSassTemplate = (
 @use '@janis.me/themed/generators';
 @use '@janis.me/themed/plugins';
 
-$themes: generators.theme(
-  $primary: ${primary},
-${includeIfDefined('gray', gray)}${includeIfDefined('info', info)}${includeIfDefined('success', success)}${includeIfDefined('warning', warning)}${includeIfDefined('error', error)}  $target-space: ${colorspace},
-);
+$themes: ();
 
 // The plugins are optional,
 // but that's what's used for this website. 
 @include themed.configure(
   $themes,
-  $plugins: plugins.alpha(
+  generators.colors(
+    $primary: ${primary},
+  ${includeIfDefined('gray', gray)}${includeIfDefined('info', info)}${includeIfDefined('success', success)}${includeIfDefined('warning', warning)}${includeIfDefined('error', error)}  $target-space: ${colorspace},
+  ),
+  plugins.alpha(
     $operation: 'change',
     $steps: (
       0.2,

@@ -9,7 +9,12 @@ By default, the generated CSS variables will use the `themed` prefix, for exampl
 ```scss
 @use '@janis.me/themed';
 
-@include themed.configure($themes, $prefix: 'my-custom-var');
+@include themed.configure(
+  $themes,
+  (
+    'prefix': 'my-custom-var',
+  )
+);
 ```
 
 This would generate `--my-custom-var-text`. The `themed` function will automatically use the selected prefix, [provided it's in the same lexical scope! ](/guide/global-setup)

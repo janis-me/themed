@@ -36,6 +36,7 @@
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "catalog:formatter",
     "@janis.me/linter-config": "workspace:*",
+    "@janis.me/sass-loader": "workspace:^",
     "@janis.me/typescript-config": "workspace:*",
     "@playwright/test": "catalog:",
     "@vitest/browser": "catalog:",
@@ -46,7 +47,7 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "packageManager": "pnpm@10.8.0",
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=22.11.0"
   }

@@ -63,12 +63,12 @@ $theme-prefix: 'my-var';
 export const EXAMPLE_GENERATORS = `@use '@janis.me/themed' as *;
 @use '@janis.me/themed/generators';
 
-// You probably want to
-// 1) define info/success/warning/error colors yourself
-// 2) use the 'oklch' colorspace
-$themes: generators.generate($primary: #3584E4, $gray: #241F31, $target-space: rgb);
+$themes: ();
 
-@include configure($themes);
+// In production use, you probably want to
+// 1) define info/success/warning/error colors yourself
+// 2) use the 'oklch' colorspace combined with the 'p3' plugin
+@include configure($themes, generators.colors($primary: #3584E4, $target-space: rgb));
 @include apply();
 `;
 
@@ -78,16 +78,14 @@ export const EXAMPLE_PLUGINS = `@use '@janis.me/themed';
 @use 'sass:meta';
 
 $themes: (
-  light: (
-    'text': #1e1f24,
+  light: ('text': #1e1f24,
     'background': #f1f1f1,
     'grey-1': #fcfcfd,
     'grey-2': #f9f9fb,
     'grey-3': #eff0f3,
     'teal-9': #16b6b3,
   ),
-  dark: (
-    'text': #eeeef0,
+  dark: ('text': #eeeef0,
     'background': #1e1e20,
     'grey-1': #202123,
     'grey-2': #27282a,
@@ -97,25 +95,21 @@ $themes: (
 );
 
 $high-contrast: (
-  light: (
-    'teal-9': oklch(0.7 0.1617 192.68),
+  light: ('teal-9': oklch(0.7 0.1617 192.68),
   ),
-  dark: (
-    'teal-9': oklch(0.7 0.1617 192.68),
+  dark: ('teal-9': oklch(0.7 0.1617 192.68),
   ),
 );
 
 
 $theme-prefix: 'my-var';
 
-@include themed.configure($themes, $theme-prefix, $plugins: [
+@include themed.configure($themes, ('prefix': $theme-prefix),
   // first, ensure all themes receive the same values
   plugins.fill(),
   // then, create some variants of the colors.
-  plugins.variants(
-    ('alpha', 'change', (0.1, 0.9)),
-    ('saturation', 'adjust', (20%, 40%, 60%, 80%, 90%))
-  ),
+  plugins.variants(('alpha', 'change', (0.1, 0.9)),
+    ('saturation', 'adjust', (20%, 40%, 60%, 80%, 90%))),
   // Some extra high contrast colors.
   plugins.p3($high-contrast),
   // the colorspace plugin plays along nicely with the 'variants' plugin
@@ -123,7 +117,7 @@ $theme-prefix: 'my-var';
   // In a real world example, you would probably want to use the 'oklch' colorspace
   // but we chose 'hsl' to visualize them in the output editor.
   plugins.colorspace(hsl),
-]);
+);
 @include themed.apply();
 `;
 
@@ -151,7 +145,7 @@ $themes: (
   )
 );
 
-@include themed.configure($themes, $plugins: plugins.alpha('change', (0.2, 0.5, 0.8)));
+@include themed.configure($themes, plugins.alpha('change', (0.2, 0.5, 0.8)));
 @include themed.apply();
 `;
 
@@ -179,7 +173,7 @@ $themes: (
   )
 );
 
-@include themed.configure($themes, $plugins: plugins.colorspace(oklch));
+@include themed.configure($themes, plugins.colorspace(oklch));
 @include themed.apply();
 `;
 
@@ -209,10 +203,10 @@ $themes: (
 );
 
 // Extra tip: This is how you can define a custom prefix for your variables
-$theme-prefix: 'my-var';
+$config: ('prefix': 'my-var');
 
 // The fill plugin will copy over all values from the 'primary' theme to the 'dark' theme
-@include themed.configure($themes, $theme-prefix, $plugins: plugins.fill());
+@include themed.configure($themes, $config, plugins.fill());
 @include themed.apply();
 `;
 
@@ -251,7 +245,7 @@ $high-contrast: (
   ),
 );
 
-@include themed.configure($themes, $plugins: plugins.p3($high-contrast));
+@include themed.configure($themes, plugins.p3($high-contrast));
 @include themed.apply();
 `;
 
@@ -283,7 +277,7 @@ $themes: (
 // 1. the channel to change, see the corresponding operation documentation https://sass-lang.com/documentation/modules/color/#adjust
 // 2. the operation to perform, either change, scale or adjust. See https://sass-lang.com/documentation/modules/color/
 // 3. the steps or 'values' to use. Either a list or a single value.
-@include themed.configure($themes, $plugins: plugins.variants(
+@include themed.configure($themes, plugins.variants(
   ('alpha' 'change' (0.1, 0.9)),
   ('lightness', 'scale', (-60%, -40%, 40%, 60%))
 ));

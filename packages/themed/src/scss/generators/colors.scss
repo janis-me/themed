@@ -147,16 +147,16 @@ $__themed__gray-chroma-limit: 0.04;
   @return $result;
 }
 
-@function theme(
-  $primary,
-  $gray: null,
-  $info: null,
-  $success: null,
-  $warning: null,
-  $error: null,
-  $target-space: rgb,
-  $gray-chroma-limit: null
-) {
+@function __themed__generator-colors__extend-all($themes, $prefix) {
+  $primary: $__themed__generator-colors__primary;
+  $gray: $__themed__generator-colors__gray;
+  $info: $__themed__generator-colors__info;
+  $success: $__themed__generator-colors__success;
+  $warning: $__themed__generator-colors__warning;
+  $error: $__themed__generator-colors__error;
+  $target-space: $__themed__generator-colors__target-space;
+  $gray-chroma-limit: $__themed__generator-colors__gray-chroma-limit;
+
   @if meta.type-of($primary) != 'color' {
     @error "[themed-generate] $primary must be a valid color.";
   }
@@ -230,4 +230,36 @@ $__themed__gray-chroma-limit: 0.04;
   $result-themes: map.deep-merge($result-themes, _add-colors($error-dark, 'dark', 'error', $target-space));
 
   @return $result-themes;
+}
+
+// long variable names to not pollute the global namespace too much.
+$__themed__generator-colors__primary: null;
+$__themed__generator-colors__gray: null;
+$__themed__generator-colors__info: null;
+$__themed__generator-colors__success: null;
+$__themed__generator-colors__warning: null;
+$__themed__generator-colors__error: null;
+$__themed__generator-colors__target-space: rgb;
+$__themed__generator-colors__gray-chroma-limit: null;
+
+@function colors(
+  $primary,
+  $gray: null,
+  $info: null,
+  $success: null,
+  $warning: null,
+  $error: null,
+  $target-space: null,
+  $gray-chroma-limit: null
+) {
+  $__themed__generator-colors__primary: $primary !global;
+  $__themed__generator-colors__gray: $gray !global;
+  $__themed__generator-colors__info: $info !global;
+  $__themed__generator-colors__success: $success !global;
+  $__themed__generator-colors__warning: $warning !global;
+  $__themed__generator-colors__error: $error !global;
+  $__themed__generator-colors__target-space: $target-space !global;
+  $__themed__generator-colors__gray-chroma-limit: $gray-chroma-limit !global;
+
+  @return ('name': 'themed-generator-colors', 'extend-all': meta.get-function(__themed__generator-colors__extend-all));
 }
