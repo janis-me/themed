@@ -25,14 +25,14 @@
   </a>
 </p>
 <p align="center" style="font-size: 1.5rem;">
-  @janis.me/<b>themed</b>: SCSS-native themes made simple
+  @janis.me/<b>themed</b>: themes made simple
 </p>
 <br/>
 
-`@janis.me/themed` is a customizable SCSS utility to add theming to your website as easily and safely as possible. It also offers utility methods for javascript/typescript (and react via `@janis.me/react-themed`).
+`@janis.me/themed` is the all-in-one solution for adding themes to your website. Easy, feature-rich and safe. First-class javascript/typescript support! (and react via `@janis.me/react-themed`).
 
 > [!WARNING]  
-> This is in early development. Expect things to break and change before it hits 1.0.0
+> This is still in development. Expect things to break and change before it hits 1.0.0
 
 **Visit our [Documentation](https://themed.janis.me)**
 
@@ -40,13 +40,13 @@
 
 ## Features:
 
-- 🔒 **Type-checking** themes for validity, checking all values exist etc.
-- 🌐 Produces nice **SCSS AND CSS** variables, so you can use all SCSS features with theming.
+- 🔒 **Type-checking** themes for validity, checking all values exist, with proper error messages!
+- 🌈 **Auto-generated** Themes! Never struggle with color saturation again.
 - 🖌 **Multi-theme**: You can either use classic dark/light themes, or define as many as you want!
-- 🚀 **Extra features** like JS/TS methods for interactivity built in.
-- 🔌 **Built-in plugins** like wide-gammut colors, auto-generated color variants and more.
+- 🚀 **Everything you need** like controlling themes via js/ts - built in.
+- 🔌 **Built-in plugins** like auto-generated color variants, blending colors and more.
 - 🎭 **Customizable**: Adjust nearly every aspect of how you use themes.
-- 🌈 Prints **human-readable** errors when doing something wrong.
+- 🌐 Produces nice **SCSS AND CSS** variables, so you can use all SCSS features with theming.
 - First class **React support** with `@janis.me/react-themed`.
 
 ---
@@ -58,7 +58,7 @@ It's as easy as:
 ```scss
 @use '@janis.me/themed' as *;
 
-// Define themes in a map
+// Define themes in a map, or generate it with themed! (See docs)
 $themes: (
   'dark': (
     'text': #212529,
@@ -74,6 +74,7 @@ $themes: (
 
 // Configure the themes. They will be checked for validity, uniformity etc.
 @include configure($theme-map);
+// Add the CSS variables wherever you need them with `apply`
 @include apply();
 
 // Use the themed function to get type-checked theming!
@@ -83,12 +84,12 @@ body {
 }
 ```
 
-Using SCSS' meta package and error/type checking. you get nice error hints!
+And 🎉 tada: When you use a wrong variable, you instantly know it!
 
 ```bash
-[sass] "'grey-29' is not defined in your themes."
+[sass] "'grey' is not defined in your themes."
     ╷
-22  │  background-color: themed("grey-29");
+22  │  background-color: themed("grey");
     │                     ^^^^^^^^^^^^^^^^^
     ╵
   src/styles/main.scss 22:21  root stylesheet
@@ -104,8 +105,6 @@ npm install @janis.me/themed
 pnpm add @janis.me/themed
 ```
 
-you can also just copy the stuff in `packages/themed` if you prefer.
-
 ### React
 
 For react, install `@janis.me/react-themed` and place a <ThemeProvider> at the app level of your app. You can then use the `useTheme` hook to retrieve/update it. All utility methods are also exported from `@janis.me/react-themed/js`.
@@ -117,8 +116,8 @@ For react, install `@janis.me/react-themed` and place a <ThemeProvider> at the a
 **Q: Why not just use CSS variables?**
 
 1. Using SCSS builtins like `color.adjust` and `color.change` will not work with CSS variables. If you need transparency, or want to generate shades of a color with SCSS, it's tough
-
-2. Ugly theme definitions. Defining all those variables in plain CSS is weird. You would probably use SCSS to define maps of themes anyways, and then convert them to SCSS variables.
+2. Browser support. Not all browsers support `@property` yet, or they might not support the colors you define (`display-p3`/wide-gammut). Themed is aware of all these issues and solves them for you!
+3. Error-checking. If you misspell or accidentally override a CSS variable, you're screwed. With themed, that'll never happen!
 
 **Q: Can I use this with tailwind?**
 

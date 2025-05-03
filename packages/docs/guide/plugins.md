@@ -89,7 +89,7 @@ $high-contrast: (
   ),
 );
 
-@include themed.configure($themes, $plugins: plugins.p3($high-contrast));
+@include themed.configure($themes, plugins.p3($high-contrast));
 @include themed.apply();
 ```
 
