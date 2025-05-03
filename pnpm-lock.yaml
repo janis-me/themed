@@ -79,6 +79,10 @@ catalogs:
 importers:
 
   .:
+    dependencies:
+      '@janis.me/sass-loader':
+        specifier: workspace:^
+        version: link:packages/sass-loader
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: catalog:formatter

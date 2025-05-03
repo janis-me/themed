@@ -1,47 +1,7 @@
 import * as sass from 'sass-embedded';
 import { describe, expect, it } from 'vitest';
 
-const themed = {
-  index: await import('../src/scss/index.scss?raw'),
-  utils: await import('../src/scss//utils.scss?raw'),
-  plugins: await import('../src/scss//plugins.scss?raw'),
-  'plugins/colorspace': await import('../src/scss//plugins/colorspace.scss?raw'),
-  'plugins/fill': await import('../src/scss//plugins/fill.scss?raw'),
-  'plugins/p3': await import('../src/scss//plugins/p3.scss?raw'),
-  'plugins/variants': await import('../src/scss//plugins/variants.scss?raw'),
-};
-
-const createThemedImporter = (_: (log: string) => void): sass.Importer => ({
-  canonicalize(specifier: string, _: sass.CanonicalizeContext) {
-    let sanitizedUrl = specifier.replace('pkg:', '');
-
-    if (sanitizedUrl.startsWith('@janis.me/themed')) {
-      sanitizedUrl = sanitizedUrl.replace('.scss', '');
-      if (sanitizedUrl === '@janis.me/themed') {
-        return new URL(`pkg:${sanitizedUrl}/index.scss`);
-      } else {
-        return new URL(`pkg:${sanitizedUrl}.scss`);
-      }
-    }
-
-    return null;
-  },
-  load(canonicalUrl: URL): sass.ImporterResult {
-    if (canonicalUrl.href.startsWith('pkg:@janis.me/themed')) {
-      let name = canonicalUrl.href.replace('pkg:@janis.me/themed/', '');
-      name = name.replace('.scss', '');
-
-      if (name in themed) {
-        return {
-          contents: themed[name as keyof typeof themed].default,
-          syntax: 'scss',
-        };
-      }
-    }
-
-    throw new Error(`themed importer: could not load ${canonicalUrl.href}`);
-  },
-});
+import { createThemedImporter } from '@janis.me/sass-loader';
 
 const compile = async (input: string) => {
   const res = await sass.compileStringAsync(input, {
@@ -187,7 +147,7 @@ describe('compile', () => {
           )
         );
       `;
-      const input = `${baseInput}\n${themes}\n@include themed.configure($themes, 'test');\n@include themed.apply()`;
+      const input = `${baseInput}\n${themes}\n@include themed.configure($themes, ('prefix': 'test'));\n@include themed.apply()`;
 
       const res = await compile(input);
 
