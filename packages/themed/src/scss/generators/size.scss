@@ -1,0 +1,38 @@
+@use 'sass:meta';
+@use 'sass:map';
+
+$__themed__generator-size__steps: (2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 160);
+
+@function __themed__generator-size__extend-all($themes, $prefix) {
+  $spacing-map: ();
+
+  @each $step in $__themed__generator-size__steps {
+    $key: '#{$__themed__generator-size__prefix}-#{$step}';
+    $val: calc($step * 1px);
+
+    $spacing-map: map.merge(
+      $spacing-map,
+      (
+        '#{$key}': $val,
+      )
+    );
+  }
+
+  $result-themes: (
+    'dark': $spacing-map,
+    'light': $spacing-map,
+  );
+
+  // Merge any existing themes.
+  $result-themes: map.deep-merge($themes, $result-themes);
+
+  @return $result-themes;
+}
+
+$__themed__generator-size__prefix: null;
+
+@function size($prefix: 'size') {
+  $__themed__generator-size__prefix: $prefix !global;
+
+  @return ('name': 'themed-generator-size', 'extend-all': meta.get-function(__themed__generator-size__extend-all));
+}

@@ -40,6 +40,7 @@ $themes: ();
 // but that's what's used for this website. 
 @include themed.configure(
   $themes,
+  generators.size(),
   generators.colors(
     $primary: ${primary},
   ${includeIfDefined('gray', gray)}${includeIfDefined('info', info)}${includeIfDefined('success', success)}${includeIfDefined('warning', warning)}${includeIfDefined('error', error)}  $target-space: ${colorspace},
