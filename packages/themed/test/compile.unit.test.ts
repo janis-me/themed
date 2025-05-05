@@ -69,9 +69,7 @@ describe('compile', () => {
       `;
       const input = `${baseInput}\n${themes}\n@include themed.configure($themes);`;
 
-      await expect(() => compile(input)).rejects.toThrowError(
-        `Theme 'dark' has an extra key 'color' not present in other themes`,
-      );
+      await expect(() => compile(input)).rejects.toThrowError(`Theme 'dark' has an extra key 'color' not present in other themes`);
     });
   });
 

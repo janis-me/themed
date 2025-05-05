@@ -4,6 +4,7 @@ import * as sass from 'sass';
 
 import { useTheme } from '@janis.me/react-themed/js';
 import { createThemedImporter } from '@janis.me/sass-loader';
+import { Button } from '@janis.me/ui';
 
 import { useDebounce } from '../../hooks/useDebounce';
 import ColorInput from '../ColorInput/ColorInput';
@@ -13,15 +14,7 @@ import './Hero.scss';
 
 const COLOR_DEBOUNCE_TIME = 100;
 
-const getSassTemplate = (
-  primary: string,
-  gray: string,
-  info: string,
-  success: string,
-  warning: string,
-  error: string,
-  colorspace: string,
-) => {
+const getSassTemplate = (primary: string, gray: string, info: string, success: string, warning: string, error: string, colorspace: string) => {
   const includeIfDefined = (name: string, value: string) => {
     if (value === '') {
       return '';
@@ -120,25 +113,23 @@ export default function Hero() {
         </div>
 
         <div className="hero__buttons">
-          <button
+          <Button.Root
             className="hero__button"
             onClick={() => {
               setTheme(toggleTheme());
             }}
           >
             {toggleTheme()} theme
-          </button>
-          <button className="hero__button" onClick={handleReset}>
+          </Button.Root>
+          <Button.Root className="hero__button" onClick={handleReset}>
             reset
-          </button>
+          </Button.Root>
         </div>
 
         <p>
-          All colors you see are generated on the fly. When you change a color, the sass compiler runs and uses
-          @janis.me/themed to generate colors.
+          All colors you see are generated on the fly. When you change a color, the sass compiler runs and uses @janis.me/themed to generate colors.
           <br />
-          Because colors are defined in hex format, you might not see any difference in the pallet below - because
-          chroma doesn&apos;t change.
+          Because colors are defined in hex format, you might not see any difference in the pallet below - because chroma doesn&apos;t change.
           <br />
           Colors left at &apos;auto&apos; will be generated based on the chroma/lightness of the primary color.
         </p>
@@ -146,22 +137,22 @@ export default function Hero() {
 
       <div className="hero__right">
         <div className="hero__toggles">
-          <button
+          <Button.Root
             className={clsx('hero__toggle', { 'hero__toggle--active': preview === 'scss' })}
             onClick={() => {
               setPreview('scss');
             }}
           >
             themed (SCSS)
-          </button>
-          <button
+          </Button.Root>
+          <Button.Root
             className={clsx('hero__toggle', { 'hero__toggle--active': preview === 'css' })}
             onClick={() => {
               setPreview('css');
             }}
           >
             Output (CSS)
-          </button>
+          </Button.Root>
         </div>
         <pre>{preview === 'scss' ? sassTemplate : stylesheet}</pre>
       </div>
