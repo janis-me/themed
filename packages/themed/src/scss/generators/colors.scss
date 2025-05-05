@@ -212,9 +212,12 @@ $__themed__gray-chroma-limit: 0.04;
   $error-dark: _generate-primary-scale($error, 'dark');
 
   $result-themes: (
-    dark: (),
-    light: (),
+    'dark': (),
+    'light': (),
   );
+
+  // Merge any existing themes.
+  $result-themes: map.deep-merge($themes, $result-themes);
 
   $result-themes: map.deep-merge($result-themes, _add-colors($primary-light, 'light', 'primary', $target-space));
   $result-themes: map.deep-merge($result-themes, _add-colors($primary-dark, 'dark', 'primary', $target-space));
