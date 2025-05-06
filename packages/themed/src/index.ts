@@ -114,6 +114,17 @@ export function setThemeInLocalstorage(theme: ThemeOption | string, localStorage
 }
 
 /**
+ * In many cases, you might want to delete the theme from localstorage.
+ * For example, when setting the theme back to 'system' or 'default'.
+ *
+ * In these cases, call `deleteThemeFromLocalstorage`, so calls to `getTheme` or `setDefaultTheme` won't use the localstorage value.
+ * @param localStorageKey
+ */
+export function deleteThemeFromLocalstorage(localStorageKey: string = THEME_LOCALSTORAGE_KEY): void {
+  localStorage.removeItem(localStorageKey);
+}
+
+/**
  * Gives you the users' preferred color scheme, so either 'dark' or 'light'.
  *
  * @returns the preferred theme. or `undefined`

@@ -1,7 +1,7 @@
 @use 'sass:meta';
 @use 'sass:map';
 
-$__themed__generator-size__steps: (1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 160);
+$__themed__generator-size__steps: (1, 2, 4, 6, 8, 12, 16, 24, 32, 40, 48, 56, 64, 80, 96, 160);
 
 @function __themed__generator-size__extend-all($themes, $prefix) {
   $spacing-map: ();
