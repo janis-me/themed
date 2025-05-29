@@ -4,7 +4,6 @@ import * as sass from 'sass';
 
 import { useTheme } from '@janis.me/react-themed/js';
 import { createThemedImporter } from '@janis.me/sass-loader';
-import { Button } from '@janis.me/ui';
 
 import { useDebounce } from '../../hooks/useDebounce';
 import ColorInput from '../ColorInput/ColorInput';
@@ -113,17 +112,17 @@ export default function Hero() {
         </div>
 
         <div className="hero__buttons">
-          <Button.Root
+          <button
             className="hero__button"
             onClick={() => {
               setTheme(toggleTheme());
             }}
           >
             {toggleTheme()} theme
-          </Button.Root>
-          <Button.Root className="hero__button" onClick={handleReset}>
+          </button>
+          <button className="hero__button" onClick={handleReset}>
             reset
-          </Button.Root>
+          </button>
         </div>
 
         <p>
@@ -137,22 +136,22 @@ export default function Hero() {
 
       <div className="hero__right">
         <div className="hero__toggles">
-          <Button.Root
+          <button
             className={clsx('hero__toggle', { 'hero__toggle--active': preview === 'scss' })}
             onClick={() => {
               setPreview('scss');
             }}
           >
             themed (SCSS)
-          </Button.Root>
-          <Button.Root
+          </button>
+          <button
             className={clsx('hero__toggle', { 'hero__toggle--active': preview === 'css' })}
             onClick={() => {
               setPreview('css');
             }}
           >
             Output (CSS)
-          </Button.Root>
+          </button>
         </div>
         <pre>{preview === 'scss' ? sassTemplate : stylesheet}</pre>
       </div>

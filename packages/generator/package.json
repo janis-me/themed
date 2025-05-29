@@ -15,7 +15,6 @@
     "@janis.me/react-themed": "workspace:*",
     "@janis.me/sass-loader": "workspace:*",
     "@janis.me/typescript-config": "workspace:*",
-    "@janis.me/ui": "0.1.0",
     "@radix-ui/react-icons": "^1.3.2",
     "@terrazzo/use-color": "^0.0.7",
     "clsx": "^2.1.1",
