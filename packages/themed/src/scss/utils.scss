@@ -59,3 +59,12 @@
   );
   @return meta.call($fn, $color, $args...);
 }
+
+@function list-contains($list1, $list2) {
+  @for $i from 1 through list.length($list1) {
+    @if list.index($list2, list.nth($list1, $i)) != null {
+      @return true;
+    }
+  }
+  @return false;
+}

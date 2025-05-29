@@ -13,15 +13,7 @@ import './Hero.scss';
 
 const COLOR_DEBOUNCE_TIME = 100;
 
-const getSassTemplate = (
-  primary: string,
-  gray: string,
-  info: string,
-  success: string,
-  warning: string,
-  error: string,
-  colorspace: string,
-) => {
+const getSassTemplate = (primary: string, gray: string, info: string, success: string, warning: string, error: string, colorspace: string) => {
   const includeIfDefined = (name: string, value: string) => {
     if (value === '') {
       return '';
@@ -34,16 +26,18 @@ const getSassTemplate = (
 @use '@janis.me/themed/generators';
 @use '@janis.me/themed/plugins';
 
-$themes: generators.theme(
-  $primary: ${primary},
-${includeIfDefined('gray', gray)}${includeIfDefined('info', info)}${includeIfDefined('success', success)}${includeIfDefined('warning', warning)}${includeIfDefined('error', error)}  $target-space: ${colorspace},
-);
+$themes: ();
 
 // The plugins are optional,
 // but that's what's used for this website. 
 @include themed.configure(
   $themes,
-  $plugins: plugins.alpha(
+  generators.size(),
+  generators.colors(
+    $primary: ${primary},
+  ${includeIfDefined('gray', gray)}${includeIfDefined('info', info)}${includeIfDefined('success', success)}${includeIfDefined('warning', warning)}${includeIfDefined('error', error)}  $target-space: ${colorspace},
+  ),
+  plugins.alpha(
     $operation: 'change',
     $steps: (
       0.2,
@@ -132,11 +126,9 @@ export default function Hero() {
         </div>
 
         <p>
-          All colors you see are generated on the fly. When you change a color, the sass compiler runs and uses
-          @janis.me/themed to generate colors.
+          All colors you see are generated on the fly. When you change a color, the sass compiler runs and uses @janis.me/themed to generate colors.
           <br />
-          Because colors are defined in hex format, you might not see any difference in the pallet below - because
-          chroma doesn&apos;t change.
+          Because colors are defined in hex format, you might not see any difference in the pallet below - because chroma doesn&apos;t change.
           <br />
           Colors left at &apos;auto&apos; will be generated based on the chroma/lightness of the primary color.
         </p>

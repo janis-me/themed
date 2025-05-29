@@ -2,7 +2,7 @@
 outline: deep
 ---
 
-# Getting started!
+# Getting started! <sub><sup>([TL;DR](#using-the-themed-function))</sup></sub>
 
 ::: tip
 You can also just look at some [examples on github](https://github.com/janis-me/themed/tree/main/examples) or the [playground](https://themed-playground.janis.me) if you want to dive in quickly.
@@ -31,24 +31,19 @@ $ bun add -D @janis.me/themed
 
 :::
 
-Use it inside SCSS with `@use '@janis.me/themed' as *;`. All mixins and functions like `configure` and `apply` will be available in this modules scope.
-
-::: code-group
+Use it inside SCSS with `@use '@janis.me/themed' as *;`.
 
 ```scss [style.scss] {1}
 @use '@janis.me/themed' as *;
 ```
 
-:::
+That makes two mixins available for you: `configure` and `apply`. Let's find out how they are used:
 
 ## Define your themes
 
-Now, define your first themes! You can either define just a dark and light theme, or define more. We will start with just two, but read [Defining Themes](/guide/defining-themes) for advanced usage.
+Now, define your first themes! You can either define just a dark and light theme, or define more. We will start with just two, but read [defining Themes](/guide/defining-themes) for advanced usage. A theme must be a map of any kind of value, grouped by your theme names (see below). You can also define themes in a separate file. Again, see [defining themes](/guide/defining-themes).
 
-A theme must be a map of values, where the key must be unique and exist for all themes.
-The value can be anything. Colors, spacings, fonts, whatever you need.
-
-Create a "map of maps" like below to group all themes together. You can also define themes in a separate file, see [defining themes](/guide/defining-themes) for more details.
+**If you quickly want to get started, you can [generate themes automatically](/guide/generators)!**
 
 ::: code-group
 
@@ -57,18 +52,14 @@ Create a "map of maps" like below to group all themes together. You can also def
 
 $themes: (
   'light': (
-    'text': #212529,
     'background': #fafafa,
-    'grey-1': #343a40,
-    'grey-2': #495057,
-    'grey-3': #6c757d,
+    'text': #212529,
+    'grey': #343a40,
   ),
   'dark': (
-    'text': #fafafa,
     'background': #212529,
-    'grey-1': #f8f9fa,
-    'grey-2': #e9ecef,
-    'grey-3': #dee2e6,
+    'text': #fafafa,
+    'grey': #f8f9fa,
   ),
 );
 ```
@@ -77,28 +68,24 @@ $themes: (
 
 ## Apply themes
 
-We call `configure` to check the themes and register them in the current module scope. It can do more though! We'll get to it.
+We call `configure` to check the themes and register them in the current module scope.
 And finally, apply those themes with the `apply` mixin. This creates the CSS variables for you.
 
 ::: code-group
 
-```scss [style.scss] {20-21}
+```scss [style.scss] {16-18}
 @use '@janis.me/themed' as *;
 
 $themes: (
   'light': (
-    'text': #212529,
     'background': #fafafa,
-    'grey-1': #343a40,
-    'grey-2': #495057,
-    'grey-3': #6c757d,
+    'text': #212529,
+    'grey': #343a40,
   ),
   'dark': (
-    'text': #fafafa,
     'background': #212529,
-    'grey-1': #f8f9fa,
-    'grey-2': #e9ecef,
-    'grey-3': #dee2e6,
+    'text': #fafafa,
+    'grey': #f8f9fa,
   ),
 );
 
@@ -116,7 +103,7 @@ For this simple example, we call both in the index.scss file. See [Global setup]
 Try to change the name of a variable in the dark theme. You get a nice error like
 
 ```sh
-[sass] Error: "[themed] Theme 'light' is missing the key 'grey-5'"
+[sass] Error: "[themed] Theme 'light' is missing the key 'blue'"
 ```
 
 Now, you can use the `themed` function **anywhere in this file** to retrieve values from your themes.
@@ -125,23 +112,19 @@ Now, you can use the `themed` function **anywhere in this file** to retrieve val
 
 ::: code-group
 
-```scss [style.scss] {23-27}
+```scss [style.scss] {19-23}
 @use '@janis.me/themed' as *;
 
 $themes: (
   'light': (
-    'text': #212529,
     'background': #fafafa,
-    'grey-1': #343a40,
-    'grey-2': #495057,
-    'grey-3': #6c757d,
+    'text': #212529,
+    'grey': #343a40,
   ),
   'dark': (
-    'text': #fafafa,
     'background': #212529,
-    'grey-1': #f8f9fa,
-    'grey-2': #e9ecef,
-    'grey-3': #dee2e6,
+    'text': #fafafa,
+    'grey': #f8f9fa,
   ),
 );
 
@@ -165,26 +148,26 @@ You can either statically add the Attribute to the html element like
 ::: code-group
 
 ```html [index.html] {1}
-<html lang="en" data-theme="light">
+<html data-theme="light">
   <!-- ... -->
 </html>
 ```
 
 :::
 
-Or, use one of the utility functions that `themed` offers out of the box in any js file, or in a script block in the index.html.
+Or, use one of the [Utility functions](/guide/utility-functions) that `themed` offers out of the box in any js file, or in a script block in the index.html.
 
 ::: code-group
 
 ```js [index.js] {1-3}
 import { setDefaultTheme } from '@janis.me/themed/js';
 
-setDefaultTheme('light');
+setDefaultTheme();
 ```
 
 :::
 
-Later, you can use more utility functions, like `toggleTheme`, `getTheme`, `getPreferredColorScheme` and more. See [Utility functions](/guide/utility-functions) for more.
+Later, you can use more [Utility functions](/guide/utility-functions), like `toggleTheme`, `getTheme`, `getPreferredColorScheme` and many more!
 
 ::: tip
 :tada: Done! You now know how this works. But, it's **very** likely you want to have a look at [Global setup](/guide/global-setup) to learn how to use the `themed` functions in every file.

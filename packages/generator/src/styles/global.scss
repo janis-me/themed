@@ -6,19 +6,18 @@
 @use '@janis.me/react-themed/generators';
 @use '@janis.me/react-themed/plugins';
 
-$themes: generators.theme(
-  $primary: #16b6b3,
-  $target-space: oklch,
-);
+$themes: ();
 
 @include themed.configure(
   $themes,
-  $plugins: plugins.alpha(
-      $operation: 'change',
-      $steps: (
-        0.2,
-        0.4,
-        0.9,
-      )
+  generators.size(),
+  generators.colors($primary: #16b6b3, $target-space: oklch),
+  plugins.alpha(
+    $operation: 'change',
+    $steps: (
+      0.2,
+      0.4,
+      0.9,
     )
+  )
 );

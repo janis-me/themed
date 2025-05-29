@@ -74,9 +74,7 @@ const createUnpkgImporter = (successLogger: Logger, warningLogger: Logger): sass
    * until one returns 200.
    */
   async load(canonicalUrl: URL): Promise<sass.ImporterResult> {
-    warningLogger(
-      `Attempting to load ${canonicalUrl.href}. Loading node packages is an experimental feature. It may not work!`,
-    );
+    warningLogger(`Attempting to load ${canonicalUrl.href}. Loading node packages is an experimental feature. It may not work!`);
 
     const basePath = canonicalUrl.pathname; // e.g. "/pkg@ver/foo"
     const origin = canonicalUrl.origin; // "https://unpkg.com"

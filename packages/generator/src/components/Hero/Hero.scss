@@ -6,12 +6,7 @@
   gap: 32px;
 
   background: themed('primary-1');
-  background: linear-gradient(
-    in oklch 120deg,
-    themed('primary-2') 0%,
-    themed('primary-3') 40%,
-    themed('primary-4') 100%
-  );
+  background: linear-gradient(in oklch 120deg, themed('primary-2') 0%, themed('primary-3') 40%, themed('primary-4') 100%);
 
   &__tag {
     background-color: themed('gray-1--a04');

@@ -3,16 +3,16 @@
 One of the best parts of `themed` is the way you can modify themes. Having static variables is one thing, but you also want, for example, different alpha values for colors, or want to scale paddings/margins evenly.
 This is where SCSS and `themed` utility methods come to play.
 
-`Themed` defines a set of functions that make it easy for you to extend/modify your themes. Just pass the plugin to the `configure` function (as a single plugin or a list)
+`Themed` defines a set of functions that make it easy for you to extend/modify your themes. Just pass all plugins to the `configure` function as arguments
 
 ```scss
 @use '@janis.me/themed';
 @use '@janis.me/themed/plugins';
 
-@include configure($themes, $plugins: (plugins.variants(('alpha' 'change' (0.2, 0.5, 0.8)))));
+@include configure($themes, (plugins.variants(('alpha' 'change' (0.2, 0.5, 0.8)))));
 ```
 
-This will call the given plugins, in this case the build-in `fill`, for every value variable in the theme.
+This will call the given plugins, in this case the build-in `variants`, for all themes.
 
 This will generate alpha values of 20%, 50% and 80% with a prefix of `--a`. So, if your theme has a color `text`, it will generate
 
@@ -35,15 +35,15 @@ Converts all colors in the themes to the given colorspace. Some valid spaces are
 
 Refer to [MDN](https://developer.mozilla.org/en-US/docs/Glossary/Color_space#named_color_spaces) for an up-to-date list
 
-<iframe src="https://themed-playground.janis.me?header=false&example=plugin-colorspace" frameborder="0" width="100%" height="500px"></iframe>
-<p align="right"><a href="https://themed-playground.janis.me?example=plugin-colorspace" target="_blank" rel="noopener noreferrer">View in playground</a></p>
+<iframe src="https://themed.janis.me/playground?header=false&example=plugin-colorspace" frameborder="0" width="100%" height="500px"></iframe>
+<p align="right"><a href="https://themed.janis.me/playground?example=plugin-colorspace" target="_blank" rel="noopener noreferrer">View in playground</a></p>
 
 ### `plugins.alpha($operation, $steps)`
 
 This is a slim version of `plugins.variants`, where you can give it an operation (`change`, `adjust` or `scale`) and steps like `(0.2, 0.4, 0.6, 0.8)` to generate alpha values.
 
-<iframe src="https://themed-playground.janis.me?header=false&example=plugin-alpha" frameborder="0" width="100%" height="500px"></iframe>
-<p align="right"><a href="https://themed-playground.janis.me?example=plugin-alpha" target="_blank" rel="noopener noreferrer">View in playground</a></p>
+<iframe src="https://themed.janis.me/playground?header=false&example=plugin-alpha" frameborder="0" width="100%" height="500px"></iframe>
+<p align="right"><a href="https://themed.janis.me/playground?example=plugin-alpha" target="_blank" rel="noopener noreferrer">View in playground</a></p>
 
 ### `plugins.variants($variants)`
 
@@ -56,10 +56,10 @@ The input must be a list of operations in the form of (`channel` `operation` (`s
 - The steps are the variants you want. Depending on the channel and operation, these are either numbers between 0 and 100, between 0 and 1, or percentages like 10% and 90%.
   The compiler will tell you if you're passing wrong values.
 
-See `https://themed-playground.janis.me/?example=plugin-variants` for some examples
+See `https://themed.janis.me/playground/?example=plugin-variants` for some examples
 
-<iframe src="https://themed-playground.janis.me?header=false&example=plugin-variants" frameborder="0" width="100%" height="500px"></iframe>
-<p align="right"><a href="https://themed-playground.janis.me?example=plugin-variants" target="_blank" rel="noopener noreferrer">View in playground</a></p>
+<iframe src="https://themed.janis.me/playground?header=false&example=plugin-variants" frameborder="0" width="100%" height="500px"></iframe>
+<p align="right"><a href="https://themed.janis.me/playground?example=plugin-variants" target="_blank" rel="noopener noreferrer">View in playground</a></p>
 
 ### `plugins.p3($themes)`
 
@@ -89,7 +89,7 @@ $high-contrast: (
   ),
 );
 
-@include themed.configure($themes, $plugins: plugins.p3($high-contrast));
+@include themed.configure($themes, plugins.p3($high-contrast));
 @include themed.apply();
 ```
 
@@ -108,8 +108,8 @@ which would give you CSS variable overrides behind a media query:
 }
 ```
 
-<iframe src="https://themed-playground.janis.me?header=false&example=plugin-p3" frameborder="0" width="100%" height="500px"></iframe>
-<p align="right"><a href="https://themed-playground.janis.me?example=plugin-p3" target="_blank" rel="noopener noreferrer">View in playground</a></p>
+<iframe src="https://themed.janis.me/playground?header=false&example=plugin-p3" frameborder="0" width="100%" height="500px"></iframe>
+<p align="right"><a href="https://themed.janis.me/playground?example=plugin-p3" target="_blank" rel="noopener noreferrer">View in playground</a></p>
 
 ## Misc plugins
 
@@ -121,8 +121,8 @@ Simply looks at all themes and adds values that exist in the [primary theme](/gu
 This plugin loops over all values of all themes for every module it is used in. It's therefore a heavy operation. Check out [How about shared/default values?](/guide/defining-themes#how-about-shared-default-values) for more info.
 :::
 
-<iframe src="https://themed-playground.janis.me?header=false&example=plugin-fill" frameborder="0" width="100%" height="500px"></iframe>
-<p align="right"><a href="https://themed-playground.janis.me?example=plugin-fill" target="_blank" rel="noopener noreferrer">View in playground</a></p>
+<iframe src="https://themed.janis.me/playground?header=false&example=plugin-fill" frameborder="0" width="100%" height="500px"></iframe>
+<p align="right"><a href="https://themed.janis.me/playground?example=plugin-fill" target="_blank" rel="noopener noreferrer">View in playground</a></p>
 
 ## Writing custom plugins
 

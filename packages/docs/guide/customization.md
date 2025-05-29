@@ -9,7 +9,12 @@ By default, the generated CSS variables will use the `themed` prefix, for exampl
 ```scss
 @use '@janis.me/themed';
 
-@include themed.configure($themes, $prefix: 'my-custom-var');
+@include themed.configure(
+  $themes,
+  (
+    'prefix': 'my-custom-var',
+  )
+);
 ```
 
 This would generate `--my-custom-var-text`. The `themed` function will automatically use the selected prefix, [provided it's in the same lexical scope! ](/guide/global-setup)
@@ -28,11 +33,7 @@ $alpha-modifiers: 90, 80, 70, 60, 50, 40, 30, 20, 10;
   @each $alpha in $alpha-modifiers {
     // make-css-variable is a utility mixin exported from `@janis.me/themed/utils`. It generates a CSS variable in the same format
     // as all other variables.
-    @include utils.make-css-variable(
-      $prefix,
-      '#{$key}--#{$alpha}',
-      #{color.change($value, $alpha: calc($alpha / 100))}
-    );
+    @include utils.make-css-variable($prefix, '#{$key}--#{$alpha}', #{color.change($value, $alpha: calc($alpha / 100))});
   }
 }
 ```

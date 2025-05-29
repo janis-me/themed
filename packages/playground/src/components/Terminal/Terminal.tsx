@@ -68,14 +68,7 @@ export default function Terminal({ onMount }: TerminalProps) {
   }, [onMount]);
 
   return (
-    <Resizable
-      enable={{ top: true }}
-      defaultSize={{ height: '30%' }}
-      maxHeight="50%"
-      minHeight="20%"
-      className="terminal__container"
-      as="div"
-    >
+    <Resizable enable={{ top: true }} defaultSize={{ height: '30%' }} maxHeight="50%" minHeight="20%" className="terminal__container" as="div">
       <div className="terminal__instance" ref={terminalElementRef} />
     </Resizable>
   );
