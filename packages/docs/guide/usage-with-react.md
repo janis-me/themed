@@ -10,9 +10,10 @@ Firstly, you should add the `ThemeProvider` to the top level of your app. This i
 This does not mean that you cannot use the CSS variables in components outside of the Provider. Those are still defined globally (on an HTML level).
 
 ```tsx
-import { ThemeProvider } from '@janis.me/react-themed/js';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+
+import { ThemeProvider } from '@janis.me/react-themed/js';
 
 import App from './App.tsx';
 

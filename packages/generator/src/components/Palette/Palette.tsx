@@ -46,9 +46,7 @@ export default function Palette() {
             {Array.from({ length: colorSteps }, (_, i) => {
               const backgroundColorString = `${color}-${String(i + 1)}`;
               const colorString = i > 7 ? `var(--themed-${color}-1` : `var(--themed-${color}-12`;
-              const colorValue = window
-                .getComputedStyle(document.documentElement)
-                .getPropertyValue(`--themed-${backgroundColorString}`);
+              const colorValue = window.getComputedStyle(document.documentElement).getPropertyValue(`--themed-${backgroundColorString}`);
 
               const formattedColorValue = formatCss(parse(colorValue) ?? colorValue, { precision: 2 });
 

@@ -124,8 +124,5 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
   $__themed__plugin-variants__operations: $operations !global;
   $__themed__plugin-variants__steps: $steps !global;
 
-  @return (
-    'name': $__themed__plugin-variants__name,
-    'extend-all': meta.get-function(__themed__plugin-variants__extend-all)
-  );
+  @return ('name': $__themed__plugin-variants__name, 'extend-all': meta.get-function(__themed__plugin-variants__extend-all));
 }

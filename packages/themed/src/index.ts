@@ -31,10 +31,7 @@ function isLocalStorageAvailable() {
  *
  * @returns {ThemeOption | string} The theme or the fallback
  */
-export function getTheme(
-  localstorageThemeKey: string = THEME_LOCALSTORAGE_KEY,
-  fallback?: string,
-): ThemeOption | string {
+export function getTheme(localstorageThemeKey: string = THEME_LOCALSTORAGE_KEY, fallback?: string): ThemeOption | string {
   const localstorageTheme = isLocalStorageAvailable() ? getThemeFromLocalstorage(localstorageThemeKey) : undefined;
 
   return localstorageTheme ?? getPreferredColorScheme() ?? getThemeFromDocument() ?? fallback ?? DEFAULT_THEME;
@@ -45,11 +42,7 @@ export function getTheme(
  *
  * @returns void
  */
-export function setTheme(
-  theme: ThemeOption | string,
-  toLocalStorage = true,
-  localStorageKey: string = THEME_LOCALSTORAGE_KEY,
-) {
+export function setTheme(theme: ThemeOption | string, toLocalStorage = true, localStorageKey: string = THEME_LOCALSTORAGE_KEY) {
   document.documentElement.setAttribute(THEME_ATTRIBUTE_NAME, theme);
   if (toLocalStorage && isLocalStorageAvailable()) {
     setThemeInLocalstorage(theme, localStorageKey);
@@ -104,9 +97,7 @@ export function setThemeToDocument(theme: ThemeOption | string) {
  *
  * @returns void
  */
-export function getThemeFromLocalstorage(
-  localStorageKey: string = THEME_LOCALSTORAGE_KEY,
-): ThemeOption | string | null {
+export function getThemeFromLocalstorage(localStorageKey: string = THEME_LOCALSTORAGE_KEY): ThemeOption | string | null {
   return localStorage.getItem(localStorageKey);
 }
 
@@ -118,11 +109,19 @@ export function getThemeFromLocalstorage(
  *
  * @returns void
  */
-export function setThemeInLocalstorage(
-  theme: ThemeOption | string,
-  localStorageKey: string = THEME_LOCALSTORAGE_KEY,
-): void {
+export function setThemeInLocalstorage(theme: ThemeOption | string, localStorageKey: string = THEME_LOCALSTORAGE_KEY): void {
   localStorage.setItem(localStorageKey, theme);
+}
+
+/**
+ * In many cases, you might want to delete the theme from localstorage.
+ * For example, when setting the theme back to 'system' or 'default'.
+ *
+ * In these cases, call `deleteThemeFromLocalstorage`, so calls to `getTheme` or `setDefaultTheme` won't use the localstorage value.
+ * @param localStorageKey
+ */
+export function deleteThemeFromLocalstorage(localStorageKey: string = THEME_LOCALSTORAGE_KEY): void {
+  localStorage.removeItem(localStorageKey);
 }
 
 /**

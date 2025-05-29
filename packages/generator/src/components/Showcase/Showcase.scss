@@ -1,0 +1,25 @@
+.showcase {
+  margin-bottom: 32px;
+  width: 100%;
+  padding: 0 20%;
+
+  &__dropdown {
+    &__slot--right {
+      margin-left: auto;
+      padding-right: themed('size-6');
+    }
+  }
+
+  @include media('<1920px') {
+    padding: 0 64px;
+  }
+  @include media('<desktop') {
+    padding: 0 32px;
+  }
+  @include media('<tablet') {
+    padding: 0 16px;
+  }
+  @include media('<phone') {
+    padding: 0 8px;
+  }
+}

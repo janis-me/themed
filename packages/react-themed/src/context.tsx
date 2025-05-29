@@ -157,7 +157,7 @@ function useTheme(): UseThemeResult {
   const context = useContext(ThemeStateContext);
 
   if (context === null) {
-    throw new Error('useCount must be used within a CountProvider');
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
 
   return useMemo(

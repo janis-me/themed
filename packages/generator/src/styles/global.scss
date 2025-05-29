@@ -10,6 +10,7 @@ $themes: ();
 
 @include themed.configure(
   $themes,
+  generators.size(),
   generators.colors($primary: #16b6b3, $target-space: oklch),
   plugins.alpha(
     $operation: 'change',

@@ -2,18 +2,8 @@
   "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-packagejson"],
   "singleQuote": true,
   "trailingComma": "all",
-  "printWidth": 120,
+  "printWidth": 160,
   "endOfLine": "lf",
   "arrowParens": "avoid",
-  "importOrder": [
-    "<BUILTIN_MODULES>",
-    "<THIRD_PARTY_MODULES>",
-    "",
-    "^@janis.me/(.*)$",
-    "",
-    "[#]",
-    "",
-    "^[./].*(?<!\\.(c|le|sc)ss)$",
-    "\\.(c|le|sc)ss$"
-  ]
+  "importOrder": ["<BUILTIN_MODULES>", "<THIRD_PARTY_MODULES>", "", "^@janis.me/(.*)$", "", "[#]", "", "^[./].*(?<!\\.(c|le|sc)ss)$", "\\.(c|le|sc)ss$"]
 }

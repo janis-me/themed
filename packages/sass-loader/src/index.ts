@@ -6,6 +6,7 @@ const themed = {
   plugins: await import('@janis.me/themed/plugins?raw'),
   generators: await import('@janis.me/themed/generators?raw'),
   'generators/colors': await import('@janis.me/themed/generators/colors?raw'),
+  'generators/size': await import('@janis.me/themed/generators/size?raw'),
   'plugins/alpha': await import('@janis.me/themed/plugins/alpha?raw'),
   'plugins/colorspace': await import('@janis.me/themed/plugins/colorspace?raw'),
   'plugins/fill': await import('@janis.me/themed/plugins/fill?raw'),
