@@ -10,11 +10,7 @@
 
 // An empty map that will be filled with the given themes, once the `@check` mixin was called
 $__themed__themes: ();
-$__themed__plugins: ();
-// List of all keys in the (primary) theme to check which keys exist.
-$__themed__theme-keys: ();
-// The string used to prefix all CSS variables
-$__themed__prefix: 'themed';
+$__themed__config: ();
 
 // ------------
 // Helper methods/mixins
@@ -26,7 +22,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
 // A function that applies the given plugins to each value of every theme.
 // This can be used to dynamically alter themes, adding more variables to them etc.
-@function _extend-by-plugins($themes, $plugins) {
+@function _extend-by-plugins($themes, $plugins, $prefix) {
   $result-map: $themes;
 
   @each $plugin in $plugins {
@@ -37,7 +33,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
       @if meta.type-of($plugin-extend-function) == 'function' {
         // Call the plugin 'extend' function with all themes and the prefix.
-        $plugin-result: meta.call($plugin-extend-function, $result-map, $__themed__prefix);
+        $plugin-result: meta.call($plugin-extend-function, $result-map, $prefix);
 
         @if meta.type-of($plugin-result) != 'map' {
           @error "[themed] The plugin '#{$plugin-id}' did not return a map for an 'extend-all' action. This is fatal.";
@@ -55,12 +51,12 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
 // Plugins can be 'pre-apply', 'post-apply' or both.
 // This mixin executes the given mixin for each plugin.
-@mixin _apply-plugins($plugins, $type) {
+@mixin _apply-plugins($plugins, $type, $themes, $prefix) {
   @if $type != 'pre-apply' and $type != 'post-apply' {
     @error "[themed] The given plugin type '#{$type}' is not a valid type. Use 'pre-apply' or 'post-apply'.";
   }
 
-  @each $plugin in $__themed__plugins {
+  @each $plugin in $plugins {
     $plugin-id: map.get($plugin, '_plugin-id');
 
     @if map.has-key($plugin, $type) {
@@ -68,7 +64,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
       @if meta.type-of($plugin-flag-mixin) == 'mixin' {
         // the 'core' of flag plugins: Apply the defined mixins.
-        @include meta.apply($plugin-flag-mixin, $__themed__themes, $__themed__prefix);
+        @include meta.apply($plugin-flag-mixin, $themes, $prefix);
       } @else {
         @warn "[themed] #{$type} mixin for plugin '#{$plugin-id}' is not a valid mixin. Skipping.";
       }
@@ -80,7 +76,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 // merges all user and plugin configs.
 @function _get-and-validate-config($configs) {
   $config: (
-    'prefix': $__themed__prefix,
+    'prefix': 'themed',
     'plugins': (),
   );
 
@@ -263,7 +259,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
   $prefix: map.get($config, 'prefix');
   $plugins: map.get($config, 'plugins');
 
-  $_themes: _extend-by-plugins($themes, $plugins);
+  $_themes: _extend-by-plugins($themes, $plugins, $prefix);
 
   @if not _verify-themes($_themes) {
     @error "[themed] Error while checking themes. See error above.";
@@ -271,58 +267,62 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
   // Populate the global themes variable. This is later used just for validation etc.
   $__themed__themes: $_themes !global;
-  $__themed__plugins: $plugins !global;
-  // Register valid keys. We checked that all maps have the same keys, so we just get the ones from the first theme.
-  $__themed__theme-keys: map.keys(list.nth(map.values($__themed__themes), 1)) !global;
-  // Prefix used for CSS variables
-  $__themed__prefix: $prefix !global;
+  $__themed__config: $config !global;
 }
 
 // Verifies themes and then applies them to the documentElement.
 @mixin apply() {
-  @include _apply-plugins($__themed__plugins, 'pre-apply');
+  $prefix: map.get($__themed__config, 'prefix');
+  $plugins: map.get($__themed__config, 'plugins');
+
+  @include _apply-plugins($plugins, 'pre-apply', $__themed__themes, $prefix);
 
   @each $theme-name, $theme-map in $__themed__themes {
     html[data-theme='#{$theme-name}'] {
       // Register the default variables for each theme
       @each $key, $val in $theme-map {
-        @include utils.make-css-variable($__themed__prefix, $key, $val);
+        @include utils.make-css-variable($prefix, $key, $val);
         // Add extra content for each theme.
-        @content ($__themed__prefix, $key, $val, $theme-name);
+        @content ($prefix, $key, $val, $theme-name);
       }
     }
   }
 
-  @include _apply-plugins($__themed__plugins, 'post-apply');
+  @include _apply-plugins($plugins, 'post-apply', $__themed__themes, $prefix);
 }
 
 // Returns a value from the current theme, checking for validity
 // You could also just use the `var()` directly, but this function
 // provides a nice way to check for validity and shows a better error message
 @function themed($name, $verify: true) {
+  $theme-keys: map.keys(list.nth(map.values($__themed__themes), 1));
+  $prefix: map.get($__themed__config, 'prefix');
+
   @if list.length($__themed__themes) == 0 {
     @error "[themed] There are no themes registered. You probably forgot to call 'check' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "[themed] '#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($__themed__theme-keys, $name) == null {
+  } @else if $verify and list.index($theme-keys, $name) == null {
     @error "[themed] '#{$name}' is not defined in your themes.";
   }
 
-  @return utils.get-css-variable($__themed__prefix, $name);
+  @return utils.get-css-variable($prefix, $name);
 }
 
 // Return a themes variable without any type-checking or using CSS variables,
 // Useful for custom theming logic on a component level
 @function unthemed($name, $theme: null, $verify: true) {
+  $theme-keys: map.keys(list.nth(map.values($__themed__themes), 1));
+
   @if list.length($__themed__themes) == 0 {
     @error "[themed] There are no themes registered. You probably forgot to call 'check' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "[themed] '#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($__themed__theme-keys, $name) == null {
+  } @else if $verify and list.index($theme-keys, $name) == null {
     @error "[themed] '#{$name}' is not defined in your themes.";
   }
 
