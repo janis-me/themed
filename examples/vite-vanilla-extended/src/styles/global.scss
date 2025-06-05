@@ -8,7 +8,15 @@
 
 $config: (
   'prefix': 'my-var',
+  'plugins': (
+    // adds wide-gammut colors for P3 displays
+    plugins.p3(themes.$high-contrast),
+    // adds missing values to all themes (like common sizes)
+    plugins.fill(),
+    // Adds a fallback media query to properly style the page if the `data-theme` attribute is not set on the html element.
+    plugins.prefers-color-scheme(),
+  ),
 );
 
 // Calling `configure` defines the theme-map, enabling type-checking.
-@include themed.configure(themes.$themes, $config, plugins.p3(themes.$high-contrast), plugins.fill());
+@include themed.configure(themes.$themes, $config);

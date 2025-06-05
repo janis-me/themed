@@ -249,6 +249,37 @@ $high-contrast: (
 @include themed.apply();
 `;
 
+export const EXAMPLE_PLUGIN_PREFERS_COLOR_SCHEME_FALLBACK = `@use '@janis.me/themed';
+@use '@janis.me/themed/plugins';
+
+@use 'sass:meta';
+
+$themes: (
+  light: (
+    'text': #1e1f24,
+    'background': #f1f1f1,
+    'grey-1': #fcfcfd,
+    'grey-2': #f9f9fb,
+    'grey-3': #eff0f3,
+    'teal-9':#29c5c3,
+  ),
+  dark: (
+    'text': #eeeef0,
+    'background': #1e1e20,
+    'grey-1': #202123,
+    'grey-2': #27282a,
+    'grey-3': #303033,
+    'teal-9': #16b6b3,
+  )
+);
+
+// Ensure that the site is styled properly, even if the 'data-theme' attribute is missing on the html element.
+// That can often be the case for static sites, as we must first run some JavaScript to detect the user's preferred color scheme.
+// With this plugin, the site is initially rendered with the themes passed here ('light' and 'dark' by default).
+@include themed.configure($themes, plugins.prefers-color-scheme());
+@include themed.apply();
+`;
+
 export const EXAMPLE_PLUGIN_VARIANTS = `@use '@janis.me/themed';
 @use '@janis.me/themed/plugins';
 

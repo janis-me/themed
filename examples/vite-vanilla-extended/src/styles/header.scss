@@ -1,3 +1,5 @@
+@use '/src/styles/global.scss' as *;
+
 header {
   height: 100%;
   padding: themed('default-padding') 32px;
