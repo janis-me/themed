@@ -232,5 +232,5 @@ $__themed__generator-colors__gray-chroma-limit: null;
   $__themed__generator-colors__target-space: $target-space !global;
   $__themed__generator-colors__gray-chroma-limit: $gray-chroma-limit !global;
 
-  @return ('name': 'themed-generator-colors', 'extend-all': meta.get-function(__themed__generator-colors__extend-all));
+  @return ('_plugin-id': 'themed-generator-colors', 'extend-all': meta.get-function(__themed__generator-colors__extend-all));
 }

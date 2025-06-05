@@ -34,5 +34,5 @@ $__themed__generator-size__prefix: null;
 @function size($prefix: 'size') {
   $__themed__generator-size__prefix: $prefix !global;
 
-  @return ('name': 'themed-generator-size', 'extend-all': meta.get-function(__themed__generator-size__extend-all));
+  @return ('_plugin-id': 'themed-generator-size', 'extend-all': meta.get-function(__themed__generator-size__extend-all));
 }
