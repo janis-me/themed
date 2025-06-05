@@ -1,12 +1,10 @@
 @use 'sass:meta';
 @use 'sass:color';
 
+@use './global.scss' as *;
 @use './themes.scss';
 @use '@janis.me/themed/plugins';
 @use '@janis.me/themed/utils';
-
-@import './button.scss';
-@import './header.scss';
 
 // This actually applies the base theme to the documentElement.
 // Everything after the `using` keyword is used to dynamically generate more CSS variables.

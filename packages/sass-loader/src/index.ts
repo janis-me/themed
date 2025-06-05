@@ -11,6 +11,7 @@ const themed = {
   'plugins/colorspace': await import('@janis.me/themed/plugins/colorspace?raw'),
   'plugins/fill': await import('@janis.me/themed/plugins/fill?raw'),
   'plugins/p3': await import('@janis.me/themed/plugins/p3?raw'),
+  'plugins/prefers-color-scheme': await import('@janis.me/themed/plugins/prefers-color-scheme?raw'),
   'plugins/variants': await import('@janis.me/themed/plugins/variants?raw'),
 };
 

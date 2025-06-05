@@ -6,7 +6,7 @@
 @use 'sass:string';
 @use 'sass:color';
 
-$__themed__plugin-alpha__name: 'themed-plugin-alpha';
+$__themed__plugin-alpha__id: 'themed-plugin-alpha';
 
 $__themed__plugin-alpha__operation: null;
 $__themed__plugin-alpha__steps: null;
@@ -49,17 +49,17 @@ $__themed__plugin-alpha__allowed-operations: ('change', 'adjust', 'scale');
 
 @function alpha($operation, $steps) {
   @if not $operation or meta.type-of($operation) != 'string' {
-    @error "[#{$__themed__plugin-alpha__name}] The given operation is not a valid string.";
+    @error "[#{$__themed__plugin-alpha__id}] The given operation is not a valid string.";
   }
   @if list.index($__themed__plugin-alpha__allowed-operations, $operation) == null {
-    @error "[#{$__themed__plugin-alpha__name}] The given operation is not a valid operation. Allowed operations are: #{string.join($__themed__plugin-alpha__allowed-operations, ', ')}.";
+    @error "[#{$__themed__plugin-alpha__id}] The given operation is not a valid operation. Allowed operations are: #{string.join($__themed__plugin-alpha__allowed-operations, ', ')}.";
   }
   @if not $steps or meta.type-of($steps) != 'list' {
-    @error "[#{$__themed__plugin-alpha__name}] The given steps is not a valid list.";
+    @error "[#{$__themed__plugin-alpha__id}] The given steps is not a valid list.";
   }
 
   $__themed__plugin-alpha__operation: $operation !global;
   $__themed__plugin-alpha__steps: $steps !global;
 
-  @return ('name': $__themed__plugin-alpha__name, 'extend-all': meta.get-function(__themed__plugin-alpha__extend-all));
+  @return ('_plugin-id': $__themed__plugin-alpha__id, 'extend-all': meta.get-function(__themed__plugin-alpha__extend-all));
 }

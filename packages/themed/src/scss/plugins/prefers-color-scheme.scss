@@ -1,0 +1,41 @@
+@use '../utils';
+
+@use 'sass:meta';
+@use 'sass:color';
+@use 'sass:map';
+
+// globals;
+$__themed__plugin-prefers-color-scheme__dark: null;
+$__themed__plugin-prefers-color-scheme__light: null;
+
+@mixin __themed__plugin-prefers-color-scheme__pre-apply($themes, $prefix) {
+  @media (prefers-color-scheme: dark) {
+    $dark-theme: map.get($themes, $__themed__plugin_prefers_color_scheme__dark);
+    @if $dark-theme {
+      html:not([data-theme]) {
+        @each $key, $value in $dark-theme {
+          @include utils.make-css-variable($prefix, $key, $value);
+        }
+      }
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    $light-theme: map.get($themes, $__themed__plugin_prefers_color_scheme__light);
+    @if $light-theme {
+      html:not([data-theme]) {
+        @each $key, $value in $light-theme {
+          @include utils.make-css-variable($prefix, $key, $value);
+        }
+      }
+    }
+  }
+}
+
+// If there is no `data-theme` attribute on the html element, we fallback to setting the theme based on the users preference
+@function prefers-color-scheme($light: 'light', $dark: 'dark') {
+  $__themed__plugin-prefers-color-scheme__light: $light !global;
+  $__themed__plugin-prefers-color-scheme__dark: $dark !global;
+
+  @return ('_plugin-id': 'themed-plugin-prefers-color-scheme', 'pre-apply': meta.get-mixin(__themed__plugin-prefers-color-scheme__pre-apply));
+}

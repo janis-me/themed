@@ -6,7 +6,7 @@
 @use 'sass:string';
 @use 'sass:color';
 
-$__themed__plugin-variants__name: 'themed-plugin-variants';
+$__themed__plugin-variants__id: 'themed-plugin-variants';
 
 $__themed__plugin-variants__channels: null;
 $__themed__plugin-variants__operations: null;
@@ -79,13 +79,13 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
 
     @if $i % 3 == 1 {
       @if list.index($__themed__plugin-variants__allowed-channels, $arg) == null {
-        @error "[#{$__themed__plugin-variants__name}] The channel '#{$arg}' is not allowed. Allowed channels are: #{list.join($__themed__plugin-variants__allowed-channels, ', ')}.";
+        @error "[#{$__themed__plugin-variants__id}] The channel '#{$arg}' is not allowed. Allowed channels are: #{list.join($__themed__plugin-variants__allowed-channels, ', ')}.";
       }
 
       $channels: list.append($channels, $arg);
     } @else if $i % 3 == 2 {
       @if list.index($__themed__plugin-variants__allowed-operations, $arg) == null {
-        @error "[#{$__themed__plugin-variants__name}] The operation '#{$arg}' is not allowed. Allowed operations are: #{list.join($__themed__plugin-variants__allowed-operations, ', ')}.";
+        @error "[#{$__themed__plugin-variants__id}] The operation '#{$arg}' is not allowed. Allowed operations are: #{list.join($__themed__plugin-variants__allowed-operations, ', ')}.";
       }
 
       $operations: list.append($operations, $arg);
@@ -110,7 +110,7 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
     @if meta.type-of($arg) == 'list' {
       $args-list: list.join($args-list, $arg);
     } @else {
-      @error "[#{$__themed__plugin-variants__name}] Each entry of the arguments list must be a list. Got '#{$arg}' of type '#{meta.type-of($arg)}'.";
+      @error "[#{$__themed__plugin-variants__id}] Each entry of the arguments list must be a list. Got '#{$arg}' of type '#{meta.type-of($arg)}'.";
     }
   }
 
@@ -124,5 +124,5 @@ $__themed__plugin-variants__allowed-operations: ('change', 'adjust', 'scale');
   $__themed__plugin-variants__operations: $operations !global;
   $__themed__plugin-variants__steps: $steps !global;
 
-  @return ('name': $__themed__plugin-variants__name, 'extend-all': meta.get-function(__themed__plugin-variants__extend-all));
+  @return ('_plugin-id': $__themed__plugin-variants__id, 'extend-all': meta.get-function(__themed__plugin-variants__extend-all));
 }

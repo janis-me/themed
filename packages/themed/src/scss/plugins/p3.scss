@@ -5,7 +5,7 @@
 @use 'sass:meta';
 @use 'sass:color';
 
-$__themed__plugin-p3__name: 'themed-plugin-p3';
+$__themed__plugin-p3__id: 'themed-plugin-p3';
 
 // globals;
 $__themed__plugin-p3__overrides-map: null;
@@ -33,12 +33,12 @@ $__themed__plugin-p3__overrides-map: null;
 // public facing plugin function
 @function p3($overrides) {
   @if not $overrides or meta.type-of($overrides) != 'map' {
-    @error "[#{$__themed__plugin-p3__name}] The given p3 overrides is not a valid map.";
+    @error "[#{$__themed__plugin-p3__id}] The given p3 overrides is not a valid map.";
     @return null;
   }
 
   @if list.length(map.keys($overrides)) == 0 {
-    @error "[#{$__themed__plugin-p3__name}] The given p3 overrides map is empty.";
+    @error "[#{$__themed__plugin-p3__id}] The given p3 overrides map is empty.";
     @return null;
   }
 
@@ -46,5 +46,5 @@ $__themed__plugin-p3__overrides-map: null;
     $__themed__plugin-p3__overrides-map: $overrides !global;
   }
 
-  @return ('name': $__themed__plugin-p3__name, 'pre-apply': meta.get-mixin('__themed__plugin-p3__pre-apply'));
+  @return ('_plugin-id': $__themed__plugin-p3__id, 'pre-apply': meta.get-mixin('__themed__plugin-p3__pre-apply'));
 }

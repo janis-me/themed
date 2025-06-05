@@ -1,6 +1,6 @@
 import { getThemeFromDocument, setDefaultTheme, setTheme, toggleTheme, watchPreferredColorScheme } from '@janis.me/themed/js';
 
-import './styles/main.scss';
+import './styles/index.scss';
 
 function setupThemed() {
   // When first loaded, you might want to set the default theme for the user.

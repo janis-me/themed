@@ -1,19 +1,6 @@
-import * as sass from 'sass-embedded';
 import { describe, expect, it } from 'vitest';
 
-import { createThemedImporter } from '@janis.me/sass-loader';
-
-const compile = async (input: string) => {
-  const res = await sass.compileStringAsync(input, {
-    importers: [
-      createThemedImporter(str => {
-        console.log(str);
-      }),
-    ],
-  });
-
-  return res;
-};
+import { compile } from './utils';
 
 describe('compile', () => {
   describe('fails on invalid usage', () => {

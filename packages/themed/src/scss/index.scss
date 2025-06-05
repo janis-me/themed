@@ -10,40 +10,36 @@
 
 // An empty map that will be filled with the given themes, once the `@check` mixin was called
 $__themed__themes: ();
-$__themed__plugins: ();
-// List of all keys in the (primary) theme to check which keys exist.
-$__themed__theme-keys: ();
-// The string used to prefix all CSS variables
-$__themed__prefix: 'themed';
+$__themed__config: ();
 
 // ------------
 // Helper methods/mixins
 // ------------
 
 $__themed__allowed-config-props: ('prefix', 'plugins');
-$__themed__allowed-plugin-props: ('name', 'pre-apply', 'post-apply', 'extend-all');
+$__themed__allowed-plugin-props: ('_plugin-id', 'pre-apply', 'post-apply', 'extend-all', 'plugins');
 $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__themed__allowed-plugin-props);
 
 // A function that applies the given plugins to each value of every theme.
 // This can be used to dynamically alter themes, adding more variables to them etc.
-@function _extend-by-plugins($themes, $plugins) {
+@function _extend-by-plugins($themes, $plugins, $prefix) {
   $result-map: $themes;
 
   @each $plugin in $plugins {
-    $plugin-name: map.get($plugin, 'name');
+    $plugin-id: map.get($plugin, '_plugin-id');
     @if map.has-key($plugin, 'extend-all') {
       $plugin-extend-function: map.get($plugin, 'extend-all');
       $plugin-result: $result-map;
 
       @if meta.type-of($plugin-extend-function) == 'function' {
         // Call the plugin 'extend' function with all themes and the prefix.
-        $plugin-result: meta.call($plugin-extend-function, $result-map, $__themed__prefix);
+        $plugin-result: meta.call($plugin-extend-function, $result-map, $prefix);
 
         @if meta.type-of($plugin-result) != 'map' {
-          @error "[themed] The plugin '#{$plugin-name}' did not return a map for an 'extend-all' action. This is fatal.";
+          @error "[themed] The plugin '#{$plugin-id}' did not return a map for an 'extend-all' action. This is fatal.";
         }
       } @else {
-        @warn "Themed: Extend function for plugin '#{$plugin-name}' is not a valid function. Skipping.";
+        @warn "Themed: Extend function for plugin '#{$plugin-id}' is not a valid function. Skipping.";
       }
 
       $result-map: map.deep-merge($result-map, $plugin-result);
@@ -55,22 +51,22 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
 // Plugins can be 'pre-apply', 'post-apply' or both.
 // This mixin executes the given mixin for each plugin.
-@mixin _apply-plugins($plugins, $type) {
+@mixin _apply-plugins($plugins, $type, $themes, $prefix) {
   @if $type != 'pre-apply' and $type != 'post-apply' {
     @error "[themed] The given plugin type '#{$type}' is not a valid type. Use 'pre-apply' or 'post-apply'.";
   }
 
-  @each $plugin in $__themed__plugins {
-    $plugin-name: map.get($plugin, 'name');
+  @each $plugin in $plugins {
+    $plugin-id: map.get($plugin, '_plugin-id');
 
     @if map.has-key($plugin, $type) {
       $plugin-flag-mixin: map.get($plugin, $type);
 
       @if meta.type-of($plugin-flag-mixin) == 'mixin' {
         // the 'core' of flag plugins: Apply the defined mixins.
-        @include meta.apply($plugin-flag-mixin, $__themed__themes, $__themed__prefix);
+        @include meta.apply($plugin-flag-mixin, $themes, $prefix);
       } @else {
-        @warn "[themed] #{$type} mixin for plugin '#{$plugin-name}' is not a valid mixin. Skipping.";
+        @warn "[themed] #{$type} mixin for plugin '#{$plugin-id}' is not a valid mixin. Skipping.";
       }
     }
   }
@@ -80,7 +76,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 // merges all user and plugin configs.
 @function _get-and-validate-config($configs) {
   $config: (
-    'prefix': $__themed__prefix,
+    'prefix': 'themed',
     'plugins': (),
   );
 
@@ -92,8 +88,8 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
       $keys: map.keys($item);
 
-      // The given config has one or more of the $plugin-keys, but no name.
-      @if utils.list-contains($keys, $__themed__allowed-plugin-props) {
+      // The given config has a '_plugin-id', so it is treated as a plugin config.
+      @if list.index($keys, '_plugin-id') != null {
         // Should be treated as a plugin
         @if not _verify-plugin-config($item) {
           @error "[themed] The given plugin is not valid. See error above.";
@@ -101,6 +97,20 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
         // Include the plugin in the list of plugins.
         $existing-plugins: map.get($config, 'plugins');
+
+        // Check if there are any nested plugins (plugins can have other plugins)
+        // If so, add them to the list of plugins.
+        $nested-plugins: map.get($item, 'plugins');
+        @if $nested-plugins != null {
+          @each $nested-plugin in $nested-plugins {
+            @if not _verify-plugin-config($nested-plugin) {
+              @error "[themed] The given plugin is not valid. See error above.";
+            }
+            // Include the nested plugin in the list of plugins.
+            $existing-plugins: list.append($existing-plugins, $nested-plugin);
+          }
+        }
+
         $config: map.merge(
           $config,
           (
@@ -126,7 +136,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
           @if $plugins != null {
             @each $plugin in $plugins {
-              @if not _verify-plugin-config($item) {
+              @if not _verify-plugin-config($plugin) {
                 @error "[themed] The given plugin is not valid. See error above.";
               }
 
@@ -135,7 +145,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
               $config: map.merge(
                 $config,
                 (
-                  'plugins': list.append($existing-plugins, $item),
+                  'plugins': list.append($existing-plugins, $plugin),
                 )
               );
             }
@@ -152,30 +162,26 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
 @function _verify-plugin-config($plugin) {
   @if meta.type-of($plugin) != 'map' {
-    @error "[themed] The given plugin is not valid. It must be a SCSS map including a 'name' and some actions. See https://themed.janis.me/guide/plugins.html.";
+    @error "[themed] The given plugin is not valid. It must be a SCSS map including a '_plugin-id' and some actions. See https://themed.janis.me/guide/plugins.html.";
   }
 
-  $plugin-name: map.get($plugin, 'name');
+  $plugin-id: map.get($plugin, '_plugin-id');
   $plugin-keys: map.keys($plugin);
 
-  // Check if the plugin has a valid name
-  @if meta.type-of($plugin-name) != 'string' or $plugin-name == '' {
-    @error "[themed] A plugin does not have a valid name. This is fatal.";
+  // Check if the plugin has a valid id
+  @if meta.type-of($plugin-id) != 'string' or $plugin-id == '' {
+    @error "[themed] A plugin does not have a valid id. This is fatal.";
   }
 
   @if list.length($plugin-keys) == 1 {
-    @error "[themed] The plugin '#{$plugin-name}' does not have any actions defined. It must define at least one of #{$__themed__allowed-plugin-props}";
+    @error "[themed] The plugin '#{$plugin-id}' does not have any actions defined. It must define at least one of #{$__themed__allowed-plugin-props}";
   }
 
   // Check if the plugin has a valid type
   @each $key, $val in $plugin {
-    @if $key != 'name' {
+    @if $key != '_plugin-id' {
       @if list.index($__themed__allowed-plugin-props, $key) == null {
-        @error "[themed] The plugin '#{$plugin-name}' has an invalid key '#{$key}'. Allowed keys are: #{$__themed__allowed-plugin-props}";
-      }
-
-      @if meta.type-of($val) != 'mixin' and meta.type-of($val) != 'function' {
-        @error "[themed] The plugin '#{$plugin-name}' has an invalid action '#{$key}'. It must be a mixin or function.";
+        @error "[themed] The plugin '#{$plugin-id}' has an invalid key '#{$key}'. Allowed keys are: #{$__themed__allowed-plugin-props}";
       }
     }
   }
@@ -253,7 +259,7 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
   $prefix: map.get($config, 'prefix');
   $plugins: map.get($config, 'plugins');
 
-  $_themes: _extend-by-plugins($themes, $plugins);
+  $_themes: _extend-by-plugins($themes, $plugins, $prefix);
 
   @if not _verify-themes($_themes) {
     @error "[themed] Error while checking themes. See error above.";
@@ -261,58 +267,62 @@ $__themed__all-allowed-props: list.join($__themed__allowed-config-props, $__them
 
   // Populate the global themes variable. This is later used just for validation etc.
   $__themed__themes: $_themes !global;
-  $__themed__plugins: $plugins !global;
-  // Register valid keys. We checked that all maps have the same keys, so we just get the ones from the first theme.
-  $__themed__theme-keys: map.keys(list.nth(map.values($__themed__themes), 1)) !global;
-  // Prefix used for CSS variables
-  $__themed__prefix: $prefix !global;
+  $__themed__config: $config !global;
 }
 
 // Verifies themes and then applies them to the documentElement.
 @mixin apply() {
-  @include _apply-plugins($__themed__plugins, 'pre-apply');
+  $prefix: map.get($__themed__config, 'prefix');
+  $plugins: map.get($__themed__config, 'plugins');
+
+  @include _apply-plugins($plugins, 'pre-apply', $__themed__themes, $prefix);
 
   @each $theme-name, $theme-map in $__themed__themes {
     html[data-theme='#{$theme-name}'] {
       // Register the default variables for each theme
       @each $key, $val in $theme-map {
-        @include utils.make-css-variable($__themed__prefix, $key, $val);
+        @include utils.make-css-variable($prefix, $key, $val);
         // Add extra content for each theme.
-        @content ($__themed__prefix, $key, $val, $theme-name);
+        @content ($prefix, $key, $val, $theme-name);
       }
     }
   }
 
-  @include _apply-plugins($__themed__plugins, 'post-apply');
+  @include _apply-plugins($plugins, 'post-apply', $__themed__themes, $prefix);
 }
 
 // Returns a value from the current theme, checking for validity
 // You could also just use the `var()` directly, but this function
 // provides a nice way to check for validity and shows a better error message
 @function themed($name, $verify: true) {
+  $theme-keys: map.keys(list.nth(map.values($__themed__themes), 1));
+  $prefix: map.get($__themed__config, 'prefix');
+
   @if list.length($__themed__themes) == 0 {
     @error "[themed] There are no themes registered. You probably forgot to call 'check' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "[themed] '#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($__themed__theme-keys, $name) == null {
+  } @else if $verify and list.index($theme-keys, $name) == null {
     @error "[themed] '#{$name}' is not defined in your themes.";
   }
 
-  @return utils.get-css-variable($__themed__prefix, $name);
+  @return utils.get-css-variable($prefix, $name);
 }
 
 // Return a themes variable without any type-checking or using CSS variables,
 // Useful for custom theming logic on a component level
 @function unthemed($name, $theme: null, $verify: true) {
+  $theme-keys: map.keys(list.nth(map.values($__themed__themes), 1));
+
   @if list.length($__themed__themes) == 0 {
     @error "[themed] There are no themes registered. You probably forgot to call 'check' or 'apply'";
   }
 
   @if meta.type-of($name) != 'string' {
     @error "[themed] '#{$name}' is not a string (should be quoted when passed into this function)";
-  } @else if $verify and list.index($__themed__theme-keys, $name) == null {
+  } @else if $verify and list.index($theme-keys, $name) == null {
     @error "[themed] '#{$name}' is not defined in your themes.";
   }
 
